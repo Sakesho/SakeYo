@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SakeYō · Seasons v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#101820; --black-deep:#0a1016; --charcoal:#2C2C2C;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD;
+  --gray:#A0A0A0; --text-mute:#5F5E5A;
+  --sage:#2D6B4F;
+  --hairline:rgba(16,24,32,0.08); --hairline-strong:rgba(16,24,32,0.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-content:center;padding:40px 0;color:var(--black)}
+.caption{position:fixed;top:6px;left:12px;color:#888;font-size:10px;letter-spacing:.04em;z-index:100}
+.device{width:436px;background:#0a0a0a;border-radius:56px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;position:relative}
+.phone{width:412px;background:var(--cream);position:relative;overflow:hidden;border-radius:46px;min-height:1900px}
+.notch{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#0a0a0a;border-radius:18px;z-index:50}
+.statusbar{background:var(--black);padding:18px 32px 8px;display:flex;align-items:center;justify-content:space-between;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;letter-spacing:-.01em}
+.statusbar .icons{display:flex;align-items:center;gap:6px}
+.statusbar .icons svg{display:block}
+.header{background:var(--black);padding:10px 20px 18px;display:flex;align-items:center;justify-content:space-between}
+.hdr-back{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.75);text-decoration:none;font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.hdr-back svg{width:14px;height:14px}
+.wordmark{font-weight:700;font-size:13px;letter-spacing:.22em;color:#fff}
+.wordmark span{color:var(--crimson)}
+.hdr-spacer{width:64px}
+.hero{position:relative;margin-bottom:8px}
+.hero-img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:18% center;display:block;filter:saturate(.88) contrast(1.04) brightness(.82)}
+.hero-scrim{position:absolute;left:0;right:0;bottom:0;padding:80px 28px 32px;background:linear-gradient(to bottom,rgba(10,16,22,0) 0%,rgba(10,16,22,.65) 40%,rgba(10,16,22,.92) 100%)}
+.hero-overline{font-weight:600;font-size:11px;letter-spacing:.22em;color:#fff;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.hero-overline:after{content:"";flex:1;height:1px;background:rgba(255,255,255,.22);max-width:60px}
+.hero-manifesto{font-family:'Source Serif 4',serif;font-style:italic;font-size:18px;line-height:1.5;color:rgba(255,255,255,.94);letter-spacing:-.005em}
+.hero-manifesto p + p{margin-top:14px}
+.sec-label{padding:0 24px;margin:40px 0 18px;display:flex;align-items:center}
+.sec-label .lbl{font-weight:600;font-size:10px;letter-spacing:.18em;color:var(--text-mute);text-transform:uppercase;flex:1;position:relative}
+.sec-label .lbl:after{content:"";position:absolute;top:50%;left:90px;right:0;height:1px;background:var(--hairline);margin-left:12px}
+.featured{padding:0 24px;display:flex;flex-direction:column;gap:28px;margin-bottom:8px}
+.feat{display:block;text-decoration:none;color:inherit;background:#fff;padding:0 0 22px;border-radius:2px;box-shadow:0 1px 2px rgba(16,24,32,0.04)}
+.feat-img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;margin-bottom:14px;background:#ddd}
+.feat .overline{font-weight:600;font-size:10px;letter-spacing:.18em;color:var(--crimson);text-transform:uppercase;margin-bottom:8px;padding:0 20px}
+.feat h2{font-family:'Source Serif 4',serif;font-weight:600;font-size:22px;line-height:1.22;letter-spacing:-.01em;color:var(--black);margin-bottom:10px;padding:0 20px}
+.feat .dek{font-family:'Source Serif 4',serif;font-size:14px;line-height:1.55;color:var(--text-mute);margin-bottom:10px;padding:0 20px}
+.feat .meta{font-size:11px;letter-spacing:.04em;color:var(--gray);display:flex;align-items:center;gap:10px;padding:14px 20px 0;border-top:1px solid var(--hairline);margin-top:6px}
+.feat .meta .sep{width:3px;height:3px;border-radius:50%;background:var(--gray)}
+.tail{padding:48px 24px 96px;text-align:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+.nav{position:sticky;bottom:0;background:#fff;border-top:1px solid rgba(16,24,32,0.08);overflow:visible}
+.nav-grid{position:relative;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;padding:14px 0 26px;height:96px;overflow:visible}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:#5F5E5A;text-decoration:none;font-size:12px;font-weight:500;font-family:'Inter',sans-serif}
+.nav-item svg{width:23px;height:23px;stroke-width:1.6;fill:none;stroke:currentColor}
+.nav-item.active{color:#9B1B1B}
+.nav-item.active svg{stroke:#9B1B1B}
+.nav-item.active.filled svg{fill:#9B1B1B}
+.fab-wrap{position:relative}
+.fab{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:58px;height:58px;border-radius:50%;background:#9B1B1B;display:flex;align-items:center;justify-content:center;border:4px solid #fff;box-shadow:0 6px 16px rgba(155,27,27,.35);z-index:10}
+.fab svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:1.8}
+</style>
+</head><body>
+<div class="caption">sakeyo_seasons_v1 · DRAFT — verify Yamawa "for oyster" producer and region (Miyagi?) before publishing</div>
+<div class="device">
+<div class="notch"></div>
+<div class="phone">
+  <div class="statusbar">
+    <span>9:41</span>
+    <div class="icons">
+      <svg width="18" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5"/><rect x="5" y="5" width="3" height="6" rx="0.5"/><rect x="10" y="2" width="3" height="9" rx="0.5"/><rect x="15" y="0" width="3" height="11" rx="0.5"/></svg>
+      <svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4.2 A11 11 0 0 1 15 4.2" stroke-linecap="round"/><path d="M3.5 6.4 A7.5 7.5 0 0 1 12.5 6.4" stroke-linecap="round"/><path d="M6 8.6 A4 4 0 0 1 10 8.6" stroke-linecap="round"/><circle cx="8" cy="10" r="0.8" fill="currentColor" stroke="none"/></svg>
+      <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x="0.5" y="0.5" width="22" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.6"/><rect x="2" y="2" width="19" height="8" rx="1.2" fill="currentColor"/><rect x="23.5" y="4" width="1.5" height="4" rx="0.6" fill="currentColor" fill-opacity="0.6"/></svg>
+    </div>
+  </div>
+  <header class="header">
+    <a class="hdr-back" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+    <div class="wordmark">SAKE<span>YŌ</span></div>
+    <div class="hdr-spacer"></div>
+  </header>
+  <section class="hero">
+    <img class="hero-img" src="images/sakeyo_seasons_v1-2_70.jpg" alt="A plate of raw oysters on ice with lemon, beside a bottle of Yamawa sake labeled 'for oyster' and a small porcelain tokkuri on a wooden counter">
+    <div class="hero-scrim">
+      <div class="hero-overline">Seasons</div>
+      <div class="hero-manifesto">
+        <p>Oysters in Japan are a winter fish. The cold months pull them tight and briny; by April they spawn and turn soft. There is a sake called Yamawa "for oyster" — sharp, dry, brewed for one pairing and one season.</p>
+        <p>Sake follows this logic everywhere. This is where we write about what is in season — the sake, and what to drink it with.</p>
+      </div>
+    </div>
+  </section>
+  <div class="sec-label"><div class="lbl">Featured</div></div>
+  <div class="featured">
+
+    <a class="feat" href="#">
+      <img class="feat-img" src="images/sakeyo_seasons_v1-2_71.jpg" alt="A chef searing a block of katsuo over open flame at the counter">
+      <div class="overline">Field Notes</div>
+      <h2>The bonito runs north in spring and south in fall, and the sake changes with it</h2>
+      <p class="dek">Katsuo crosses Japan twice a year. The spring fish — hatsugatsuo — rides the Kuroshio up past Kochi in March, lean and almost grassy. The autumn fish — modorigatsuo — comes back down in September fat with summer feeding, the belly streaked the color of cured ham. Same animal, not the same dish. Hatsugatsuo wants a sharp junmai served cool. Modorigatsuo wants a hiyaoroshi with weight, served at room temperature so the fat doesn't seize. The Edo poets wrote about hatsugatsuo the way wine writers write about the first Beaujolais. The autumn fish is better.</p>
+      <div class="meta"><span>Apr 11</span><span class="sep"></span><span>6 min</span></div>
+    </a>
+
+    <a class="feat" href="#">
+      <img class="feat-img" src="images/sakeyo_seasons_v1-2_72.jpg" alt="Bottles of cloudy unpasteurized shinshu being filled on the line at a brewery">
+      <div class="overline">Profile</div>
+      <h2>Shinshu is the sake that smells like the brewery it came from</h2>
+      <p class="dek">The kura starts in November. By February the first tanks are pressed, and what comes out is shinshu — new sake, unblended, often unpasteurized, shipped while it still tastes like the room it was made in. There is a smell shinshu has that older sake doesn't: green, faintly of rice paste, of cold concrete and steam. It fades by June. Drink it now or wait a year for something else. Pair it with the first bamboo shoots of the season, simmered in dashi. Pair it with sashimi of madai. Pair it with nothing and drink it standing up in the kitchen at four in the afternoon.</p>
+      <div class="meta"><span>Apr 11</span><span class="sep"></span><span>5 min</span></div>
+    </a>
+
+    <a class="feat" href="#">
+      <img class="feat-img" src="images/sakeyo_seasons_v1-2_73.jpg" alt="A bottle of Saku no Hana aki no junmai ginjo, a hiyaoroshi labeled with autumn maple leaves, on a counter beside a porcelain cup">
+      <div class="overline">Field Notes</div>
+      <h2>Hiyaoroshi rests through summer and meets the Pacific saury at the door</h2>
+      <p class="dek">Hiyaoroshi is sake pressed in late winter, pasteurized once, and left alone in the brewery's coldest room until the outside air matches the temperature inside the tank. That happens in September. It ships without a second pasteurization and sells for about six weeks. It arrives the same week sanma does. Sanma — Pacific saury — runs down the Tōhoku coast in early autumn, silver and oily. You grill it whole over charcoal, salt only, until the skin splits. Grated daikon, a wedge of sudachi, the bitter green guts left in. The hiyaoroshi sits next to it at room temperature and does what a year of rest taught it to do.</p>
+      <div class="meta"><span>Apr 11</span><span class="sep"></span><span>7 min</span></div>
+    </a>
+
+  </div>
+  <div class="tail">More stories coming.</div>
+  <nav class="nav">
+  <div class="nav-grid">
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9v9a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg>
+      <span>Home</span>
+    </a>
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16" y2="16"/></svg>
+      <span>Search</span>
+    </a>
+    <div class="fab-wrap">
+      <a class="fab" href="#" aria-label="Scan">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3l1.5-2h9L18 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg>
+      </a>
+    </div>
+    <a class="nav-item active" href="#">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></svg>
+      <span>Explore</span>
+    </a>
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      <span>Profile</span>
+    </a>
+  </div>
+</nav>
+
+</div>
+</div>
+
+
+
+
+<!--PROTO-NAV-->
+<script>
+(function(){
+  var R={"nav": {"home": "sakeyo_home_v2.html", "explore": "sakeyo_explore_v2d.html", "profile": "sakeyo_profile_v5.html"}, "first": "sake-detail-v6a-type-dash.html"};
+  function go(s){try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-go',screen:s},'*');return;}}catch(e){}location.href=s;}
+  function back(){if(R.backTo){go(R.backTo);return;}try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-back'},'*');return;}}catch(e){}history.back();}
+  function txt(el){return ((el.textContent||'')+' '+(el.getAttribute&&el.getAttribute('aria-label')||'')).toLowerCase().trim();}
+  function match(s,dict){for(var k in dict){if(s.indexOf(k)!==-1)return dict[k];}return null;}
+  var firstFeat=null;
+  if(R.first){var all=document.querySelectorAll('.feat, .article, .event, .cellar-card, .event-card, .note-card, .start, .piece, .sh, .shelf, .featured-article');if(all[0])firstFeat=all[0];}
+  document.addEventListener('click',function(e){
+    var el=e.target;
+    if(R.selectorGo){for(var sel in R.selectorGo){var hit=e.target.closest(sel);if(hit){e.preventDefault();e.stopPropagation();go(R.selectorGo[sel]);return;}}}
+    if(R.viewToggle){var vbtn=e.target.closest('[data-view]');if(vbtn){e.preventDefault();e.stopPropagation();var v=vbtn.getAttribute('data-view');if(R.viewToggle[v])go(R.viewToggle[v]);return;}}
+    while(el&&el!==document.body&&el.nodeType===1){
+      if(el.classList&&(el.classList.contains('hdr-back')||el.classList.contains('back'))){e.preventDefault();e.stopPropagation();back();return;}
+      if(el.classList&&el.classList.contains('nav-item')){var d=match(txt(el),R.nav||{});if(d){e.preventDefault();e.stopPropagation();go(d);return;}}
+      if(firstFeat&&(el===firstFeat||firstFeat.contains(el))){e.preventDefault();e.stopPropagation();go(R.first);return;}
+      if(R.textGo){var t=txt(el);if(t.length<200){var tg=match(t,R.textGo);if(tg){e.preventDefault();e.stopPropagation();go(tg);return;}}}
+      if(R.text){var t2=txt(el);if(t2.length<100){var d2=match(t2,R.text);if(d2){e.preventDefault();e.stopPropagation();go(d2);return;}}}
+      el=el.parentElement;
+    }
+  },true);
+})();
+</script>
+<!--/PROTO-NAV-->
+</body></html>

@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>SakeYō · Passport</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light only;
+  --black:#101820; --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD;
+  --gray:#A0A0A0; --text-mute:#5F5E5A; --charcoal:#2C2C2C;
+  --sage:#2D6B4F; --gold:#B8893B;
+  --hairline:rgba(16,24,32,0.08); --hairline-strong:rgba(16,24,32,0.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-content:center;padding:40px 0;color:#101820}
+.caption{position:fixed;top:6px;left:12px;color:#888;font-size:10px;letter-spacing:.04em;z-index:100}
+.device{width:436px;background:#0a0a0a;border-radius:56px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;position:relative}
+.phone{width:412px;background:var(--cream);position:relative;overflow:hidden;border-radius:46px;min-height:2300px}
+.notch{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#0a0a0a;border-radius:18px;z-index:50}
+.statusbar{background:var(--black);padding:18px 32px 8px;display:flex;align-items:center;justify-content:space-between;color:#fff;font-weight:600;font-size:14px}
+.statusbar .icons{display:flex;align-items:center;gap:6px}
+
+.header{background:var(--black);padding:10px 20px 18px;display:flex;align-items:center;justify-content:space-between}
+.hdr-back{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.75);text-decoration:none;font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.hdr-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.wordmark{font-weight:700;font-size:13px;letter-spacing:.22em;color:#fff}
+.wordmark span{color:var(--crimson)}
+.hdr-action{width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#fff;background:transparent;border:none;cursor:pointer}
+.hdr-action svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+/* Masthead */
+.masthead{padding:30px 24px 22px;background:var(--cream)}
+.mast-overline{font-weight:600;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);margin-bottom:14px}
+.mast-title{font-family:'Source Serif 4',serif;font-weight:700;font-size:32px;line-height:1.05;letter-spacing:-.02em;color:var(--black);margin-bottom:8px}
+.mast-sub{font-family:'Source Serif 4',serif;font-style:italic;font-size:14px;line-height:1.5;color:var(--text-mute);max-width:320px}
+.stats{display:flex;gap:24px;margin-top:20px;padding-top:20px;border-top:1px solid var(--hairline)}
+.stat-num{font-family:'Source Serif 4',serif;font-weight:700;font-size:24px;line-height:1;color:var(--black);letter-spacing:-.02em}
+.stat-lbl{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mute);margin-top:6px}
+
+/* Toggle */
+.view-toggle{display:flex;padding:0 24px;gap:0;background:var(--cream);position:sticky;top:0;z-index:5}
+.vt{flex:1;padding:14px 0;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute);background:transparent;border:none;border-bottom:1.5px solid var(--hairline);cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px}
+.vt.on{color:var(--black);border-bottom-color:var(--crimson)}
+.vt .num{font-family:'Source Serif 4',serif;font-weight:700;font-size:13px;letter-spacing:0;text-transform:none;color:var(--crimson)}
+.vt:not(.on) .num{color:var(--gray)}
+
+/* Filter chips */
+.filter-bar{padding:18px 24px 8px;display:flex;gap:8px;overflow-x:auto;background:var(--cream)}
+.filter-bar::-webkit-scrollbar{display:none}
+.fchip{flex-shrink:0;padding:7px 14px;border-radius:100px;border:1px solid var(--hairline-strong);background:transparent;font-size:11px;font-weight:600;color:var(--text-mute);white-space:nowrap;cursor:pointer;letter-spacing:.04em}
+.fchip.active{background:var(--black);color:#fff;border-color:var(--black)}
+
+/* Map summary card */
+.map-summary{margin:18px 24px 0;background:#fff;border-radius:3px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,32,0.04)}
+.map-summary-map{height:160px;background:linear-gradient(135deg,#e8e3dc,#d4cdc1);position:relative;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:9px;letter-spacing:.18em;text-transform:uppercase}
+.map-summary-map .pin{position:absolute;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.map-summary-map .pin.p1{top:25%;left:42%}
+.map-summary-map .pin.p2{top:32%;left:46%}
+.map-summary-map .pin.p3{top:48%;left:38%}
+.map-summary-map .pin.p4{top:55%;left:55%}
+.map-summary-map .pin.p5{top:42%;left:62%}
+.map-summary-map .pin.p6{top:38%;left:50%}
+.map-summary-map .pin.p7{top:62%;left:48%}
+.map-summary-foot{padding:14px 18px;display:flex;align-items:center;gap:14px;border-top:1px solid var(--hairline)}
+.ms-stat{flex:1}
+.ms-stat-num{font-family:'Source Serif 4',serif;font-weight:700;font-size:18px;color:var(--black);line-height:1;letter-spacing:-.01em}
+.ms-stat-lbl{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute);margin-top:4px}
+.ms-divider{width:1px;height:28px;background:var(--hairline)}
+
+/* Section header */
+.section-h{padding:36px 24px 14px;display:flex;align-items:baseline;gap:12px}
+.section-h .lbl{font-weight:600;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-mute);flex:1;position:relative}
+.section-h .lbl:before{content:"";display:inline-block;width:14px;height:1px;background:var(--crimson);vertical-align:middle;margin-right:12px}
+.section-h .count{font-family:'Source Serif 4',serif;font-size:13px;color:var(--gray);font-weight:600}
+
+/* Visited place — richer card with notes */
+.visited{margin:0 24px 18px;background:#fff;border-radius:3px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,32,0.04);text-decoration:none;color:inherit;display:block;position:relative}
+.v-stamp{position:absolute;top:14px;right:14px;width:54px;height:54px;border:1.5px solid var(--crimson);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--crimson);transform:rotate(-8deg);background:rgba(255,255,255,.8);z-index:2}
+.v-stamp-mo{font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1}
+.v-stamp-day{font-family:'Source Serif 4',serif;font-weight:700;font-size:18px;line-height:1;margin:2px 0}
+.v-stamp-yr{font-size:8px;font-weight:600;letter-spacing:.1em;line-height:1}
+.v-img{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#3a3a3a,#1a1a1a);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.32);font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.v-body{padding:18px 20px}
+.v-cat{font-weight:600;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);margin-bottom:6px}
+.v-name{font-family:'Source Serif 4',serif;font-weight:700;font-size:22px;line-height:1.15;letter-spacing:-.015em;color:var(--black);margin-bottom:6px;padding-right:60px}
+.v-loc{font-size:11px;color:var(--text-mute);display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.v-loc .dot{width:3px;height:3px;border-radius:50%;background:var(--gray)}
+
+/* User's note */
+.v-note{padding:14px 16px;background:var(--cream);border-radius:3px;font-family:'Source Serif 4',serif;font-style:italic;font-size:14px;line-height:1.5;color:var(--charcoal);border-left:2px solid var(--crimson);position:relative;margin-bottom:14px}
+.v-note-label{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mute);margin-bottom:6px}
+
+/* What I drank */
+.v-drank{margin-bottom:14px}
+.v-drank-label{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mute);margin-bottom:8px}
+.v-drank-items{display:flex;flex-direction:column;gap:6px}
+.v-drank-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--charcoal);padding:6px 0;border-bottom:1px dotted var(--hairline)}
+.v-drank-item:last-child{border-bottom:none}
+.v-drank-item .name{font-family:'Source Serif 4',serif;font-weight:600;color:var(--black);flex:1}
+.v-drank-item .rating{display:flex;gap:1px;color:var(--crimson);font-size:11px;letter-spacing:.05em}
+.v-drank-item .rating .empty{color:var(--hairline-strong)}
+
+/* Foot */
+.v-foot{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--hairline);font-size:10px;letter-spacing:.04em;color:var(--text-mute)}
+.v-foot .src{display:flex;align-items:center;gap:6px}
+.v-foot .src svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
+.v-foot .src strong{color:var(--black);font-weight:600;text-decoration:underline}
+
+/* Compact visited (for less-detailed entries) */
+.v-compact{margin:0 24px 12px;background:#fff;border-radius:3px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 2px rgba(16,24,32,0.04);text-decoration:none;color:inherit}
+.v-compact-thumb{width:48px;height:48px;border-radius:3px;background:linear-gradient(135deg,#3a3a3a,#1a1a1a);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.3);font-size:7px;text-align:center;letter-spacing:.1em;text-transform:uppercase;padding:4px;line-height:1.1}
+.v-compact-info{flex:1;min-width:0}
+.v-compact-name{font-family:'Source Serif 4',serif;font-weight:600;font-size:15px;color:var(--black);letter-spacing:-.005em;margin-bottom:3px}
+.v-compact-meta{font-size:11px;color:var(--text-mute);display:flex;align-items:center;gap:6px}
+.v-compact-meta .dot{width:2.5px;height:2.5px;border-radius:50%;background:var(--gray)}
+.v-compact-date{flex-shrink:0;font-family:'Source Serif 4',serif;font-size:11px;color:var(--gray);font-weight:600}
+
+/* Year divider */
+.year-div{padding:20px 24px 8px;font-family:'Source Serif 4',serif;font-weight:700;font-size:14px;color:var(--gray);letter-spacing:-.01em;display:flex;align-items:center;gap:12px}
+.year-div:after{content:"";flex:1;height:1px;background:var(--hairline)}
+
+.tail{padding:32px 24px 110px;text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+
+.nav{position:sticky;bottom:0;background:#fff;border-top:1px solid rgba(16,24,32,0.08)}
+.nav-grid{position:relative;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;padding:14px 0 26px;height:96px}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:#5F5E5A;text-decoration:none;font-size:12px;font-weight:500}
+.nav-item svg{width:23px;height:23px;stroke-width:1.6;fill:none;stroke:currentColor}
+.nav-item.active{color:var(--crimson)}
+.nav-item.active svg{stroke:var(--crimson)}
+.fab-wrap{position:relative}
+.fab{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:58px;height:58px;border-radius:50%;background:var(--crimson);display:flex;align-items:center;justify-content:center;border:4px solid #fff;box-shadow:0 6px 16px rgba(155,27,27,.35);z-index:10}
+.fab svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:1.8}
+</style>
+</head><body>
+<div class="caption">sakeyo_passport_v1 · visited places with notes &amp; tasting log · INSERT IMAGES at .v-img and thumb divs</div>
+<div class="device">
+<div class="notch"></div>
+<div class="phone">
+
+  <div class="statusbar">
+    <span>9:41</span>
+    <div class="icons">
+      <svg width="18" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5"/><rect x="5" y="5" width="3" height="6" rx="0.5"/><rect x="10" y="2" width="3" height="9" rx="0.5"/><rect x="15" y="0" width="3" height="11" rx="0.5"/></svg>
+      <svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4.2 A11 11 0 0 1 15 4.2" stroke-linecap="round"/><path d="M3.5 6.4 A7.5 7.5 0 0 1 12.5 6.4" stroke-linecap="round"/><path d="M6 8.6 A4 4 0 0 1 10 8.6" stroke-linecap="round"/><circle cx="8" cy="10" r="0.8" fill="currentColor"/></svg>
+      <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x="0.5" y="0.5" width="22" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.6"/><rect x="2" y="2" width="19" height="8" rx="1.2" fill="currentColor"/><rect x="23.5" y="4" width="1.5" height="4" rx="0.6" fill="currentColor" fill-opacity="0.6"/></svg>
+    </div>
+  </div>
+
+  <header class="header">
+    <a class="hdr-back" href="sakeyo_japan_template-4.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+    <div class="wordmark">SAKE<span>YŌ</span></div>
+    <button class="hdr-action" aria-label="Search"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+  </header>
+
+  <section class="masthead">
+    <div class="mast-overline">Trips · Rung 06</div>
+    <h1 class="mast-title">Where you've been.</h1>
+    <p class="mast-sub">Twenty-three places across nine prefectures. The notes you took. The bottles you finished.</p>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">14</div><div class="stat-lbl">Wishlist</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-lbl">Trips</div></div>
+      <div class="stat"><div class="stat-num">23</div><div class="stat-lbl">Passport</div></div>
+    </div>
+  </section>
+
+  <div class="view-toggle">
+    <button class="vt" onclick="window.location.href='sakeyo_japan_template-4.html'">Featured</button>
+    <button class="vt" onclick="window.location.href='sakeyo_wishlist_v2.html'">Wishlist <span class="num">14</span></button>
+    <button class="vt on">Passport <span class="num">23</span></button>
+  </div>
+
+  <div class="filter-bar">
+    <div class="fchip active">All</div>
+    <div class="fchip">By prefecture</div>
+    <div class="fchip">Bars</div>
+    <div class="fchip">Restaurants</div>
+    <div class="fchip">Breweries</div>
+    <div class="fchip">2026</div>
+    <div class="fchip">2025</div>
+  </div>
+
+  <!-- Map summary -->
+  <div class="map-summary">
+    <div class="map-summary-map">
+      [ MAP — JAPAN, ALL VISITED ]
+      <div class="pin p1"></div>
+      <div class="pin p2"></div>
+      <div class="pin p3"></div>
+      <div class="pin p4"></div>
+      <div class="pin p5"></div>
+      <div class="pin p6"></div>
+      <div class="pin p7"></div>
+    </div>
+    <div class="map-summary-foot">
+      <div class="ms-stat"><div class="ms-stat-num">23</div><div class="ms-stat-lbl">Places</div></div>
+      <div class="ms-divider"></div>
+      <div class="ms-stat"><div class="ms-stat-num">9</div><div class="ms-stat-lbl">Prefectures</div></div>
+      <div class="ms-divider"></div>
+      <div class="ms-stat"><div class="ms-stat-num">47</div><div class="ms-stat-lbl">Sake logged</div></div>
+    </div>
+  </div>
+
+  <!-- Recent visits header -->
+  <div class="section-h"><div class="lbl">Recent</div><div class="count">2026</div></div>
+
+  <!-- Featured visit 1 -->
+  <a class="visited" href="#">
+    <div class="v-stamp">
+      <div class="v-stamp-mo">Mar</div>
+      <div class="v-stamp-day">14</div>
+      <div class="v-stamp-yr">2026</div>
+    </div>
+    <div class="v-img"><img src="images/okagesan_interior.jpeg" alt="Okagesan interior" style="width:100%;height:100%;object-fit:cover"></div>
+    <div class="v-body">
+      <div class="v-cat">Tokyo · Izakaya</div>
+      <div class="v-name">Okagesan</div>
+      <div class="v-loc"><span>Yotsuya</span><span class="dot"></span><span>1st visit</span><span class="dot"></span><span>2 hrs</span></div>
+
+      <div class="v-note">
+        <span class="v-note-label">Note</span>
+        Sat at the far end of the counter. Chef brought the chalkboard, walked us through the seasonal stuff. The yawarimizu thing is real — actually noticeable in the glass. Try to come back in October for the hiyaoroshi.
+      </div>
+
+      <div class="v-drank">
+        <div class="v-drank-label">What we drank</div>
+        <div class="v-drank-items">
+          <div class="v-drank-item">
+            <span class="name">Senkin Modern Muku</span>
+            <span class="rating">●●●●<span class="empty">●</span></span>
+          </div>
+          <div class="v-drank-item">
+            <span class="name">Tedorigawa Yamahai Junmai</span>
+            <span class="rating">●●●●●</span>
+          </div>
+          <div class="v-drank-item">
+            <span class="name">Kuheiji EAU DU DESIR</span>
+            <span class="rating">●●●<span class="empty">●●</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="v-foot">
+        <div class="src"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>From <strong>SakeYō: Okagesan kept the star</strong></div>
+        <span>3 photos</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- Featured visit 2 -->
+  <a class="visited" href="#">
+    <div class="v-stamp">
+      <div class="v-stamp-mo">Feb</div>
+      <div class="v-stamp-day">22</div>
+      <div class="v-stamp-yr">2026</div>
+    </div>
+    <div class="v-img"><img src="images/tedorigawa_brewery.jpg" alt="Tedorigawa Brewery" style="width:100%;height:100%;object-fit:cover"></div>
+    <div class="v-body">
+      <div class="v-cat">Ishikawa · Brewery</div>
+      <div class="v-name">Tedorigawa Brewery</div>
+      <div class="v-loc"><span>Hakusan</span><span class="dot"></span><span>1st visit</span><span class="dot"></span><span>3 hrs</span></div>
+
+      <div class="v-note">
+        <span class="v-note-label">Note</span>
+        Yasuyuki gave the tour himself. The koji room is colder than I expected. Bought a bottle of the unpasteurized junmai daiginjo direct — only sold at the kura. Worth the 45-minute drive from Kanazawa, especially if you can do it on a brewing day.
+      </div>
+
+      <div class="v-drank">
+        <div class="v-drank-label">What we drank</div>
+        <div class="v-drank-items">
+          <div class="v-drank-item">
+            <span class="name">Tedorigawa Yamahai Junmai (nama)</span>
+            <span class="rating">●●●●●</span>
+          </div>
+          <div class="v-drank-item">
+            <span class="name">Tedorigawa Junmai Daiginjo</span>
+            <span class="rating">●●●●<span class="empty">●</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="v-foot">
+        <div class="src"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Added manually</div>
+        <span>5 photos</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 2025 divider -->
+  <div class="year-div">2025</div>
+
+  <a class="v-compact" href="#">
+    <div class="v-compact-thumb"><img src="images/kuri.jpg" alt="Kuri" style="width:100%;height:100%;object-fit:cover"></div>
+    <div class="v-compact-info">
+      <div class="v-compact-name">Kuri</div>
+      <div class="v-compact-meta"><span>Sake bar · Ginza</span><span class="dot"></span><span>Tokyo</span></div>
+    </div>
+    <div class="v-compact-date">Nov '25</div>
+  </a>
+
+  <a class="v-compact" href="#">
+    <div class="v-compact-thumb"><img src="images/nakajima.jpg" alt="Nakajima Shoten" style="width:100%;height:100%;object-fit:cover"></div>
+    <div class="v-compact-info">
+      <div class="v-compact-name">Nakajima Shoten</div>
+      <div class="v-compact-meta"><span>Sake shop · Niigata City</span><span class="dot"></span><span>Niigata</span></div>
+    </div>
+    <div class="v-compact-date">Oct '25</div>
+  </a>
+
+  <a class="v-compact" href="#">
+    <div class="v-compact-thumb"><img src="images/ponshukan.jpeg" alt="Ponshukan" style="width:100%;height:100%;object-fit:cover"></div>
+    <div class="v-compact-info">
+      <div class="v-compact-name">Ponshukan</div>
+      <div class="v-compact-meta"><span>Tasting bar · Echigo-Yuzawa Stn</span><span class="dot"></span><span>Niigata</span></div>
+    </div>
+    <div class="v-compact-date">Oct '25</div>
+  </a>
+
+  <a class="v-compact" href="#">
+    <div class="v-compact-thumb"><img src="images/hasegawa.jpeg" alt="Hasegawa Saketen" style="width:100%;height:100%;object-fit:cover"></div>
+    <div class="v-compact-info">
+      <div class="v-compact-name">Hasegawa Saketen</div>
+      <div class="v-compact-meta"><span>Sake shop · Tokyo Stn</span><span class="dot"></span><span>Tokyo</span></div>
+    </div>
+    <div class="v-compact-date">Oct '25</div>
+  </a>
+
+  <a class="v-compact" href="#">
+    <div class="v-compact-thumb"><img src="images/kidoizumi.jpeg" alt="Kidoizumi Brewery" style="width:100%;height:100%;object-fit:cover"></div>
+    <div class="v-compact-info">
+      <div class="v-compact-name">Kidoizumi Brewery</div>
+      <div class="v-compact-meta"><span>Brewery · Isumi</span><span class="dot"></span><span>Chiba</span></div>
+    </div>
+    <div class="v-compact-date">Sep '25</div>
+  </a>
+
+  <a class="v-compact" href="#">
+    <div class="v-compact-thumb"><img src="images/shinkawaya.jpeg" alt="Shinkawaya" style="width:100%;height:100%;object-fit:cover"></div>
+    <div class="v-compact-info">
+      <div class="v-compact-name">Shinkawaya</div>
+      <div class="v-compact-meta"><span>Izakaya · Shinjuku</span><span class="dot"></span><span>Tokyo</span></div>
+    </div>
+    <div class="v-compact-date">Sep '25</div>
+  </a>
+
+  <div class="tail">23 places · 9 prefectures · since June 2024</div>
+
+  <nav class="nav">
+    <div class="nav-grid">
+      <a class="nav-item" href="sakeyo_home_v2.html"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9v9a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+      <a class="nav-item active" href="#"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Trips</span></a>
+      <div class="fab-wrap">
+        <a class="fab" href="sake-detail-v6a-type-dash.html" aria-label="Scan">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3l1.5-2h9L18 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg>
+        </a>
+      </div>
+      <a class="nav-item" href="sakeyo_explore_v2d.html"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg><span>Explore</span></a>
+      <a class="nav-item" href="sakeyo_profile_v5.html"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><span>Profile</span></a>
+    </div>
+  </nav>
+
+</div>
+</div>
+</body></html>

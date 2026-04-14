@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>SakeYō · Wishlist</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light only;
+  --black:#101820; --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD;
+  --gray:#A0A0A0; --text-mute:#5F5E5A; --charcoal:#2C2C2C;
+  --hairline:rgba(16,24,32,0.08); --hairline-strong:rgba(16,24,32,0.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-content:center;padding:40px 0;color:#101820}
+.caption{position:fixed;top:6px;left:12px;color:#888;font-size:10px;letter-spacing:.04em;z-index:100}
+.device{width:436px;background:#0a0a0a;border-radius:56px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;position:relative}
+.phone{width:412px;background:var(--cream);position:relative;overflow:hidden;border-radius:46px;min-height:2200px}
+.notch{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#0a0a0a;border-radius:18px;z-index:50}
+.statusbar{background:var(--black);padding:18px 32px 8px;display:flex;align-items:center;justify-content:space-between;color:#fff;font-weight:600;font-size:14px}
+.statusbar .icons{display:flex;align-items:center;gap:6px}
+
+.header{background:var(--black);padding:10px 20px 18px;display:flex;align-items:center;justify-content:space-between}
+.hdr-back{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.75);text-decoration:none;font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.hdr-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.wordmark{font-weight:700;font-size:13px;letter-spacing:.22em;color:#fff}
+.wordmark span{color:var(--crimson)}
+.hdr-action{width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#fff;background:transparent;border:none;cursor:pointer}
+.hdr-action svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+/* Hero — same as landing for visual continuity */
+.hero{position:relative;background:var(--black);padding:36px 28px 38px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 65% 35%, rgba(155,27,27,.08) 0%, transparent 55%);pointer-events:none}
+.hero-overline{font-weight:600;font-size:11px;letter-spacing:.22em;color:#fff;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px;position:relative}
+.hero-overline:after{content:"";flex:1;height:1px;background:rgba(255,255,255,.22);max-width:60px}
+.hero-title{font-family:'Source Serif 4',serif;font-weight:700;font-size:30px;line-height:1.08;letter-spacing:-.02em;color:#fff;margin-bottom:10px}
+.hero-sub{font-family:'Source Serif 4',serif;font-style:italic;font-size:15px;line-height:1.5;color:rgba(255,255,255,.75);max-width:320px}
+
+/* Top tabs */
+.tabs{display:flex;background:var(--cream);padding:0 24px;border-bottom:1px solid var(--hairline);position:sticky;top:0;z-index:10}
+.tab{flex:1;padding:18px 0 16px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:-1px}
+.tab.on{color:var(--black);border-bottom-color:var(--crimson)}
+.tab .num{font-family:'Source Serif 4',serif;font-weight:700;font-size:12px;letter-spacing:0;text-transform:none;color:var(--gray)}
+.tab.on .num{color:var(--crimson)}
+
+/* Filter chips — region */
+.chips-wrap{padding:18px 0 4px}
+.chips-label{padding:0 24px 12px;font-weight:600;font-size:10px;letter-spacing:.18em;color:var(--text-mute);text-transform:uppercase}
+.chips{display:flex;gap:8px;padding:0 24px 14px;overflow-x:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;padding:8px 14px;border:1px solid var(--hairline-strong);border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--black);background:transparent;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.chip.active{background:var(--black);color:#fff;border-color:var(--black)}
+.chip.dim{color:var(--gray);border-color:var(--hairline)}
+.chip .dot{width:5px;height:5px;border-radius:50%;background:var(--crimson)}
+.chip.dim .dot{background:var(--gray);opacity:.4}
+
+/* Filter chips — type (second row) */
+.chips-row2{padding:0 0 8px;border-bottom:1px solid var(--hairline)}
+
+/* Count line */
+.count-line{padding:18px 24px 12px;display:flex;align-items:baseline;justify-content:space-between}
+.count-num{font-family:'Source Serif 4',serif;font-size:13px;color:var(--text-mute);font-weight:600}
+.count-sort{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson);text-decoration:none;display:flex;align-items:center;gap:6px}
+.count-sort svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* Place row — the saved item */
+.places{padding:0 24px 0}
+.p-row{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:1px solid var(--hairline);text-decoration:none;color:inherit;position:relative}
+.p-row:last-child{border-bottom:none}
+.p-thumb{width:64px;height:64px;border-radius:3px;background:linear-gradient(135deg,#3a3a3a,#1a1a1a);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.32);font-size:8px;text-align:center;letter-spacing:.1em;text-transform:uppercase;padding:6px;line-height:1.1;overflow:hidden}
+.p-info{flex:1;min-width:0;padding-right:30px}
+.p-cat{font-weight:600;font-size:9px;letter-spacing:.18em;color:var(--crimson);text-transform:uppercase;margin-bottom:4px}
+.p-name{font-family:'Source Serif 4',serif;font-weight:700;font-size:17px;color:var(--black);letter-spacing:-.01em;line-height:1.2;margin-bottom:5px}
+.p-meta{font-size:11px;color:var(--text-mute);display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.p-meta .dot{width:2.5px;height:2.5px;border-radius:50%;background:var(--gray)}
+.p-src{font-family:'Source Serif 4',serif;font-style:italic;font-size:11px;color:var(--gray);line-height:1.4}
+.p-src strong{color:var(--text-mute);font-weight:600;font-style:normal;text-decoration:underline}
+.p-saved{position:absolute;top:18px;right:0;width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;cursor:pointer}
+.p-saved svg{width:14px;height:14px;stroke:var(--crimson);fill:var(--crimson);stroke-width:1.8}
+
+/* Empty state copy */
+.empty-hint{padding:60px 36px;text-align:center}
+.empty-hint p{font-family:'Source Serif 4',serif;font-style:italic;font-size:14px;color:var(--text-mute);line-height:1.5}
+
+.tail{padding:32px 24px 110px;text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+
+.nav{position:sticky;bottom:0;background:#fff;border-top:1px solid rgba(16,24,32,0.08)}
+.nav-grid{position:relative;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;padding:14px 0 26px;height:96px}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:#5F5E5A;text-decoration:none;font-size:12px;font-weight:500}
+.nav-item svg{width:23px;height:23px;stroke-width:1.6;fill:none;stroke:currentColor}
+.nav-item.active{color:var(--crimson)}
+.nav-item.active svg{stroke:var(--crimson)}
+.fab-wrap{position:relative}
+.fab{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:58px;height:58px;border-radius:50%;background:var(--crimson);display:flex;align-items:center;justify-content:center;border:4px solid #fff;box-shadow:0 6px 16px rgba(155,27,27,.35);z-index:10}
+.fab svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:1.8}
+</style>
+</head><body>
+<div class="caption">sakeyo_wishlist_v2 · simple flat list · region + type chips · INSERT IMAGES at .p-thumb divs</div>
+<div class="device">
+<div class="notch"></div>
+<div class="phone">
+
+  <div class="statusbar">
+    <span>9:41</span>
+    <div class="icons">
+      <svg width="18" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5"/><rect x="5" y="5" width="3" height="6" rx="0.5"/><rect x="10" y="2" width="3" height="9" rx="0.5"/><rect x="15" y="0" width="3" height="11" rx="0.5"/></svg>
+      <svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4.2 A11 11 0 0 1 15 4.2" stroke-linecap="round"/><path d="M3.5 6.4 A7.5 7.5 0 0 1 12.5 6.4" stroke-linecap="round"/><path d="M6 8.6 A4 4 0 0 1 10 8.6" stroke-linecap="round"/><circle cx="8" cy="10" r="0.8" fill="currentColor"/></svg>
+      <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x="0.5" y="0.5" width="22" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.6"/><rect x="2" y="2" width="19" height="8" rx="1.2" fill="currentColor"/><rect x="23.5" y="4" width="1.5" height="4" rx="0.6" fill="currentColor" fill-opacity="0.6"/></svg>
+    </div>
+  </div>
+
+  <header class="header">
+    <a class="hdr-back" href="sakeyo_japan_template-4.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+    <div class="wordmark">SAKE<span>YŌ</span></div>
+    <button class="hdr-action" aria-label="Search"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-overline">Japan</div>
+    <h1 class="hero-title">Where to next.</h1>
+    <p class="hero-sub">The places you've saved from stories. Filter by region or type.</p>
+  </section>
+
+  <div class="tabs">
+    <a class="tab" href="sakeyo_japan_template-4.html">Featured</a>
+    <a class="tab on" href="#">Wishlist <span class="num">14</span></a>
+    <a class="tab" href="sakeyo_passport_v1.html">Passport <span class="num">23</span></a>
+  </div>
+
+  <!-- Region chips -->
+  <div class="chips-wrap">
+    <div class="chips-label">By Prefecture</div>
+    <div class="chips">
+      <a class="chip active" href="#">All</a>
+      <a class="chip" href="#"><span class="dot"></span>Ishikawa</a>
+      <a class="chip" href="#"><span class="dot"></span>Tokyo</a>
+      <a class="chip" href="#"><span class="dot"></span>Niigata</a>
+      <a class="chip" href="#"><span class="dot"></span>Toyama</a>
+      <a class="chip" href="#"><span class="dot"></span>Fukui</a>
+      <a class="chip dim" href="#">Hyōgo</a>
+      <a class="chip dim" href="#">Yamagata</a>
+      <a class="chip dim" href="#">Akita</a>
+    </div>
+  </div>
+
+  <!-- Type chips -->
+  <div class="chips-wrap chips-row2">
+    <div class="chips-label">By Type</div>
+    <div class="chips">
+      <a class="chip active" href="#">All</a>
+      <a class="chip" href="#">Bars</a>
+      <a class="chip" href="#">Restaurants</a>
+      <a class="chip" href="#">Breweries</a>
+      <a class="chip" href="#">Sake Shops</a>
+      <a class="chip" href="#">Tasting Rooms</a>
+    </div>
+  </div>
+
+  <div class="count-line">
+    <div class="count-num">14 places</div>
+    <a class="count-sort" href="#">Recently saved <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+  </div>
+
+  <div class="places">
+
+    <a class="p-row" href="sakeyo_article_shushu_v2.html">
+      <div class="p-thumb"><img src="images/Kanazawa_Shu_Shu.jpeg" alt="Shu Shu" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="p-info">
+        <div class="p-cat">Sake Bar · Ishikawa</div>
+        <div class="p-name">Kanazawa Shu Shu</div>
+        <div class="p-meta"><span>Oyamamachi, Kanazawa</span><span class="dot"></span><span>Booking via FB</span></div>
+        <div class="p-src">From <strong>Kanazawa Shu Shu</strong> by Brad Brown</div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+    <a class="p-row" href="#">
+      <div class="p-thumb"><img src="images/okagesan_2.jpeg" alt="Okagesan" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="p-info">
+        <div class="p-cat">Izakaya · Tokyo</div>
+        <div class="p-name">Okagesan</div>
+        <div class="p-meta"><span>Yotsuya</span><span class="dot"></span><span>Reservation only</span><span class="dot"></span><span>¥¥¥</span></div>
+        <div class="p-src">From <strong>Okagesan kept the Michelin star</strong></div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+    <a class="p-row" href="#">
+      <div class="p-thumb"><img src="images/sushi_kinari.jpeg" alt="Sushi Kinari" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="p-info">
+        <div class="p-cat">Sushi · Ishikawa</div>
+        <div class="p-name">Sushi Kinari</div>
+        <div class="p-meta"><span>Korinbo, Kanazawa</span><span class="dot"></span><span>Reservation only</span></div>
+        <div class="p-src">From <strong>24 hours in Kanazawa</strong></div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+    <a class="p-row" href="#">
+      <div class="p-thumb"><img src="images/shizenha_kagura.jpeg" alt="Shizenha Kagura" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="p-info">
+        <div class="p-cat">Ramen · Ishikawa</div>
+        <div class="p-name">Shizenha Kagura</div>
+        <div class="p-meta"><span>Kanazawa Station</span><span class="dot"></span><span>Bib Gourmand</span></div>
+        <div class="p-src">From <strong>24 hours in Kanazawa</strong></div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+    <a class="p-row" href="#">
+      <div class="p-thumb"><img src="images/noguchi_naohiko.jpeg" alt="Noguchi Naohiko" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="p-info">
+        <div class="p-cat">Tasting Room · Ishikawa</div>
+        <div class="p-name">Noguchi Naohiko Tasting Booth</div>
+        <div class="p-meta"><span>Kanazawa Station</span><span class="dot"></span><span>Walk-in</span></div>
+        <div class="p-src">From <strong>24 hours in Kanazawa</strong></div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+    <a class="p-row" href="#">
+      <div class="p-thumb"><img src="images/tedorigawa.png" alt="Tedorigawa Brewery" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="p-info">
+        <div class="p-cat">Brewery · Ishikawa</div>
+        <div class="p-name">Tedorigawa Brewery</div>
+        <div class="p-meta"><span>Hakusan</span><span class="dot"></span><span>Tours by appt.</span></div>
+        <div class="p-src">From <strong>The Birth of Saké</strong> film notes</div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+    <a class="p-row" href="#">
+      <div class="p-thumb"><img src="images/hasegawa.jpeg" alt="Hasegawa Saketen" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="p-info">
+        <div class="p-cat">Sake Shop · Tokyo</div>
+        <div class="p-name">Hasegawa Saketen</div>
+        <div class="p-meta"><span>Tokyo Station GranSta</span><span class="dot"></span><span>Tasting available</span></div>
+        <div class="p-src">From <strong>Tokyo's best bottle shops</strong></div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+    <a class="p-row" href="#">
+      <div class="p-thumb"><img src="images/kuri.jpg" alt="Kuri" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="p-info">
+        <div class="p-cat">Sake Bar · Tokyo</div>
+        <div class="p-name">Kuri</div>
+        <div class="p-meta"><span>Ginza</span><span class="dot"></span><span>Counter, 12 seats</span></div>
+        <div class="p-src">From <strong>Ginza after 9</strong></div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+    <a class="p-row" href="#">
+      <div class="p-thumb">[ FUKU ]</div>
+      <div class="p-info">
+        <div class="p-cat">Brewery · Ishikawa</div>
+        <div class="p-name">Fukumitsuya</div>
+        <div class="p-meta"><span>Kanazawa</span><span class="dot"></span><span>Founded 1625</span></div>
+        <div class="p-src">From <strong>Kanazawa's oldest kura</strong></div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+    <a class="p-row" href="#">
+      <div class="p-thumb"><img src="images/ponshukan.jpeg" alt="Ponshukan" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="p-info">
+        <div class="p-cat">Tasting Room · Niigata</div>
+        <div class="p-name">Ponshukan</div>
+        <div class="p-meta"><span>Echigo-Yuzawa Station</span><span class="dot"></span><span>¥500 / 5 cups</span></div>
+        <div class="p-src">From <strong>The Niigata sake corridor</strong></div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+    <a class="p-row" href="#">
+      <div class="p-thumb"><img src="images/iso_kiln.jpeg" alt="Iso Kiln" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="p-info">
+        <div class="p-cat">Pottery · Fukui</div>
+        <div class="p-name">Iso Kiln</div>
+        <div class="p-meta"><span>Echizen, Fukui</span><span class="dot"></span><span>Studio visits</span></div>
+        <div class="p-src">From <strong>Vessels for sake</strong></div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+    <a class="p-row" href="#">
+      <div class="p-thumb"><img src="images/masuda.jpg" alt="Masuda Sake Brewing" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="p-info">
+        <div class="p-cat">Brewery · Toyama</div>
+        <div class="p-name">Masuda Sake Brewing</div>
+        <div class="p-meta"><span>Toyama City</span><span class="dot"></span><span>Tours Sat only</span></div>
+        <div class="p-src">From <strong>Masuizumi: a kura with three kinds of water</strong></div>
+      </div>
+      <button class="p-saved" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </a>
+
+  </div>
+
+  <div class="tail">14 places · sorted by recently saved</div>
+
+  <nav class="nav">
+    <div class="nav-grid">
+      <a class="nav-item" href="sakeyo_home_v2.html"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9v9a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+      <a class="nav-item" href="#"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Search</span></a>
+      <div class="fab-wrap">
+        <a class="fab" href="sake-detail-v6a-type-dash.html" aria-label="Scan">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3l1.5-2h9L18 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg>
+        </a>
+      </div>
+      <a class="nav-item active" href="sakeyo_explore_v2d.html"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg><span>Explore</span></a>
+      <a class="nav-item" href="sakeyo_profile_v5.html"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><span>Profile</span></a>
+    </div>
+  </nav>
+
+</div>
+</div>
+</body></html>

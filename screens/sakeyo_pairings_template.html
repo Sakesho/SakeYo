@@ -79,7 +79,7 @@ body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-cont
   </div>
 
   <header class="header">
-    <a class="hdr-back" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+    <a class="hdr-back" href="sakeyo_explore_v2d.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
     <div class="wordmark">SAKE<span>YŌ</span></div>
     <div class="hdr-spacer"></div>
   </header>
@@ -162,9 +162,9 @@ body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-cont
 <!--PROTO-NAV-->
 <script>
 (function(){
-  var R={"nav": {"home": "sakeyo_home_v2.html", "explore": "sakeyo_explore_v2d.html", "profile": "sakeyo_profile_v5.html"}, "first": "sake-detail-v6a-type-dash.html", "backTo": "sakeyo_101_hub_v1.html"};
+  var R={"nav": {"home": "sakeyo_home_v2.html", "explore": "sakeyo_explore_v2d.html", "profile": "sakeyo_profile_v5.html"}, "first": "sake-detail-v6a-type-dash.html"};
   function go(s){try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-go',screen:s},'*');return;}}catch(e){}location.href=s;}
-  function back(){if(R.backTo){go(R.backTo);return;}try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-back'},'*');return;}}catch(e){}history.back();}
+  function back(){if(R.backTo){go(R.backTo);return;}try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-back'},'*');return;}}catch(e){}if(history.length>1){history.back();}else{go('sakeyo_explore_v2d.html');}}
   function txt(el){return ((el.textContent||'')+' '+(el.getAttribute&&el.getAttribute('aria-label')||'')).toLowerCase().trim();}
   function match(s,dict){for(var k in dict){if(s.indexOf(k)!==-1)return dict[k];}return null;}
   var firstFeat=null;

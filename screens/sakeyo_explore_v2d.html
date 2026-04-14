@@ -264,7 +264,7 @@ body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-cont
 <!--PROTO-NAV-->
 <script>
 (function(){
-  var R={"nav": {"home": "sakeyo_home_v2.html", "explore": "sakeyo_explore_v2d.html", "profile": "sakeyo_profile_v5.html"}, "text": {"sake 101": "sakeyo_101_hub_v1.html", "brewer": "sakeyo_breweries_v2.html", "craft": "sakeyo_craft_v1.html", "table": "sakeyo_table.html", "pairing": "sakeyo_pairings_template.html", "season": "sakeyo_seasons_v1-2.html", "local": "sakeyo_local_v1.html", "japan": "sakeyo_101_hub_v1.html"}};
+  var R={"nav": {"home": "sakeyo_home_v2.html", "explore": "sakeyo_explore_v2d.html", "profile": "sakeyo_profile_v5.html"}, "text": {"sake 101": "sakeyo_101_hub_v1.html", "brewer": "sakeyo_breweries_v2.html", "craft": "sakeyo_craft_v1.html", "table": "sakeyo_table.html", "pairing": "sakeyo_pairings_template.html", "season": "sakeyo_seasons_v1-2.html", "local": "sakeyo_local_v1.html", "japan": "sakeyo_japan_template-4.html"}};
   function go(s){try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-go',screen:s},'*');return;}}catch(e){}location.href=s;}
   function back(){if(R.backTo){go(R.backTo);return;}try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-back'},'*');return;}}catch(e){}history.back();}
   function txt(el){return ((el.textContent||'')+' '+(el.getAttribute&&el.getAttribute('aria-label')||'')).toLowerCase().trim();}

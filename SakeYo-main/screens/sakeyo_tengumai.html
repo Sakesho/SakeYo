@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SakeYō · Tengumai Yamahai Junmai</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#101820; --black-deep:#0a1016; --charcoal:#2C2C2C;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD;
+  --gray:#A0A0A0; --text-mute:#5F5E5A;
+  --sage:#2D6B4F;
+  --hairline:rgba(16,24,32,0.08); --hairline-strong:rgba(16,24,32,0.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-content:center;gap:30px;padding:40px 0;color:var(--black);flex-wrap:wrap}
+.caption{position:fixed;top:6px;left:12px;color:#888;font-size:10px;letter-spacing:.04em;z-index:100}
+.phone-wrap{position:relative}
+.device{width:436px;background:#0a0a0a;border-radius:56px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;position:relative}
+.phone{width:412px;background:var(--cream);position:relative;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;border-radius:46px;height:896px}
+.notch{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#0a0a0a;border-radius:18px;z-index:50}
+.statusbar{background:var(--black);padding:18px 32px 8px;display:flex;align-items:center;justify-content:space-between;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;letter-spacing:-.01em}
+.statusbar .icons{display:flex;align-items:center;gap:6px}
+.statusbar .icons svg{display:block}
+
+.header{background:var(--black);padding:10px 20px 18px;display:flex;align-items:center;justify-content:space-between;}
+.label{position:absolute;top:-22px;left:0;color:#aaa;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+
+/* HEADER */
+.hdr-back{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.75);text-decoration:none;font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase;width:64px}
+.hdr-back svg{width:14px;height:14px}
+.wordmark{font-weight:700;font-size:13px;letter-spacing:.22em;color:#fff}
+.wordmark span{color:var(--crimson)}
+.hdr-action{width:64px;display:flex;justify-content:flex-end;color:rgba(255,255,255,.85)}
+.hdr-action svg{width:20px;height:20px;stroke-width:1.8}
+
+/* MASTHEAD (list view) */
+.masthead{background:var(--black);padding:18px 28px 32px;color:#fff}
+.mast-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.mast-overline{font-weight:600;font-size:10px;letter-spacing:.22em;color:var(--crimson);text-transform:uppercase}
+.mast-meta{font-size:12px;color:rgba(255,255,255,.55);font-weight:500;letter-spacing:.02em}
+.mast-meta:has(★),.detail-hero .mast-meta{color:var(--crimson);font-size:14px;letter-spacing:1px}
+.mast-sub{font-family:'Source Serif 4',serif;font-style:italic;font-size:15px;line-height:1.5;color:rgba(255,255,255,.7);max-width:340px;margin-bottom:0}
+
+.stats{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.12);margin-top:28px;padding-top:22px}
+.stat{flex:1;text-align:center;padding:0}
+.mast-title{font-family:'Inter',sans-serif;font-weight:700;font-size:32px;line-height:1.08;letter-spacing:-.02em;margin-bottom:8px;color:#fff}
+
+.stat-num{font-family:'Inter',sans-serif;font-weight:700;font-size:26px;line-height:1;letter-spacing:-.02em;color:#fff;margin-bottom:6px}
+.stat-lbl{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500}
+
+/* FILTER BAR */
+.filter-bar{padding:18px 24px 6px;display:flex;gap:8px;overflow-x:auto;background:var(--cream);position:sticky;top:0;z-index:10;border-bottom:1px solid var(--hairline)}
+.filter-bar::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:7px 14px;border-radius:100px;border:1px solid var(--hairline-strong);background:transparent;font-size:12px;font-weight:500;color:var(--text-mute);letter-spacing:.01em;cursor:pointer;display:flex;align-items:center;gap:5px}
+.chip.active{background:var(--black);color:#fff;border-color:var(--black)}
+.chip svg{width:11px;height:11px}
+
+.sort-row{padding:14px 24px 6px;display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute);font-weight:600}
+.sort-row .sort{display:flex;align-items:center;gap:5px;color:var(--black)}
+.sort-row .sort svg{width:12px;height:12px}
+
+/* MONTH HEADER */
+.month{padding:32px 24px 14px;display:flex;align-items:baseline;gap:14px}
+.month-name{font-family:'Inter',sans-serif;font-weight:600;font-size:11px;letter-spacing:.18em;color:var(--charcoal);text-transform:uppercase}
+.month-rule{flex:1;height:1px;background:var(--hairline)}
+.month-count{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);font-weight:600}
+
+/* DIARY ENTRIES */
+.entries{padding:0 24px;display:flex;flex-direction:column;gap:16px}
+.entry{display:flex;gap:16px;text-decoration:none;color:inherit;padding:18px;background:#fff;border-radius:2px;box-shadow:0 1px 2px rgba(16,24,32,0.04)}
+.entry-img{width:84px;height:120px;object-fit:contain;flex-shrink:0;background:transparent;display:flex;align-items:center;justify-content:center}
+.entry-img img{width:100%;height:100%;object-fit:contain;display:block}
+.entry-body{flex:1;min-width:0}
+.entry-overline{font-weight:600;font-size:10px;letter-spacing:.16em;color:var(--crimson);text-transform:uppercase;margin-bottom:6px}
+.entry-name{font-family:'Inter',sans-serif;font-weight:700;font-size:18px;line-height:1.22;letter-spacing:-.015em;margin-bottom:4px}
+.entry-brewery{font-family:'Inter',sans-serif;font-size:13px;color:var(--text-mute);margin-bottom:10px}
+.entry-note{font-family:'Source Serif 4',serif;font-size:13.5px;line-height:1.5;color:var(--charcoal);margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.entry-note.empty{color:var(--gray);font-style:italic}
+.entry-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--gray);letter-spacing:.02em}
+.entry-meta .sep{width:3px;height:3px;border-radius:50%;background:var(--gray)}
+.entry-stars{color:var(--crimson);letter-spacing:1px;font-size:11px}
+.entry-stars .off{color:var(--hairline-strong)}
+
+/* TAIL & NAV */
+.tail{padding:48px 24px 110px;text-align:center}
+.tail-line{font-family:'Source Serif 4',serif;font-style:italic;font-size:14px;color:var(--text-mute);margin-bottom:18px}
+.tail-cta{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--black);color:#fff;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.tail-cta svg{width:14px;height:14px}
+
+.nav{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--hairline);display:flex;justify-content:space-around;align-items:center;padding:12px 0 18px;height:78px}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--charcoal);text-decoration:none;font-size:12px;font-weight:400;flex:1}
+.nav-item svg{width:24px;height:24px;stroke-width:1.6}
+.nav-item.active{color:var(--crimson);font-weight:600}
+.nav-item.active svg{fill:var(--crimson);stroke:var(--crimson)}
+.nav-fab{flex:1;display:flex;justify-content:center;align-items:center;position:relative}
+.nav-fab a{width:60px;height:60px;border-radius:50%;background:var(--crimson);display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;box-shadow:0 6px 16px rgba(155,27,27,.35);margin-top:-18px;border:4px solid #fff}
+.nav-fab a svg{width:26px;height:26px;stroke-width:1.8}
+
+/* ============= ENTRY DETAIL ============= */
+.detail-hero{background:var(--black);padding:24px 28px 36px;color:#fff;position:relative}
+.detail-overline{font-weight:600;font-size:10px;letter-spacing:.22em;color:var(--crimson);text-transform:uppercase;margin-bottom:18px}
+.detail-name{font-family:'Inter',sans-serif;font-weight:700;font-size:28px;line-height:1.1;letter-spacing:-.02em;margin-bottom:6px;color:#fff}
+.detail-brewery{font-family:'Inter',sans-serif;font-size:14px;color:rgba(255,255,255,.65);margin-bottom:24px}
+
+.detail-bottle-row{display:flex;gap:20px;align-items:flex-end;margin-top:20px}
+.detail-bottle{width:96px;height:140px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:transparent}
+.detail-bottle img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 4px 12px rgba(0,0,0,.4))}
+.detail-context{flex:1;padding-bottom:6px}
+.context-line{font-family:'Source Serif 4',serif;font-size:13px;line-height:1.55;color:rgba(255,255,255,.85)}
+.context-line + .context-line{margin-top:4px}
+.context-line .key{color:rgba(255,255,255,.5);font-style:italic;margin-right:6px}
+
+/* RATING ROW (personal sort) */
+.rating-row{padding:24px 28px;background:var(--cream);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--hairline)}
+.rating-lbl{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute);font-weight:600}
+.stars-big{display:flex;gap:4px;color:var(--crimson);font-size:22px;letter-spacing:2px}
+.stars-big .off{color:var(--hairline-strong)}
+
+/* SECTION */
+.sec{padding:30px 28px;border-bottom:1px solid var(--hairline)}
+.sec-head{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.sec-head:after{content:"";flex:1;height:1px;background:var(--hairline)}
+
+.notes-body{font-family:'Source Serif 4',serif;font-size:16px;line-height:1.6;color:var(--charcoal);font-style:italic}
+.notes-body.empty{color:var(--gray)}
+
+/* CHIPS — style taxonomy */
+.taxonomy{display:flex;flex-wrap:wrap;gap:7px}
+.tax{padding:6px 12px;border-radius:100px;border:1px solid var(--hairline-strong);font-size:11.5px;font-weight:500;color:var(--text-mute);letter-spacing:.01em;background:transparent;cursor:pointer}
+.tax.on{background:var(--black);color:#fff;border-color:var(--black)}
+
+/* MATCH RESPONSE */
+.match-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.match{padding:14px 12px;border:1px solid var(--hairline-strong);background:transparent;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px}
+.match.on{border-color:var(--crimson);background:rgba(155,27,27,.04)}
+.match-t{font-family:'Source Serif 4',serif;font-weight:600;font-size:14px;color:var(--black)}
+.match.on .match-t{color:var(--crimson)}
+.match-d{font-size:11px;color:var(--text-mute);font-style:italic;font-family:'Source Serif 4',serif}
+
+/* CONTEXT FIELDS GRID */
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:24px 20px}
+.field-key{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);font-weight:600;margin-bottom:6px}
+.field-val{font-family:'Source Serif 4',serif;font-size:14px;color:var(--black);line-height:1.4}
+.field-val.muted{color:var(--gray);font-style:italic}
+
+/* VESSEL SELECTOR */
+.vessels{display:flex;gap:6px;margin-top:4px}
+.vessel{flex:1;aspect-ratio:1/1.15;border:1px solid var(--hairline-strong);background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;padding:10px 6px}
+.vessel.on{border-color:var(--crimson);background:rgba(155,27,27,.04)}
+.vessel svg{width:38px;height:42px;color:var(--charcoal);stroke:currentColor;fill:none;stroke-width:1.4;stroke-linejoin:round}
+.vessel.on svg{color:var(--crimson)}
+.vessel-lbl{font-size:10px;letter-spacing:.04em;color:var(--text-mute);text-align:center;line-height:1.2;font-weight:500}
+.vessel.on .vessel-lbl{color:var(--crimson);font-weight:600}
+.vessel-jp{font-family:'Source Serif 4',serif;font-style:italic;font-size:10px;color:var(--gray);margin-top:1px}
+
+/* TECHNICAL DETAILS — accordion */
+.tech{padding:0 28px 0;border-bottom:1px solid var(--hairline)}
+.tech .sec-head{margin-bottom:0;padding:30px 0 14px}
+.accordion{border-top:1px solid var(--hairline)}
+.accordion details{border-bottom:1px solid var(--hairline)}
+.accordion summary{display:flex;align-items:center;justify-content:space-between;padding:16px 0;cursor:pointer;list-style:none;font-weight:600;font-size:13px;letter-spacing:-.005em;color:var(--black)}
+.accordion summary::-webkit-details-marker{display:none}
+.accordion summary::after{content:'';width:10px;height:10px;border-right:2px solid var(--text-mute);border-bottom:2px solid var(--text-mute);transform:rotate(45deg);transition:transform .2s;flex-shrink:0;margin-left:12px}
+.accordion details[open] summary::after{transform:rotate(-135deg)}
+.accordion .detail-rows{padding:0 0 18px}
+.detail-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--hairline)}
+.detail-row:last-child{border-bottom:none}
+.detail-row .dk{font-size:12px;color:var(--text-mute);font-weight:500}
+.detail-row .dv{font-family:'Source Serif 4',serif;font-size:13px;color:var(--black);text-align:right}
+.detail-row .dv.muted{color:var(--gray);font-style:italic}
+
+/* ACTIONS */
+.actions{padding:24px 28px 36px;display:flex;flex-direction:column;gap:10px}
+.btn{padding:14px;text-align:center;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none}
+.btn-primary{background:var(--black);color:#fff}
+.btn-secondary{background:transparent;color:var(--black);border:1px solid var(--hairline-strong)}
+.btn-danger{background:transparent;color:var(--crimson);border:1px solid rgba(155,27,27,.3);margin-top:10px}
+
+/* Header icons — alerts & settings */
+.hdr-icons{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,.85);display:flex;align-items:center;text-decoration:none}
+.hdr-icon svg{width:20px;height:20px}
+.hdr-icon .badge{position:absolute;top:-2px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+.phone::-webkit-scrollbar{display:none}
+.sticky-top{position:sticky;top:0;z-index:30}
+</style>
+</head><body>
+
+<!-- ============ ENTRY DETAIL ============ -->
+<div class="phone-wrap">
+  <div class="device">
+  <div class="notch"></div>
+  <div class="phone">
+  <div class="sticky-top">
+
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="icons">
+        <svg width="18" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5"/><rect x="5" y="5" width="3" height="6" rx="0.5"/><rect x="10" y="2" width="3" height="9" rx="0.5"/><rect x="15" y="0" width="3" height="11" rx="0.5"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4.2 A11 11 0 0 1 15 4.2" stroke-linecap="round"/><path d="M3.5 6.4 A7.5 7.5 0 0 1 12.5 6.4" stroke-linecap="round"/><path d="M6 8.6 A4 4 0 0 1 10 8.6" stroke-linecap="round"/><circle cx="8" cy="10" r="0.8" fill="currentColor" stroke="none"/></svg>
+        <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x="0.5" y="0.5" width="22" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.6"/><rect x="2" y="2" width="19" height="8" rx="1.2" fill="currentColor"/><rect x="23.5" y="4" width="1.5" height="4" rx="0.6" fill="currentColor" fill-opacity="0.6"/></svg>
+      </div>
+
+  <header class="header">
+      <a class="hdr-back" href="sakeyo_diary_v1.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+      <div class="wordmark">SAKE<span>YŌ</span></div>
+      <div class="hdr-icons"><a class="hdr-icon" href="sakeyo_alerts_v1.html" aria-label="Alerts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a><a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a></div>
+    </header>
+  </div>
+
+    <section class="detail-hero">
+      <div class="mast-top" style="margin-bottom:16px">
+        <div class="mast-overline">Bottle · Apr 11, 2026</div>
+      </div>
+      <h1 class="detail-name">Tengumai Yamahai Junmai</h1>
+      <div class="detail-brewery">Shata Shuzō · Ishikawa</div>
+
+      <div class="detail-bottle-row">
+        <div class="detail-bottle"><img src="images/sakeyo_diary_v1_29.png" alt="Tengumai Junmai Yamahai"></div>
+        <div class="detail-context">
+          <div class="context-line"><span class="key">at</span>Kanazawa Shu Shu</div>
+          <div class="context-line"><span class="key">with</span>Iburigako, oden</div>
+          <div class="context-line"><span class="key">served</span>Warm (nurukan)</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rating-row">
+      <div class="rating-lbl">My rating</div>
+      <div class="stars-big">★★★★★</div>
+    </div>
+
+    <section class="sec">
+      <div class="sec-head">Notes</div>
+      <p class="notes-body">Ordered on Yamagami's recommendation — he poured it warm and pushed the iburigako across the counter without asking. Heavier than I expected. Earthy, almost savory on the finish. The kind of bottle I'd come back for.</p>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head">Style</div>
+      <div class="taxonomy">
+        <button class="tax on">Heavy</button>
+        <button class="tax on">Rich</button>
+        <button class="tax on">Aged</button>
+        <button class="tax">Fruity</button>
+        <button class="tax">Dry</button>
+        <button class="tax">Fresh</button>
+        <button class="tax">Sour</button>
+        <button class="tax">Light</button>
+        <button class="tax">Sweet</button>
+        <button class="tax">Clean</button>
+        <button class="tax">Mellow</button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head">For your taste profile</div>
+      <div class="match-grid">
+        <button class="match on">
+          <span class="match-t">Loved it</span>
+          <span class="match-d">More like this</span>
+        </button>
+        <button class="match">
+          <span class="match-t">Liked it</span>
+          <span class="match-d">Worth another</span>
+        </button>
+        <button class="match">
+          <span class="match-t">Curious</span>
+          <span class="match-d">Need to taste again</span>
+        </button>
+        <button class="match">
+          <span class="match-t">Not for me</span>
+          <span class="match-d">Less like this</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head">Vessel</div>
+      <div class="vessels">
+        <button class="vessel">
+          <svg viewBox="0 0 40 44"><path d="M6 16 Q20 10 34 16 Q32 26 28 30 L12 30 Q8 26 6 16 Z"/><path d="M16 30 L16 34 L24 34 L24 30"/></svg>
+          <div class="vessel-lbl">Hiragata<div class="vessel-jp">平形</div></div>
+        </button>
+        <button class="vessel on">
+          <svg viewBox="0 0 40 44"><path d="M8 12 Q20 8 32 12 Q30 24 26 32 L14 32 Q10 24 8 12 Z"/><path d="M16 32 L16 36 L24 36 L24 32"/></svg>
+          <div class="vessel-lbl">Sugi-nari<div class="vessel-jp">杉形</div></div>
+        </button>
+        <button class="vessel">
+          <svg viewBox="0 0 40 44"><path d="M11 10 Q11 8 14 8 L26 8 Q29 8 29 10 L29 34 Q29 36 26 36 L14 36 Q11 36 11 34 Z"/><path d="M15 36 L15 39 L25 39 L25 36"/></svg>
+          <div class="vessel-lbl">Tsutsu-gata<div class="vessel-jp">筒型</div></div>
+        </button>
+        <button class="vessel">
+          <svg viewBox="0 0 40 44"><path d="M10 6 Q10 18 20 22 Q30 18 30 6 Z"/><path d="M20 22 L20 36"/><path d="M13 38 L27 38"/></svg>
+          <div class="vessel-lbl">Wine glass<div class="vessel-jp">&nbsp;</div></div>
+        </button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head">Bottle details</div>
+      <div class="fields">
+        <div>
+          <div class="field-key">Date</div>
+          <div class="field-val">Apr 11, 2026</div>
+        </div>
+        <div>
+          <div class="field-key">Where</div>
+          <div class="field-val">Kanazawa Shu Shu</div>
+        </div>
+        <div>
+          <div class="field-key">Served</div>
+          <div class="field-val">Warm · Nurukan</div>
+        </div>
+        <div>
+          <div class="field-key">Occasion</div>
+          <div class="field-val muted">— Add</div>
+        </div>
+        <div>
+          <div class="field-key">With</div>
+          <div class="field-val">Iburigako, oden</div>
+        </div>
+        <div>
+          <div class="field-key">Price</div>
+          <div class="field-val muted">— Add</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tech">
+      <div class="sec-head">Technical Details</div>
+      <div class="accordion">
+
+        <details>
+          <summary>Technical Details</summary>
+          <div class="detail-rows">
+            <div class="detail-row"><span class="dk">Rice Polishing Ratio</span><span class="dv">60%</span></div>
+            <div class="detail-row"><span class="dk">Alcohol %</span><span class="dv">15.5%</span></div>
+            <div class="detail-row"><span class="dk">SMV (Sake Meter Value)</span><span class="dv">+3</span></div>
+            <div class="detail-row"><span class="dk">Acidity Value</span><span class="dv">1.8</span></div>
+            <div class="detail-row"><span class="dk">Amino Acid Value</span><span class="dv">1.6</span></div>
+            <div class="detail-row"><span class="dk">Vintage</span><span class="dv muted">— n/a</span></div>
+          </div>
+        </details>
+
+        <details>
+          <summary>Ingredients</summary>
+          <div class="detail-rows">
+            <div class="detail-row"><span class="dk">Rice Type</span><span class="dv">Gohyakumangoku</span></div>
+            <div class="detail-row"><span class="dk">Yeast</span><span class="dv">Kanazawa KZ-14</span></div>
+            <div class="detail-row"><span class="dk">Koji</span><span class="dv">Yellow (Ki-koji)</span></div>
+          </div>
+        </details>
+
+        <details>
+          <summary>Brewing Techniques</summary>
+          <div class="detail-rows">
+            <div class="detail-row"><span class="dk">Starter</span><span class="dv">Yamahai</span></div>
+            <div class="detail-row"><span class="dk">Pasteurization</span><span class="dv">Once (Nama-chozo)</span></div>
+            <div class="detail-row"><span class="dk">Press</span><span class="dv">Yabuta</span></div>
+            <div class="detail-row"><span class="dk">Fraction</span><span class="dv">Nakadori</span></div>
+            <div class="detail-row"><span class="dk">Muroka</span><span class="dv">No (charcoal filtered)</span></div>
+            <div class="detail-row"><span class="dk">Genshu</span><span class="dv">No (water added)</span></div>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <div class="actions">
+      <a class="btn btn-secondary" href="#">Add to Cellar</a>
+      <a class="btn btn-danger" href="#">Delete entry</a>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-item" href="sakeyo_home_v2.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10a2 2 0 0 1-2 2h-4v-7h-6v7H5a2 2 0 0 1-2-2z"/></svg><span>Home</span></a>
+      <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Search</span></a>
+      <div class="nav-fab"><a href="sake-detail-v6a-type-dash.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+      <a class="nav-item" href="sakeyo_explore_v2d.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg><span>Menu Scan</span></a>
+      <a class="nav-item" href="sakeyo_profile_v5.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><span>Profile</span></a>
+    </nav>
+
+  </div>
+  </div>
+</div>
+
+</body></html>

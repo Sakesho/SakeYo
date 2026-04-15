@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SakeYō · Event Detail</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#101820; --charcoal:#2C2C2C;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB;
+  --gray:#A0A0A0; --text-mute:#5F5E5A;
+  --sage:#2D6B4F;
+  --hairline:rgba(16,24,32,0.08); --hairline-strong:rgba(16,24,32,0.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-content:center;padding:40px 0;color:var(--black)}
+.device{width:436px;background:#0a0a0a;border-radius:56px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset}
+.phone{width:412px;background:var(--cream);overflow-y:auto;overflow-x:hidden;scrollbar-width:none;border-radius:46px;height:896px;position:relative}
+.notch{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#0a0a0a;border-radius:18px;z-index:50}
+
+.statusbar{background:var(--black);padding:18px 32px 8px;display:flex;align-items:center;justify-content:space-between;color:#fff;font-weight:600;font-size:14px;letter-spacing:-.01em}
+.statusbar .icons{display:flex;gap:6px;align-items:center}
+.header{background:var(--black);padding:10px 20px 14px;display:flex;align-items:center;justify-content:space-between;}
+.hdr-back{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.75);text-decoration:none;font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase;width:64px}
+.hdr-back svg{width:14px;height:14px}
+.wordmark{font-weight:700;font-size:13px;letter-spacing:.22em;color:#fff}
+.wordmark span{color:var(--crimson)}
+.hdr-action{width:64px;display:flex;justify-content:flex-end;gap:14px;color:rgba(255,255,255,.85)}
+.hdr-action svg{width:20px;height:20px;stroke-width:1.8}
+
+/* GALLERY */
+.gallery{background:var(--black);padding:0;height:320px;overflow:hidden}
+.gallery .g{background:linear-gradient(135deg,#3a2a2a,#1a1a1a);border-radius:2px;overflow:hidden;position:relative}
+.gallery .g1{grid-row:1/3;background:url('images/sakeyo_event_detail_v1_33.jpg') center/cover no-repeat}
+.gallery .g2{background:linear-gradient(135deg,#2a3545,#101820)}
+.gallery .g3{background:linear-gradient(135deg,#5a2020,#2a0a0a)}
+.g-count{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:4px 8px;font-weight:500;letter-spacing:.06em}
+.g-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.25);font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+
+/* HERO */
+.hero{background:var(--black);padding:20px 28px 32px;color:#fff}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}
+.hero-over{font-weight:600;font-size:10px;letter-spacing:.22em;color:var(--crimson);text-transform:uppercase}
+.match-badge{padding:6px 10px;background:rgba(45,107,79,.18);border:1px solid var(--sage);color:#7fc5a3;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.hero-title{font-family:'Source Serif 4',serif;font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-.01em;margin-bottom:12px}
+.hero-lede{font-family:'Source Serif 4',serif;font-style:italic;font-size:15px;line-height:1.55;color:rgba(255,255,255,.78)}
+
+/* LOGISTICS STRIP */
+.logistics{background:var(--cream);padding:20px 28px;display:grid;grid-template-columns:repeat(2,1fr);gap:18px 12px;border-bottom:1px solid var(--hairline)}
+.log-item .log-lbl{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:5px}
+.log-item .log-val{font-size:14px;font-weight:600;color:var(--black)}
+.log-item .log-sub{font-size:12px;color:var(--text-mute);margin-top:2px}
+
+/* SECTIONS */
+.sec{padding:24px 24px 0}
+.sec:last-of-type{padding-bottom:0}
+.sec-head{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:12px;padding:0 4px}
+.sec-card{background:#fff;padding:22px 22px;border-radius:2px;box-shadow:0 1px 2px rgba(16,24,32,0.04)}
+
+.prose{font-family:'Source Serif 4',serif;font-size:16px;line-height:1.7;color:var(--charcoal)}
+.prose p + p{margin-top:14px}
+
+/* FLIGHT */
+.flight{display:flex;flex-direction:column;gap:0}
+.sake{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--hairline)}
+.sake:last-child{border-bottom:none}
+.sake-num{font-weight:700;font-size:11px;letter-spacing:.14em;color:var(--gray);width:34px;flex-shrink:0;padding-top:2px}
+.sake-body{flex:1}
+.sake-name{font-family:'Source Serif 4',serif;font-weight:700;font-size:17px;line-height:1.2;margin-bottom:3px}
+.sake-meta{font-size:12px;color:var(--text-mute);margin-bottom:6px}
+.sake-note{font-family:'Source Serif 4',serif;font-size:13.5px;line-height:1.5;color:var(--charcoal);font-style:italic}
+.sake-match{flex-shrink:0;font-weight:700;font-size:15px;color:var(--sage);padding-top:2px}
+
+/* HOST */
+.host{display:flex;gap:14px;align-items:flex-start}
+.host-avatar{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#3a2a24,#1a1210);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;font-family:'Source Serif 4',serif}
+.host-body{flex:1}
+.host-name{font-weight:700;font-size:16px;margin-bottom:2px}
+.host-role{font-size:12px;color:var(--text-mute);margin-bottom:8px}
+.host-bio{font-family:'Source Serif 4',serif;font-size:14px;line-height:1.55;color:var(--charcoal)}
+
+/* MARKETPLACE */
+.market{background:#fff;padding:18px;display:flex;gap:14px;align-items:center;margin:28px 28px 0;border-left:3px solid var(--crimson)}
+.market-body{flex:1}
+.market-over{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--crimson);font-weight:600;margin-bottom:4px}
+.market-txt{font-family:'Source Serif 4',serif;font-size:14px;line-height:1.45;color:var(--charcoal)}
+.market-arrow{color:var(--black)}
+
+/* STICKY CTA */
+.cta-bar{position:sticky;bottom:78px;background:#fff;border-top:1px solid var(--hairline);padding:14px 20px;display:flex;gap:10px;align-items:center;z-index:20}
+.cta-price{flex:1}
+.cta-price .p{font-weight:700;font-size:20px;letter-spacing:-.01em}
+.cta-price .s{font-size:11px;color:var(--crimson);font-weight:600;letter-spacing:.04em}
+.cta-save{padding:14px 16px;border:1px solid var(--hairline-strong);background:transparent;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--black);text-decoration:none;cursor:pointer}
+.cta-reserve{padding:14px 22px;background:var(--crimson);color:#fff;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+
+/* NAV */
+.nav{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--hairline);display:flex;justify-content:space-around;align-items:center;padding:12px 0 18px;height:78px}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--charcoal);text-decoration:none;font-size:12px;font-weight:400;flex:1}
+.nav-item svg{width:24px;height:24px;stroke-width:1.6}
+.nav-item.active{color:var(--crimson);font-weight:600}
+.nav-item.active svg{fill:var(--crimson);stroke:var(--crimson)}
+.nav-fab{flex:1;display:flex;justify-content:center;align-items:center}
+.nav-fab a{width:60px;height:60px;border-radius:50%;background:var(--crimson);display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;box-shadow:0 6px 16px rgba(155,27,27,.35);margin-top:-18px;border:4px solid #fff}
+.nav-fab a svg{width:26px;height:26px;stroke-width:1.8}
+
+/* Header icons — alerts & settings */
+.hdr-icons{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,.85);display:flex;align-items:center;text-decoration:none}
+.hdr-icon svg{width:20px;height:20px}
+.hdr-icon .badge{position:absolute;top:-2px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+.phone::-webkit-scrollbar{display:none}
+.sticky-top{position:sticky;top:0;z-index:30}
+</style>
+</head>
+<body>
+<div class="device"><div class="phone">
+  <div class="notch"></div>
+  <div class="sticky-top">
+
+  <div class="statusbar">
+    <span>9:41</span>
+    <div class="icons">
+      <svg width="18" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5"/><rect x="5" y="5" width="3" height="6" rx="0.5"/><rect x="10" y="2" width="3" height="9" rx="0.5"/><rect x="15" y="0" width="3" height="11" rx="0.5"/></svg>
+      <svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4.2 A11 11 0 0 1 15 4.2" stroke-linecap="round"/><path d="M3.5 6.4 A7.5 7.5 0 0 1 12.5 6.4" stroke-linecap="round"/><path d="M6 8.6 A4 4 0 0 1 10 8.6" stroke-linecap="round"/><circle cx="8" cy="10" r="0.8" fill="currentColor"/></svg>
+      <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x="0.5" y="0.5" width="22" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.6"/><rect x="2" y="2" width="19" height="8" rx="1.2" fill="currentColor"/><rect x="23.5" y="4" width="1.5" height="4" rx="0.6" fill="currentColor" fill-opacity="0.6"/></svg>
+    </div>
+
+  <header class="header">
+    <a class="hdr-back" href="sakeyo_calendar_v1.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+    <div class="wordmark">SAKE<span>YŌ</span></div>
+    <div class="hdr-icons"><a class="hdr-icon" href="sakeyo_alerts_v1.html" aria-label="Alerts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a><a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a></div>
+  </header>
+  </div>
+
+  <!-- IMAGE GALLERY -->
+  <div class="gallery">
+    <img src="images/sakeyo_event_detail_v1_33.jpg" alt="An Evening with Niigata Sake" style="width:100%;height:100%;object-fit:cover">
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-top">
+      <div class="hero-over">Tasting · Niigata</div>
+    </div>
+    <h1 class="hero-title">An Evening with<br>Niigata Sake</h1>
+    <p class="hero-lede">Five sake from snow-country breweries, paired with seasonal Japanese dishes. A structured walk through what makes Niigata sake taste like Niigata.</p>
+  </section>
+
+  <!-- LOGISTICS -->
+  <div class="logistics">
+    <div class="log-item"><div class="log-lbl">Date</div><div class="log-val">Sat, May 15</div><div class="log-sub">2026</div></div>
+    <div class="log-item"><div class="log-lbl">Time</div><div class="log-val">7:00 PM</div><div class="log-sub">~2½ hours</div></div>
+    <div class="log-item"><div class="log-lbl">Venue</div><div class="log-val">Hashida Sushi</div><div class="log-sub">Tanjong Pagar</div></div>
+    <div class="log-item"><div class="log-lbl">Seats</div><div class="log-val">3 remaining</div><div class="log-sub">of 16</div></div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="sec">
+    <div class="sec-head">About the Evening</div>
+    <div class="sec-card">
+      <div class="prose">
+        <p>Niigata makes more sake than any prefecture except Hyōgo. It also makes a particular <em>kind</em> of sake — clean, dry, mineral, shaped by snowmelt water and a colder, slower fermentation than most of Japan.</p>
+        <p>Five pours, light to heavy, with seasonal dishes from Hashida's counter alongside. Kenji locks in the final lineup the week of the event based on what's landed fresh — which is the whole point of drinking sake this way.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOST -->
+  <section class="sec">
+    <div class="sec-head">Your Host</div>
+    <div class="sec-card">
+      <div class="host">
+      <div class="host-avatar">K</div>
+      <div class="host-body">
+        <div class="host-name">Kenji Yamamoto</div>
+        <div class="host-role">Sake Sommelier · Former toji, Kikuhime</div>
+        <div class="host-bio">Eight years brewing at Kikuhime before moving to Singapore. Runs SakeYō's Niigata and Ishikawa programming. No unnecessary frills, just good sake and context for why it tastes the way it does.</div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKETPLACE TIE-IN -->
+  <div class="market">
+    <div class="market-body">
+      <div class="market-over">After the Event</div>
+      <div class="market-txt">Anything you tasted that you'd like to buy will be in the marketplace the next morning, with your updated match score attached.</div>
+    </div>
+    <div class="market-arrow">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </div>
+  </div>
+
+  <div style="height:40px"></div>
+
+  <!-- STICKY CTA -->
+  <div class="cta-bar">
+    <div class="cta-price">
+      <div class="p">$65</div>
+      <div class="s">Only 3 seats left</div>
+    </div>
+    <a class="cta-save" href="#">Save</a>
+    <a class="cta-reserve" href="#">Reserve</a>
+  </div>
+
+  <nav class="nav">
+    <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10a2 2 0 0 1-2 2h-4v-7h-6v7H5a2 2 0 0 1-2-2z"/></svg><span>Home</span></a>
+    <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Search</span></a>
+    <div class="nav-fab"><a href="sake-detail-v6a-type-dash.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+    <a class="nav-item active" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg><span>Calendar</span></a>
+    <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><span>Profile</span></a>
+  </nav>
+
+</div></div>
+
+
+
+
+<!--PROTO-NAV-->
+<script>
+(function(){
+  var R={"nav": {"home": "sakeyo_home_v2.html", "explore": "sakeyo_explore_v2d.html", "profile": "sakeyo_profile_v5.html"}};
+  function go(s){try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-go',screen:s},'*');return;}}catch(e){}location.href=s;}
+  function back(){if(R.backTo){go(R.backTo);return;}try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-back'},'*');return;}}catch(e){}history.back();}
+  function txt(el){return ((el.textContent||'')+' '+(el.getAttribute&&el.getAttribute('aria-label')||'')).toLowerCase().trim();}
+  function match(s,dict){for(var k in dict){if(s.indexOf(k)!==-1)return dict[k];}return null;}
+  var firstFeat=null;
+  if(R.first){var all=document.querySelectorAll('.feat, .article, .event, .cellar-card, .event-card, .note-card, .start, .piece, .sh, .shelf, .featured-article');if(all[0])firstFeat=all[0];}
+  document.addEventListener('click',function(e){
+    var el=e.target;
+    if(R.selectorGo){for(var sel in R.selectorGo){var hit=e.target.closest(sel);if(hit){e.preventDefault();e.stopPropagation();go(R.selectorGo[sel]);return;}}}
+    if(R.viewToggle){var vbtn=e.target.closest('[data-view]');if(vbtn){e.preventDefault();e.stopPropagation();var v=vbtn.getAttribute('data-view');if(R.viewToggle[v])go(R.viewToggle[v]);return;}}
+    while(el&&el!==document.body&&el.nodeType===1){
+      if(el.classList&&(el.classList.contains('hdr-back')||el.classList.contains('back'))){e.preventDefault();e.stopPropagation();back();return;}
+      if(el.classList&&el.classList.contains('nav-item')){var d=match(txt(el),R.nav||{});if(d){e.preventDefault();e.stopPropagation();go(d);return;}}
+      if(firstFeat&&(el===firstFeat||firstFeat.contains(el))){e.preventDefault();e.stopPropagation();go(R.first);return;}
+      if(R.textGo){var t=txt(el);if(t.length<200){var tg=match(t,R.textGo);if(tg){e.preventDefault();e.stopPropagation();go(tg);return;}}}
+      if(R.text){var t2=txt(el);if(t2.length<100){var d2=match(t2,R.text);if(d2){e.preventDefault();e.stopPropagation();go(d2);return;}}}
+      el=el.parentElement;
+    }
+  },true);
+})();
+</script>
+<!--/PROTO-NAV-->
+</body></html>

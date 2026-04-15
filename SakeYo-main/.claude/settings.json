@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -n '209,212p' \"/Users/bradbrown/Desktop/HTML Prototype/proto-web/SakeYo-main/screens/sakeyo_home_v2.html\")",
+      "Bash(sed -n '232,233p' \"/Users/bradbrown/Desktop/HTML Prototype/proto-web/SakeYo-main/screens/sakeyo_home_v2.html\")"
+    ]
+  }
+}

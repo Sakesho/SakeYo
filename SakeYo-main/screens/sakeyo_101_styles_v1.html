@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SakeYō · Groundwork v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#101820; --charcoal:#2C2C2C;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-2:#EDE7DF;
+  --gray:#A0A0A0; --text-mute:#5F5E5A;
+  --sage:#2D6B4F; --navy:#1A2E3D;
+  --hairline:rgba(16,24,32,0.08);
+  --hairline-strong:rgba(16,24,32,0.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-content:center;gap:30px;padding:56px 20px;color:var(--black);flex-wrap:wrap}
+.phone-wrap{position:relative}
+.label{position:absolute;top:-26px;left:4px;color:#aaa;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+.device{width:436px;background:#0a0a0a;border-radius:56px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset}
+.phone{width:412px;background:var(--cream);overflow-y:auto;overflow-x:hidden;scrollbar-width:none;border-radius:46px;height:896px;position:relative}
+.notch{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#0a0a0a;border-radius:18px;z-index:50}
+
+/* status + header (match reference) */
+.statusbar{background:var(--black);padding:18px 32px 8px;display:flex;align-items:center;justify-content:space-between;color:#fff;font-weight:600;font-size:14px}
+.statusbar .icons{display:flex;gap:6px}
+.header{background:var(--black);padding:10px 20px 18px;display:flex;align-items:center;justify-content:space-between;}
+.hdr-side{width:68px;display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.75);font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.hdr-side.right{justify-content:flex-end}
+.hdr-side svg{width:18px;height:18px;stroke-width:1.8}
+.wordmark{font-weight:700;font-size:13px;letter-spacing:.22em;color:#fff}
+.wordmark span{color:var(--crimson)}
+
+/* masthead */
+.masthead{background:var(--black);padding:14px 28px 30px;color:#fff}
+.mast-overline{font-weight:600;font-size:10px;letter-spacing:.22em;color:var(--crimson);text-transform:uppercase;margin-bottom:12px}
+.mast-title{font-family:'Source Serif 4',serif;font-weight:700;font-size:34px;line-height:1.05;letter-spacing:-.02em;margin-bottom:10px}
+.mast-sub{font-family:'Source Serif 4',serif;font-style:italic;font-size:15px;line-height:1.5;color:rgba(255,255,255,.68);max-width:340px}
+.mast-utils{display:flex;gap:8px;margin-top:22px}
+.util{flex:1;padding:12px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;display:flex;align-items:center;gap:10px}
+.util svg{width:16px;height:16px;stroke-width:1.8;color:#fff;opacity:.85}
+.util-lbl{font-size:11px;font-weight:600;letter-spacing:.04em;color:#fff}
+.util-cnt{font-size:10px;color:rgba(255,255,255,.5);margin-left:auto;font-weight:500}
+
+/* featured piece */
+.featured{margin:22px 24px 0;background:#fff;border-radius:3px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,32,0.05)}
+.feat-img{height:170px;background:url('images/sakeyo_101_styles_v1_bg_6.png') center/cover no-repeat;position:relative;display:flex;align-items:flex-end;padding:14px 16px}
+.feat-img::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 35%,rgba(184,132,60,.22),transparent 55%)}
+.feat-tag{position:relative;font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#fff;background:var(--crimson);padding:5px 9px;border-radius:2px}
+.feat-body{padding:20px 22px 22px}
+.feat-over{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--crimson);font-weight:600;margin-bottom:8px}
+.feat-ttl{font-family:'Source Serif 4',serif;font-weight:700;font-size:22px;line-height:1.2;letter-spacing:-.01em;margin-bottom:8px}
+.feat-dek{font-family:'Source Serif 4',serif;font-size:14px;line-height:1.55;color:var(--charcoal);margin-bottom:14px}
+.feat-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text-mute);font-weight:500}
+.feat-meta .dot{width:3px;height:3px;background:var(--gray);border-radius:50%}
+
+/* section heading */
+.sec-head{padding:32px 24px 12px;display:flex;justify-content:space-between;align-items:baseline}
+.sec-ttl{font-family:'Source Serif 4',serif;font-weight:700;font-size:20px;letter-spacing:-.01em}
+.sec-link{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute);font-weight:600}
+
+/* continue rail */
+.continue{margin:0 24px;background:#fff;border-left:3px solid var(--crimson);padding:16px 18px;border-radius:2px;box-shadow:0 1px 2px rgba(16,24,32,.04)}
+.cont-over{font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--crimson);margin-bottom:6px}
+.cont-ttl{font-family:'Source Serif 4',serif;font-weight:700;font-size:16px;line-height:1.25;margin-bottom:4px}
+.cont-sub{font-size:11px;color:var(--text-mute);font-weight:500}
+
+/* category grid */
+.cat-grid{padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cat{background:#fff;padding:18px 16px 16px;border-radius:3px;border:1px solid var(--hairline);position:relative;min-height:118px;display:flex;flex-direction:column;justify-content:space-between}
+.cat-ico{width:26px;height:26px;color:var(--crimson);margin-bottom:10px}
+.cat-ico svg{width:100%;height:100%;stroke-width:1.6;fill:none;stroke:currentColor}
+.cat-ttl{font-family:'Source Serif 4',serif;font-weight:700;font-size:17px;line-height:1.15;letter-spacing:-.01em;margin-bottom:6px}
+.cat-sub{font-size:11px;color:var(--text-mute);font-weight:500;line-height:1.4}
+.cat-cnt{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);font-weight:600;margin-top:10px}
+
+/* start-here rail */
+.rail-h{display:flex;gap:10px;padding:0 24px;overflow-x:auto;scrollbar-width:none}
+.rail-h::-webkit-scrollbar{display:none}
+.start-card{flex-shrink:0;width:220px;background:var(--black);color:#fff;padding:18px 16px 16px;border-radius:3px;display:flex;flex-direction:column;gap:8px}
+.start-num{font-family:'Source Serif 4',serif;font-weight:400;font-style:italic;font-size:13px;color:var(--crimson)}
+.start-ttl{font-family:'Source Serif 4',serif;font-weight:700;font-size:16px;line-height:1.25;flex:1}
+.start-meta{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
+
+/* editors note */
+.ednote{margin:32px 24px 0;padding:20px 22px;background:var(--cream-2);border-radius:3px}
+.ed-over{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:8px}
+.ed-body{font-family:'Source Serif 4',serif;font-style:italic;font-size:14px;line-height:1.6;color:var(--charcoal)}
+.ed-sig{font-size:11px;font-weight:600;margin-top:10px;color:var(--black)}
+
+/* bottom nav */
+.bottom-nav{position:absolute;bottom:0;left:0;right:0;background:#fff;padding:14px 0 28px;border-top:1px solid var(--hairline);display:flex;align-items:center;justify-content:space-around;position:sticky;bottom:0;z-index:20}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--charcoal);text-decoration:none;font-size:12px;font-weight:400;flex:1}
+.nav-item svg{width:24px;height:24px;stroke-width:1.6}
+.nav-item svg{fill:none;stroke:currentColor}
+.nav-item.active{color:var(--crimson);font-weight:600}
+.nav-item.active svg{stroke:var(--crimson)}
+.nav-fab{flex:1;display:flex;justify-content:center}
+.nav-fab a{width:60px;height:60px;border-radius:50%;background:var(--crimson);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 16px rgba(155,27,27,.35);margin-top:-18px;border:4px solid #fff}
+.nav-fab a svg{width:26px;height:26px;stroke-width:1.8}
+
+/* ====== ARTICLE PAGE ====== */
+.art-hero{height:240px;background:linear-gradient(160deg,#1a1410 0%,#0c0906 100%);position:relative;overflow:hidden}
+.art-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%,rgba(155,27,27,.18),transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(184,132,60,.15),transparent 50%)}
+.art-hero-cap{position:absolute;bottom:12px;left:20px;right:20px;font-size:10px;color:rgba(255,255,255,.55);font-style:italic;font-family:'Source Serif 4',serif;z-index:2}
+
+.art-body{padding:26px 28px 24px;background:var(--cream)}
+.art-over{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--crimson);font-weight:600;margin-bottom:12px}
+.art-title{font-family:'Source Serif 4',serif;font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-.02em;margin-bottom:12px}
+.art-dek{font-family:'Source Serif 4',serif;font-style:italic;font-size:16px;line-height:1.5;color:var(--charcoal);margin-bottom:22px}
+
+.byline{display:flex;align-items:center;gap:12px;padding-bottom:20px;border-bottom:1px solid var(--hairline);margin-bottom:22px}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--crimson);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;letter-spacing:.02em}
+.byline-meta{flex:1}
+.byline-name{font-size:13px;font-weight:500;color:var(--black)}
+.byline-sub{font-size:11px;color:var(--text-mute);margin-top:1px}
+.byline-save{color:var(--charcoal)}
+.byline-save svg{width:20px;height:20px;stroke-width:1.6;fill:none;stroke:currentColor}
+
+.art-p{font-family:'Source Serif 4',serif;font-size:17px;line-height:1.7;color:var(--charcoal);margin-bottom:18px}
+.art-p .term{border-bottom:1px dotted var(--gray);cursor:pointer}
+.art-h{font-family:'Inter',sans-serif;font-weight:600;font-size:18px;margin:12px 0 14px;letter-spacing:-.01em}
+
+.pullquote{border-left:3px solid var(--crimson);padding:6px 0 6px 18px;margin:8px 0 22px}
+.pullquote p{font-family:'Source Serif 4',serif;font-weight:600;font-style:italic;font-size:18px;line-height:1.4;color:var(--black)}
+
+.spec{margin:4px 0 22px;background:#fff;padding:16px 18px;border-radius:3px;border:1px solid var(--hairline)}
+.spec-over{font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--crimson);margin-bottom:10px}
+.spec-row{display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px dashed var(--hairline)}
+.spec-row:last-child{border:0}
+.spec-k{color:var(--text-mute);font-weight:500}
+.spec-v{font-family:'Source Serif 4',serif;color:var(--black);font-weight:600}
+
+/* read next */
+.readnext{margin:8px 28px 0;padding:24px 0 20px;border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
+.rn-over{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:12px}
+.rn-card{display:flex;gap:14px;align-items:flex-start}
+.rn-img{width:72px;height:72px;flex-shrink:0;background:linear-gradient(135deg,#2d6b4f 0%,#1a3a2c 100%);border-radius:2px}
+.rn-body{flex:1}
+.rn-cat{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--crimson);font-weight:700;margin-bottom:4px}
+.rn-ttl{font-family:'Source Serif 4',serif;font-weight:700;font-size:16px;line-height:1.25;margin-bottom:4px}
+.rn-dek{font-size:11px;color:var(--text-mute);font-weight:500;line-height:1.4}
+
+.tags{padding:18px 28px 0;display:flex;flex-wrap:wrap;gap:6px}
+.tag{padding:5px 11px;border:1px solid var(--hairline-strong);border-radius:100px;font-size:11px;color:var(--text-mute);font-weight:500}
+
+.context-tie{margin:20px 28px 0;padding:14px 16px;background:#fff;border:1px solid var(--hairline);border-radius:3px;display:flex;gap:12px;align-items:center}
+.ct-ico{width:28px;height:28px;border-radius:50%;background:var(--cream-2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ct-ico svg{width:14px;height:14px;stroke-width:1.8;color:var(--crimson)}
+.ct-body{flex:1}
+.ct-over{font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--text-mute);margin-bottom:2px}
+.ct-txt{font-size:12px;color:var(--black);font-weight:500;line-height:1.35}
+.ct-txt b{font-weight:600}
+
+/* ====== TOPIC PAGE ====== */
+.topic-hero-img{width:100%;aspect-ratio:16/9;background:url('images/sakeyo_101_styles_v1_bg_6.png') center/cover no-repeat;position:relative}
+.topic-hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.3) 100%);pointer-events:none}
+.topic-hero{background:var(--black);padding:28px 28px 36px;color:#fff;position:relative;overflow:hidden}
+.topic-hero::after{content:"";position:absolute;right:-40px;top:-20px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(155,27,27,.22),transparent 65%);pointer-events:none}
+.topic-crumb{font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:14px}
+.topic-crumb span{color:var(--crimson)}
+.topic-ttl{font-family:'Source Serif 4',serif;font-weight:700;font-size:40px;line-height:1;letter-spacing:-.025em;margin-bottom:14px}
+.topic-dek{font-family:'Source Serif 4',serif;font-style:italic;font-size:16px;line-height:1.5;color:rgba(255,255,255,.72);max-width:340px;margin-bottom:24px;position:relative;z-index:1}
+.topic-stats{display:flex;gap:22px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);position:relative;z-index:1}
+.tstat-num{font-family:'Source Serif 4',serif;font-weight:700;font-size:22px;letter-spacing:-.01em}
+.tstat-lbl{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600;margin-top:3px}
+
+/* start-here strip (topic) */
+.start-here{margin:22px 24px 0;background:#fff;border-left:3px solid var(--crimson);padding:18px 20px;border-radius:2px;box-shadow:0 1px 2px rgba(16,24,32,.04)}
+.sh-over{font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--crimson);margin-bottom:8px}
+.sh-ttl{font-family:'Source Serif 4',serif;font-weight:700;font-size:18px;line-height:1.2;margin-bottom:6px}
+.sh-dek{font-family:'Source Serif 4',serif;font-size:13px;color:var(--text-mute);line-height:1.5;margin-bottom:10px}
+.sh-meta{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mute);font-weight:600}
+
+/* piece row */
+.pieces{padding:0 24px}
+.piece{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--hairline);align-items:flex-start}
+.piece:last-child{border:0}
+.piece-num{font-family:'Source Serif 4',serif;font-style:italic;font-weight:400;font-size:15px;color:var(--crimson);flex-shrink:0;width:22px;padding-top:2px}
+.piece-body{flex:1}
+.piece-ttl{font-family:'Source Serif 4',serif;font-weight:700;font-size:17px;line-height:1.25;letter-spacing:-.01em;margin-bottom:6px}
+.piece-dek{font-family:'Source Serif 4',serif;font-size:13px;color:var(--charcoal);line-height:1.5;margin-bottom:8px}
+.piece-meta{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mute);font-weight:600}
+.piece-meta .dot{width:3px;height:3px;background:var(--gray);border-radius:50%}
+.piece-read{color:var(--sage)}
+.piece-read svg{width:12px;height:12px;stroke-width:2.2;vertical-align:-1px;margin-right:3px}
+
+/* glossary teaser */
+.gloss-teaser{margin:28px 24px 0;padding:20px 22px;background:var(--cream-2);border-radius:3px;display:flex;gap:14px;align-items:center}
+.gloss-teaser .ct-ico{background:#fff}
+.gt-body{flex:1}
+.gt-over{font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--crimson);margin-bottom:4px}
+.gt-txt{font-family:'Source Serif 4',serif;font-size:14px;line-height:1.4;color:var(--black)}
+.gt-arrow{color:var(--crimson)}
+.gt-arrow svg{width:16px;height:16px;stroke-width:2}
+
+/* Header icons — alerts & settings */
+.hdr-icons{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,.85);display:flex;align-items:center;text-decoration:none}
+.hdr-icon svg{width:20px;height:20px}
+.hdr-icon .badge{position:absolute;top:-2px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+.phone::-webkit-scrollbar{display:none}
+.sticky-top{position:sticky;top:0;z-index:30}
+</style>
+</head>
+<body>
+
+<!-- =============== PHONE 1: GROUNDWORK HUB =============== -->
+<div class="phone-wrap">
+  <div class="device"><div class="phone">
+    <div class="notch"></div>
+  <div class="sticky-top">
+    <div class="statusbar"><span>9:41</span><span class="icons">􀙇 􀛨 􀋦</span></div>
+    <div class="header">
+      <a class="hdr-side hdr-back" href="sakeyo_101_hub_v1.html" style="text-decoration:none;color:rgba(255,255,255,.75)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg><span>Back</span></a>
+      <div class="wordmark">SAKE<span>YŌ</span></div>
+      <div class="hdr-icons"><a class="hdr-icon" href="sakeyo_alerts_v1.html" aria-label="Alerts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a><a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a></div>
+    </div>
+  </div>
+
+      <section class="masthead">
+    <div class="mast-overline">Styles</div>
+    <h1 class="mast-title">What's in a name.</h1>
+    <p class="mast-sub">What the names mean, what they don't, and what to expect in the glass.</p>
+  </section>
+
+    <div class="topic-hero-img"></div>
+
+    <a class="start-here" href="sakeyo_101_daiginjo_v1.html" style="display:block;text-decoration:none;color:inherit">
+      <div class="sh-over">Start here</div>
+      <div class="sh-ttl">Junmai, ginjo, daiginjo — the difference in one page.</div>
+      <div class="sh-dek">The labels describe one thing: how much of the rice grain was polished away before brewing. Everything else follows from that.</div>
+      <div class="sh-meta">6 min · Foundations</div>
+    </a>
+
+    <div class="sec-head">
+      <div class="sec-ttl">All nine pieces</div>
+      <div class="sec-link">OLDEST FIRST</div>
+    </div>
+
+    <div class="pieces">
+      <a class="piece" href="sakeyo_101_daiginjo_v1.html" style="text-decoration:none;color:inherit;display:flex">
+        <div class="piece-num">01</div>
+        <div class="piece-body">
+          <div class="piece-ttl">Junmai, ginjo, daiginjo — the difference in one page</div>
+          <div class="piece-dek">The rice polishing ratios explained without the chart you'd need a magnifier for.</div>
+          <div class="piece-meta"><span class="piece-read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Read</span><span class="dot"></span><span>6 min</span></div>
+        </div>
+      </a>
+
+      <div class="piece">
+        <div class="piece-num">02</div>
+        <div class="piece-body">
+          <div class="piece-ttl">Honjozo: the quiet one</div>
+          <div class="piece-dek">A small amount of distilled alcohol, a lighter body, and a reputation that's mostly wrong.</div>
+          <div class="piece-meta"><span class="piece-read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Read</span><span class="dot"></span><span>5 min</span></div>
+        </div>
+      </div>
+
+      <div class="piece">
+        <div class="piece-num">03</div>
+        <div class="piece-body">
+          <div class="piece-ttl">Nigori isn't sweet. It's just unfiltered.</div>
+          <div class="piece-dek">The cloudy one on the shelf. Why it looks that way, and what it actually tastes like.</div>
+          <div class="piece-meta"><span class="piece-read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Read</span><span class="dot"></span><span>5 min</span></div>
+        </div>
+      </div>
+
+      <div class="piece">
+        <div class="piece-num">04</div>
+        <div class="piece-body">
+          <div class="piece-ttl">Namazake: unpasteurized, uncompromised, slightly alive</div>
+          <div class="piece-dek">Why it ships cold, why it changes in the bottle, and why chasing it is worth the trouble.</div>
+          <div class="piece-meta"><span>7 min</span></div>
+        </div>
+      </div>
+
+      <div class="piece">
+        <div class="piece-num">05</div>
+        <div class="piece-body">
+          <div class="piece-ttl">Koshu: the aged ones</div>
+          <div class="piece-dek">Amber, honeyed, sometimes a decade old. The sake category that behaves most like wine — and the closest thing to sherry you'll find in Japan.</div>
+          <div class="piece-meta"><span>8 min</span></div>
+        </div>
+      </div>
+
+      <div class="piece">
+        <div class="piece-num">06</div>
+        <div class="piece-body">
+          <div class="piece-ttl">Genshu: when no water gets added back</div>
+          <div class="piece-dek">Most sake is cut with water before bottling. Genshu isn't — which is why it's 19%, intense, and built for small pours.</div>
+          <div class="piece-meta"><span>5 min</span></div>
+        </div>
+      </div>
+
+      <div class="piece">
+        <div class="piece-num">07</div>
+        <div class="piece-body">
+          <div class="piece-ttl">Sparkling sake, and why it's not a gimmick</div>
+          <div class="piece-dek">Two methods — bottle-fermented and carbonated — and the short list of brewers getting it right.</div>
+          <div class="piece-meta"><span>6 min</span></div>
+        </div>
+      </div>
+
+      <div class="piece">
+        <div class="piece-num">08</div>
+        <div class="piece-body">
+          <div class="piece-ttl">Yamahai and kimoto: the slow starters</div>
+          <div class="piece-dek">Two old-fashioned ways of making the starter mash. Funkier, earthier, more opinionated sake.</div>
+          <div class="piece-meta"><span>7 min</span></div>
+        </div>
+      </div>
+
+      <div class="piece">
+        <div class="piece-num">09</div>
+        <div class="piece-body">
+          <div class="piece-ttl">Reading a label when the style isn't on the front</div>
+          <div class="piece-dek">What to look for on the back when the marketing gets out of the way.</div>
+          <div class="piece-meta"><span>5 min</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gloss-teaser">
+      <div class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+      <div class="gt-body">
+        <div class="gt-over">Glossary</div>
+        <div class="gt-txt">31 terms in this topic — <i>seimaibuai</i>, <i>moromi</i>, <i>kimoto</i>, and more.</div>
+      </div>
+      <div class="gt-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>
+    <div class="bottom-nav">
+      <a class="nav-item" href="#"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10a2 2 0 0 1-2 2h-4v-7h-6v7H5a2 2 0 0 1-2-2z"/></svg><span>Home</span></a>
+      <a class="nav-item" href="#"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Search</span></a>
+      <div class="nav-fab"><a href="sake-detail-v6a-type-dash.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+      <a class="nav-item" href="sakeyo_explore_v2d.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg><span>Menu Scan</span></a>
+      <a class="nav-item" href="#"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><span>Profile</span></a>
+    </div>
+  </div></div>
+</div>
+
+
+<!--PROTO-NAV-->
+<script>
+(function(){
+  var R={"nav": {"home": "sakeyo_home_v2.html", "explore": "sakeyo_explore_v2d.html", "profile": "sakeyo_profile_v5.html"}, "first": "sakeyo_101_daiginjo_v1.html", "backTo": "sakeyo_101_hub_v1.html"};
+  function go(s){try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-go',screen:s},'*');return;}}catch(e){}location.href=s;}
+  function back(){if(R.backTo){go(R.backTo);return;}try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-back'},'*');return;}}catch(e){}history.back();}
+  function txt(el){return ((el.textContent||'')+' '+(el.getAttribute&&el.getAttribute('aria-label')||'')).toLowerCase().trim();}
+  function match(s,dict){for(var k in dict){if(s.indexOf(k)!==-1)return dict[k];}return null;}
+  var firstFeat=null;
+  if(R.first){var all=document.querySelectorAll('.feat, .article, .event, .cellar-card, .event-card, .note-card, .start, .piece, .sh, .shelf, .featured-article');if(all[0])firstFeat=all[0];}
+  document.addEventListener('click',function(e){
+    var el=e.target;
+    if(R.selectorGo){for(var sel in R.selectorGo){var hit=e.target.closest(sel);if(hit){e.preventDefault();e.stopPropagation();go(R.selectorGo[sel]);return;}}}
+    if(R.viewToggle){var vbtn=e.target.closest('[data-view]');if(vbtn){e.preventDefault();e.stopPropagation();var v=vbtn.getAttribute('data-view');if(R.viewToggle[v])go(R.viewToggle[v]);return;}}
+    while(el&&el!==document.body&&el.nodeType===1){
+      if(el.classList&&(el.classList.contains('hdr-back')||el.classList.contains('back'))){e.preventDefault();e.stopPropagation();back();return;}
+      if(el.classList&&el.classList.contains('nav-item')){var d=match(txt(el),R.nav||{});if(d){e.preventDefault();e.stopPropagation();go(d);return;}}
+      if(firstFeat&&(el===firstFeat||firstFeat.contains(el))){e.preventDefault();e.stopPropagation();go(R.first);return;}
+      if(R.textGo){var t=txt(el);if(t.length<200){var tg=match(t,R.textGo);if(tg){e.preventDefault();e.stopPropagation();go(tg);return;}}}
+      if(R.text){var t2=txt(el);if(t2.length<100){var d2=match(t2,R.text);if(d2){e.preventDefault();e.stopPropagation();go(d2);return;}}}
+      el=el.parentElement;
+    }
+  },true);
+})();
+</script>
+<!--/PROTO-NAV-->
+</body></html>

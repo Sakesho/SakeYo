@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SakeYō · Table v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#101820; --black-deep:#0a1016; --charcoal:#2C2C2C;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD;
+  --gray:#A0A0A0; --text-mute:#5F5E5A;
+  --sage:#2D6B4F;
+  --hairline:rgba(16,24,32,0.08); --hairline-strong:rgba(16,24,32,0.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-content:center;padding:40px 0;color:var(--black)}
+.caption{position:fixed;top:6px;left:12px;color:#888;font-size:10px;letter-spacing:.04em;z-index:100}
+.device{width:436px;background:#0a0a0a;border-radius:56px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;position:relative}
+.phone{width:412px;background:var(--cream);position:relative;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;border-radius:46px;height:896px}
+.notch{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#0a0a0a;border-radius:18px;z-index:50}
+.statusbar{background:var(--black);padding:18px 32px 8px;display:flex;align-items:center;justify-content:space-between;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;letter-spacing:-.01em}
+.statusbar .icons{display:flex;align-items:center;gap:6px}
+.statusbar .icons svg{display:block}
+
+.header{background:var(--black);padding:10px 20px 18px;display:flex;align-items:center;justify-content:space-between;}
+.hdr-back{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.75);text-decoration:none;font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.hdr-back svg{width:14px;height:14px}
+.wordmark{font-weight:700;font-size:13px;letter-spacing:.22em;color:#fff}
+.wordmark span{color:var(--crimson)}
+.hdr-spacer{width:64px}
+
+.hero{position:relative;margin-bottom:8px}
+.hero-img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;filter:saturate(.88) contrast(1.04) brightness(.82)}
+.hero-scrim{position:absolute;left:0;right:0;bottom:0;padding:80px 28px 32px;background:linear-gradient(to bottom,rgba(10,16,22,0) 0%,rgba(10,16,22,.65) 40%,rgba(10,16,22,.92) 100%)}
+.hero-overline{font-weight:600;font-size:11px;letter-spacing:.22em;color:#fff;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.hero-overline:after{content:"";flex:1;height:1px;background:rgba(255,255,255,.22);max-width:60px}
+.hero-manifesto{font-family:'Source Serif 4',serif;font-style:italic;font-size:18px;line-height:1.5;color:rgba(255,255,255,.94);letter-spacing:-.005em}
+.hero-manifesto p + p{margin-top:14px}
+
+.sec-label{padding:0 24px;margin:48px 0 20px;display:flex;align-items:center}
+.sec-label .lbl{font-weight:600;font-size:10px;letter-spacing:.18em;color:var(--text-mute);text-transform:uppercase;flex:1;position:relative}
+.sec-label .lbl:after{content:"";position:absolute;top:50%;left:90px;right:0;height:1px;background:var(--hairline);margin-left:12px}
+
+.featured{padding:0 24px;display:flex;flex-direction:column;gap:32px;margin-bottom:16px}
+.feat{display:block;text-decoration:none;color:inherit;background:#fff;padding:0 0 22px;border-radius:2px;box-shadow:0 1px 2px rgba(16,24,32,0.04)}
+.feat-img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;margin-bottom:14px;background:#ddd}
+.feat .overline{font-weight:600;font-size:10px;letter-spacing:.18em;color:var(--crimson);text-transform:uppercase;margin-bottom:8px;padding:0 20px}
+.feat h2{font-family:'Source Serif 4',serif;font-weight:600;font-size:22px;line-height:1.22;letter-spacing:-.01em;color:var(--black);margin-bottom:10px;padding:0 20px}
+.feat .dek{font-family:'Source Serif 4',serif;font-size:14px;line-height:1.55;color:var(--text-mute);margin-bottom:10px;padding:0 20px}
+.feat .meta{font-size:11px;letter-spacing:.04em;color:var(--gray);display:flex;align-items:center;gap:10px;padding:14px 20px 0;border-top:1px solid var(--hairline);margin-top:6px}
+.feat .meta .sep{width:3px;height:3px;border-radius:50%;background:var(--gray)}
+
+.tail{padding:48px 24px 96px;text-align:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+
+.nav{position:sticky;bottom:0;background:#fff;border-top:1px solid rgba(16,24,32,0.08);overflow:visible}
+.nav-grid{position:relative;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;padding:14px 0 26px;height:96px;overflow:visible}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:#5F5E5A;text-decoration:none;font-size:12px;font-weight:500;font-family:'Inter',sans-serif}
+.nav-item svg{width:23px;height:23px;stroke-width:1.6;fill:none;stroke:currentColor}
+.nav-item.active{color:#9B1B1B}
+.nav-item.active svg{stroke:#9B1B1B}
+.nav-item.active.filled svg{fill:#9B1B1B}
+.fab-wrap{position:relative}
+.fab{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:58px;height:58px;border-radius:50%;background:#9B1B1B;display:flex;align-items:center;justify-content:center;border:4px solid #fff;box-shadow:0 6px 16px rgba(155,27,27,.35);z-index:10}
+.fab svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:1.8}
+
+/* Header icons — alerts & settings */
+.hdr-icons{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,.85);display:flex;align-items:center;text-decoration:none}
+.hdr-icon svg{width:20px;height:20px}
+.hdr-icon .badge{position:absolute;top:-2px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+.phone::-webkit-scrollbar{display:none}
+.sticky-top{position:sticky;top:0;z-index:30}
+</style>
+</head><body>
+<div class="caption">sakeyo_table_v1 · DRAFT — verify Miwa Shuzo "Shinrai Thirteen" label details and Medetashi recipe attribution before publishing</div>
+<div class="device">
+<div class="notch"></div>
+<div class="phone">
+  <div class="sticky-top">
+
+  <div class="statusbar">
+    <span>9:41</span>
+    <div class="icons">
+      <svg width="18" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5"/><rect x="5" y="5" width="3" height="6" rx="0.5"/><rect x="10" y="2" width="3" height="9" rx="0.5"/><rect x="15" y="0" width="3" height="11" rx="0.5"/></svg>
+      <svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4.2 A11 11 0 0 1 15 4.2" stroke-linecap="round"/><path d="M3.5 6.4 A7.5 7.5 0 0 1 12.5 6.4" stroke-linecap="round"/><path d="M6 8.6 A4 4 0 0 1 10 8.6" stroke-linecap="round"/><circle cx="8" cy="10" r="0.8" fill="currentColor" stroke="none"/></svg>
+      <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x="0.5" y="0.5" width="22" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.6"/><rect x="2" y="2" width="19" height="8" rx="1.2" fill="currentColor"/><rect x="23.5" y="4" width="1.5" height="4" rx="0.6" fill="currentColor" fill-opacity="0.6"/></svg>
+    </div>
+
+  <header class="header">
+    <a class="hdr-back" href="sakeyo_craft_v1.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+    <div class="wordmark">SAKE<span>YŌ</span></div>
+    <div class="hdr-icons"><a class="hdr-icon" href="sakeyo_alerts_v1.html" aria-label="Alerts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a><a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a></div>
+  </header>
+  </div>
+
+  <section class="hero">
+    <img class="hero-img" src="images/sakeyo_table_74.jpg" alt="A fishmonger's counter at Nishiki Market in Kyoto: ice trays of clams, scallops, sea urchin in wooden boxes, snow crab legs, hand-lettered price tags in red and black, two vendors working behind the case">
+    <div class="hero-scrim">
+      <div class="hero-overline">Table</div>
+      <div class="hero-manifesto">
+        <p>Sake was made to be drunk with food. Specifically, with the food of the place it came from — the fish from the bay outside the brewery, the vegetables from the field next door, the dishes the brewer's family ate at home.</p>
+        <p>This is where we write about what to eat with sake, where to eat it, and how to cook it yourself — recipes from the izakaya counters, kappo kitchens, and home tables where sake is poured.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="sec-label"><div class="lbl">Featured</div></div>
+
+  <div class="featured">
+
+    <a class="feat" href="#">
+      <img class="feat-img" src="images/sakeyo_table_75.jpg" alt="A sushi chef in white at the counter, slicing a block of red tuna with a long yanagiba, two small Imari plates of cut fish set out beside him">
+      <div class="overline">At the Counter</div>
+      <h2>What sake does at the sushi counter</h2>
+      <p class="dek">The Edo sushi meal has a rhythm. A few small dishes first, then nigiri one piece at a time, each set down a moment before you eat it. Anago at the end, then tamago, then miso. Older rules said sake with sushi was rice on rice — redundant. Most chefs have stopped saying that. A cup of junmai, room temperature or just warmed, sits inside the rhythm rather than next to it.</p>
+      <div class="meta"><span>Apr 11</span><span class="sep"></span><span>6 min</span></div>
+    </a>
+
+    <a class="feat" href="#">
+      <img class="feat-img" src="images/sakeyo_table_76.jpg" alt="A single grilled chicken tsukune meatball on a bamboo skewer, glazed and lightly charred, resting on a green-striped Oribe ceramic stand">
+      <div class="overline">Recipe</div>
+      <h2>Tsukune: a brewer's family recipe, written down</h2>
+      <p class="dek">Medetashi published this one for Shinrai Thirteen, the junmai from Miwa Shuzo in Hiroshima whose label shows three generations of the brewer's family drawn in flat color. Chicken tsukune, breast and thigh both, ginger and green onion, a lemon-soy glaze cooked down in the same pan. Egg yolk on the side to dip. Forty-five minutes, four skewers, one bottle.</p>
+      <div class="meta"><span>Apr 11</span><span class="sep"></span><span>8 min</span></div>
+    </a>
+
+    <a class="feat" href="#">
+      <img class="feat-img" src="images/sakeyo_table_77.jpg" alt="Two women in patterned kimonos behind an oden counter, steam rising from the simmering pot, three rough ceramic bowls of oden plated and waiting on the wooden rail">
+      <div class="overline">Pairing</div>
+      <h2>Oden and warm sake: why this pairing works</h2>
+      <p class="dek">Oden looks like a mystery from the outside — a copper pot divided into sections, daikon and eggs and folded tofu skins floating in clear broth. It isn't a mystery. It's a winter pot of dashi that simmers all day and gets deeper as the night goes on. A junmai or kimoto warmed to around forty-five degrees opens up and meets the dashi on the same register. Cold sake fights a long-simmered broth. Warm sake disappears into it.</p>
+      <div class="meta"><span>Apr 11</span><span class="sep"></span><span>7 min</span></div>
+    </a>
+
+  </div>
+
+  <div class="tail">More stories coming.</div>
+
+  <nav class="nav">
+  <div class="nav-grid">
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9v9a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg>
+      <span>Home</span>
+    </a>
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16" y2="16"/></svg>
+      <span>Search</span>
+    </a>
+    <div class="fab-wrap">
+      <a class="fab" href="sake-detail-v6a-type-dash.html" aria-label="Scan">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3l1.5-2h9L18 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg>
+        </a>
+    </div>
+    <a class="nav-item" href="sakeyo_explore_v2d.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg><span>Menu Scan</span></a>
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      <span>Profile</span>
+    </a>
+  </div>
+</nav>
+
+</div>
+</div>
+
+
+
+
+<!--PROTO-NAV-->
+<script>
+(function(){
+  var R={"nav": {"home": "sakeyo_home_v2.html", "explore": "sakeyo_explore_v2d.html", "profile": "sakeyo_profile_v5.html"}, "first": "sake-detail-v6a-type-dash.html"};
+  function go(s){try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-go',screen:s},'*');return;}}catch(e){}location.href=s;}
+  function back(){if(R.backTo){go(R.backTo);return;}try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'nav-back'},'*');return;}}catch(e){}history.back();}
+  function txt(el){return ((el.textContent||'')+' '+(el.getAttribute&&el.getAttribute('aria-label')||'')).toLowerCase().trim();}
+  function match(s,dict){for(var k in dict){if(s.indexOf(k)!==-1)return dict[k];}return null;}
+  var firstFeat=null;
+  if(R.first){var all=document.querySelectorAll('.feat, .article, .event, .cellar-card, .event-card, .note-card, .start, .piece, .sh, .shelf, .featured-article');if(all[0])firstFeat=all[0];}
+  document.addEventListener('click',function(e){
+    var el=e.target;
+    if(R.selectorGo){for(var sel in R.selectorGo){var hit=e.target.closest(sel);if(hit){e.preventDefault();e.stopPropagation();go(R.selectorGo[sel]);return;}}}
+    if(R.viewToggle){var vbtn=e.target.closest('[data-view]');if(vbtn){e.preventDefault();e.stopPropagation();var v=vbtn.getAttribute('data-view');if(R.viewToggle[v])go(R.viewToggle[v]);return;}}
+    while(el&&el!==document.body&&el.nodeType===1){
+      if(el.classList&&(el.classList.contains('hdr-back')||el.classList.contains('back'))){e.preventDefault();e.stopPropagation();back();return;}
+      if(el.classList&&el.classList.contains('nav-item')){var d=match(txt(el),R.nav||{});if(d){e.preventDefault();e.stopPropagation();go(d);return;}}
+      if(firstFeat&&(el===firstFeat||firstFeat.contains(el))){e.preventDefault();e.stopPropagation();go(R.first);return;}
+      if(R.textGo){var t=txt(el);if(t.length<200){var tg=match(t,R.textGo);if(tg){e.preventDefault();e.stopPropagation();go(tg);return;}}}
+      if(R.text){var t2=txt(el);if(t2.length<100){var d2=match(t2,R.text);if(d2){e.preventDefault();e.stopPropagation();go(d2);return;}}}
+      el=el.parentElement;
+    }
+  },true);
+})();
+</script>
+<!--/PROTO-NAV-->
+</body></html>

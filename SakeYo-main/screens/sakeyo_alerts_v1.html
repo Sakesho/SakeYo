@@ -82,11 +82,11 @@ body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-cont
 .unread-dot{position:absolute;top:22px;right:14px;width:7px;height:7px;background:var(--crimson);border-radius:50%}
 
 /* Empty state for dismissed */
-.tail{padding:48px 24px 110px;text-align:center}
+.tail{padding:48px 24px 24px;text-align:center}
 .tail-line{font-family:'Source Serif 4',serif;font-style:italic;font-size:14px;color:var(--text-mute)}
 
 /* Nav */
-.nav{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--hairline);display:flex;justify-content:space-around;align-items:center;padding:12px 0 18px;height:78px}
+.nav{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--hairline);display:flex;justify-content:space-around;align-items:center;padding:12px 0 18px;height:78px;z-index:20}
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--charcoal);text-decoration:none;font-size:12px;font-weight:400;flex:1}
 .nav-item svg{width:24px;height:24px;stroke-width:1.6}
 .nav-item.active{color:var(--crimson);font-weight:600}
@@ -103,7 +103,6 @@ body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-cont
 <div class="notch"></div>
 <div class="phone">
   <div class="sticky-top">
-
   <div class="statusbar">
     <span>9:41</span>
     <div class="icons">
@@ -111,7 +110,7 @@ body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-cont
       <svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4.2 A11 11 0 0 1 15 4.2" stroke-linecap="round"/><path d="M3.5 6.4 A7.5 7.5 0 0 1 12.5 6.4" stroke-linecap="round"/><path d="M6 8.6 A4 4 0 0 1 10 8.6" stroke-linecap="round"/><circle cx="8" cy="10" r="0.8" fill="currentColor" stroke="none"/></svg>
       <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x="0.5" y="0.5" width="22" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.6"/><rect x="2" y="2" width="19" height="8" rx="1.2" fill="currentColor"/><rect x="23.5" y="4" width="1.5" height="4" rx="0.6" fill="currentColor" fill-opacity="0.6"/></svg>
     </div>
-
+  </div>
   <header class="header">
     <a class="hdr-back" href="sakeyo_home_v2.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
     <div class="wordmark">SAKE<span>YŌ</span></div>

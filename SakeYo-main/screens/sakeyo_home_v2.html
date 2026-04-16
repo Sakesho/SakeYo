@@ -59,7 +59,7 @@
   .statusbar {
     height: 44px;
     background: var(--black);
-    display: flex;
+    display:none;
     justify-content: space-between;
     align-items: center;
     padding: 0 28px 0 32px;
@@ -229,7 +229,7 @@
   .mini-tile span { font-size: 11px; color: var(--black); font-weight: 500; }
 
   /* Section header */
-  .section { background: var(--cream); padding: 40px 22px 0 22px; }
+  .section { background: var(--cream); padding: 32px 22px 0 22px; }
   .section-fluid { background: var(--cream); padding: 32px 0 0 0; }
   .section-fluid .section-head { padding: 0 22px; }
   .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
@@ -536,10 +536,8 @@
   <div class="section">
     <div class="section-head">
       <div>
-        <div class="section-overline crimson">RUNG 04</div>
         <div class="section-title">Continue climbing</div>
       </div>
-      <div style="font-size: 11px; color: var(--text-mute); font-weight: 500;">12 / 50</div>
     </div>
     <div class="section-sub">You loved a Niigata Junmai. Try one rung up.</div>
     <div class="climb-card">
@@ -570,7 +568,7 @@
       </div>
       <span class="section-link">All →</span>
     </div>
-    <div class="section-sub">Eight events to climb a rung this month.</div>
+    <div class="section-sub">Events happening in Singapore and Japan.</div>
     <div class="h-scroll">
       <div class="event-card">
         <div class="event-img">
@@ -740,7 +738,7 @@
     if(R.selectorGo){for(var sel in R.selectorGo){var hit=e.target.closest(sel);if(hit){e.preventDefault();e.stopPropagation();go(R.selectorGo[sel]);return;}}}
     if(R.viewToggle){var vbtn=e.target.closest('[data-view]');if(vbtn){e.preventDefault();e.stopPropagation();var v=vbtn.getAttribute('data-view');if(R.viewToggle[v])go(R.viewToggle[v]);return;}}
     while(el&&el!==document.body&&el.nodeType===1){
-      if(el.classList&&(el.classList.contains('hdr-back')||el.classList.contains('back'))){e.preventDefault();e.stopPropagation();back();return;}
+      
       if(el.classList&&el.classList.contains('nav-item')){var d=match(txt(el),R.nav||{});if(d){e.preventDefault();e.stopPropagation();go(d);return;}}
       if(firstFeat&&(el===firstFeat||firstFeat.contains(el))){e.preventDefault();e.stopPropagation();go(R.first);return;}
       if(R.textGo){var t=txt(el);if(t.length<200){var tg=match(t,R.textGo);if(tg){e.preventDefault();e.stopPropagation();go(tg);return;}}}

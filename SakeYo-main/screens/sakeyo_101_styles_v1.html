@@ -19,10 +19,10 @@ body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-cont
 .label{position:absolute;top:-26px;left:4px;color:#aaa;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
 .device{width:436px;background:#0a0a0a;border-radius:56px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset}
 .phone{width:412px;background:var(--cream);overflow-y:auto;overflow-x:hidden;scrollbar-width:none;border-radius:46px;height:896px;position:relative}
-.notch{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#0a0a0a;border-radius:18px;z-index:50}
+.notch{display:none;position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#0a0a0a;border-radius:18px;z-index:50}
 
 /* status + header (match reference) */
-.statusbar{background:var(--black);padding:18px 32px 8px;display:flex;align-items:center;justify-content:space-between;color:#fff;font-weight:600;font-size:14px}
+.statusbar{background:var(--black);padding:18px 32px 8px;display:none;align-items:center;justify-content:space-between;color:#fff;font-weight:600;font-size:14px}
 .statusbar .icons{display:flex;gap:6px}
 .header{background:var(--black);padding:10px 20px 18px;display:flex;align-items:center;justify-content:space-between;}
 .hdr-side{width:68px;display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.75);font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
@@ -223,6 +223,7 @@ body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-cont
     <h1 class="mast-title">What's in a name.</h1>
     <p class="mast-sub">What the names mean, what they don't, and what to expect in the glass.</p>
   </section>
+  </div>
 
     <div class="topic-hero-img"></div>
 
@@ -355,7 +356,7 @@ body{background:#2a2a2a;font-family:'Inter',sans-serif;display:flex;justify-cont
     if(R.selectorGo){for(var sel in R.selectorGo){var hit=e.target.closest(sel);if(hit){e.preventDefault();e.stopPropagation();go(R.selectorGo[sel]);return;}}}
     if(R.viewToggle){var vbtn=e.target.closest('[data-view]');if(vbtn){e.preventDefault();e.stopPropagation();var v=vbtn.getAttribute('data-view');if(R.viewToggle[v])go(R.viewToggle[v]);return;}}
     while(el&&el!==document.body&&el.nodeType===1){
-      if(el.classList&&(el.classList.contains('hdr-back')||el.classList.contains('back'))){e.preventDefault();e.stopPropagation();back();return;}
+      
       if(el.classList&&el.classList.contains('nav-item')){var d=match(txt(el),R.nav||{});if(d){e.preventDefault();e.stopPropagation();go(d);return;}}
       if(firstFeat&&(el===firstFeat||firstFeat.contains(el))){e.preventDefault();e.stopPropagation();go(R.first);return;}
       if(R.textGo){var t=txt(el);if(t.length<200){var tg=match(t,R.textGo);if(tg){e.preventDefault();e.stopPropagation();go(tg);return;}}}

@@ -60,7 +60,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   background-blend-mode: multiply, soft-light, multiply, overlay, overlay, multiply, normal;
 }
 .hero-content{position:absolute;left:0;right:0;bottom:0;padding:26px 26px 28px;color:#fff;z-index:5}
-.hero-ovr{display:inline-block;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);margin-bottom:12px;text-shadow:0 1px 4px rgba(0,0,0,0.6)}
+.hero-pill{display:inline-block;padding:6px 13px;background:var(--crimson);color:#fff;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:16px;box-shadow:0 2px 4px rgba(122,21,21,0.4), 0 6px 16px -4px rgba(155,27,27,0.5)}
 .hero-h1{font-family:var(--serif);font-size:44px;font-weight:400;line-height:1.02;color:var(--cream);margin-bottom:12px;letter-spacing:-0.018em;text-shadow:0 2px 30px rgba(235,155,60,0.15), 0 1px 2px rgba(0,0,0,0.8)}
 .hero-dek{font-family:var(--sans);font-size:14.5px;font-weight:400;line-height:1.5;color:rgba(245,240,235,0.78);margin-bottom:16px;max-width:320px;letter-spacing:-0.008em;text-shadow:0 1px 8px rgba(0,0,0,0.6)}
 .hero-cta{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:13px;font-weight:500;color:rgba(255,255,255,0.92);letter-spacing:-0.005em;border-bottom:1px solid rgba(255,255,255,0.4);padding-bottom:2px;text-shadow:0 1px 4px rgba(0,0,0,0.6)}
@@ -83,8 +83,8 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .sec-head{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:baseline;padding:0 22px;gap:6px 12px}
 .sec-head .sec-ovr{grid-column:1;grid-row:1;display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
 .sec-head .sec-ovr::after{content:"";flex:1;height:1px;background:var(--hair)}
-.sec-head .sec-title{grid-column:1;grid-row:2;font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.08;letter-spacing:-0.018em;color:var(--ink)}
-.sec-head .sec-link{grid-column:2;grid-row:2;align-self:end;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-mute);letter-spacing:-0.005em;white-space:nowrap;border-bottom:1px solid var(--hair);padding-bottom:2px}
+.sec-head .sec-title{grid-column:1;grid-row:2;font-family:var(--sans);font-size:24px;font-weight:600;line-height:1.1;letter-spacing:-0.022em;color:var(--ink)}
+.sec-head .sec-link{grid-column:2;grid-row:2;align-self:end;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;white-space:nowrap}
 .sec-sub{padding:8px 22px 0;font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--ink-mute);line-height:1.5;max-width:38ch}
 
 /* H-SCROLL */
@@ -100,12 +100,12 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .bot-img::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 80% 20%, rgba(0,0,0,0.18) 0%, transparent 60%);pointer-events:none}
 .bot-img .bot-photo{max-height:100%;width:auto;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(-1px 4px 6px rgba(0,0,0,0.3))}
 .bot-img .bot-match{position:absolute;top:10px;right:10px;z-index:3}
-.match-ring{width:34px;height:34px;position:relative;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center}
-.match-ring svg{width:30px;height:30px;transform:rotate(-90deg);position:absolute}
-.match-ring svg .track{fill:none;stroke:var(--hair);stroke-width:2.5}
-.match-ring svg .val{fill:none;stroke:var(--sage);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:calc(100 - var(--pct));}
-.match-ring .txt{position:relative;z-index:1;font-size:9px;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
-.match-ring .txt .pct{font-size:7px;font-weight:500}
+.match-ring{width:34px;height:34px;position:relative;display:flex;align-items:center;justify-content:center}
+.match-ring svg{width:100%;height:100%;transform:rotate(-90deg);position:absolute;inset:0}
+.match-ring svg .track{fill:none;stroke:rgba(255,255,255,0.5);stroke-width:2.5}
+.match-ring svg .val{fill:none;stroke:var(--sage);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:calc(var(--pct)*1.005) 999}
+.match-ring .txt{position:relative;z-index:1;font-family:var(--serif);font-size:11px;font-weight:500;color:var(--sage);letter-spacing:-0.02em;line-height:1;display:flex;align-items:baseline}
+.match-ring .txt .pct{font-size:0.7em;font-weight:400;margin-left:0.5px}
 .bot-body{padding:12px 14px 14px}
 .bot-cat{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-mute);margin-bottom:3px;letter-spacing:0}
 .bot-name{font-family:var(--sans);font-size:14px;font-weight:600;line-height:1.2;color:var(--ink);letter-spacing:-0.018em;margin-bottom:3px}
@@ -148,8 +148,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .jour-meta{font-family:var(--sans);font-size:11.5px;color:var(--ink-faint);letter-spacing:-0.005em}
 
 /* TOPIC CHIPS */
-.topic-label{padding:32px 22px 12px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute);display:flex;align-items:center;gap:12px}
-.topic-label::after{content:"";flex:1;height:1px;background:var(--hair)}
+.topic-label{padding:28px 22px 12px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
 .topic-chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 22px 4px;margin-right:-22px}
 .topic-chips::-webkit-scrollbar{display:none}
 .topic-chip{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:100px;font-size:13px;font-weight:500;letter-spacing:-0.005em;background:transparent;border:1px solid rgba(16,24,32,0.22);color:var(--ink-mute);white-space:nowrap;text-decoration:none}
@@ -218,7 +217,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 <!-- HERO -->
 <section class="hero" style="--hero-img: url('Images/sakeyo_home_Aoki Brewery Hero.jpg');">
   <div class="hero-content">
-    <span class="hero-ovr">Featured brewery</span>
+    <span class="hero-pill">Featured brewery</span>
     <h1 class="hero-h1">Inside Aoki Brewery, Niigata</h1>
     <p class="hero-dek">A fifth-generation tōji on rice, water, and the sake that made his valley.</p>
     <a class="hero-cta" href="sakeyo_Article_TypeC.html">Read the story →</a>
@@ -245,7 +244,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   <div class="sec-head">
     <div class="sec-ovr">For you</div>
     <h2 class="sec-title">Match for you</h2>
-    <a href="#" class="sec-link">See all</a>
+    <a href="#" class="sec-link">All →</a>
   </div>
   <div class="h-scroll">
     <a class="bot-card" href="SakeYo_Bottle_Detail_v2_TypeC.html">
@@ -286,7 +285,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   <div class="sec-head">
     <div class="sec-ovr">April · Singapore</div>
     <h2 class="sec-title">About town</h2>
-    <a href="#" class="sec-link">See all</a>
+    <a href="#" class="sec-link">All →</a>
   </div>
   <p class="sec-sub">Events happening in Singapore and Japan this month.</p>
   <div class="h-scroll">
@@ -328,7 +327,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   <div class="sec-head">
     <div class="sec-ovr">From the journal</div>
     <h2 class="sec-title">Stories &amp; reading</h2>
-    <a href="#" class="sec-link">All</a>
+    <a href="#" class="sec-link">All →</a>
   </div>
 
   <!-- Feature article -->

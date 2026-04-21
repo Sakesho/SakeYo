@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Scan result (Kinfolk)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F;
+  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,0.85);display:flex;align-items:center}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hdr-icon .badge{position:absolute;top:-1px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+
+/* CONFIDENCE BANNER */
+.scan-banner{padding:20px 22px 8px;display:flex;align-items:center;gap:14px;position:relative;z-index:2}
+.shot-thumb{width:56px;height:74px;border-radius:2px;overflow:hidden;flex-shrink:0;background:#222;border:1px solid var(--hair-soft)}
+.shot-thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(1.04) contrast(0.88) saturate(0.82) sepia(0.06)}
+.banner-body{flex:1;min-width:0}
+.banner-over{font-family:var(--sans);font-size:10px;color:var(--sage);font-weight:600;letter-spacing:0.20em;text-transform:uppercase;margin-bottom:5px;display:inline-flex;align-items:center;gap:6px}
+.banner-over .dot{width:5px;height:5px;border-radius:50%;background:var(--sage)}
+.banner-ttl{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--ink);letter-spacing:-0.012em;line-height:1.15;margin-bottom:3px}
+.banner-sub{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-faint);letter-spacing:0}
+.retake{flex-shrink:0;padding:7px 12px;border-radius:100px;border:1px solid var(--hair-strong);font-family:var(--sans);font-size:11px;color:var(--ink-mute);font-weight:600;letter-spacing:0.14em;text-transform:uppercase}
+
+/* HERO — recognized */
+.r-hero{margin:14px 22px 0;background:radial-gradient(ellipse 60% 45% at 62% 42%, rgba(255,240,210,0.08) 0%, transparent 60%),linear-gradient(180deg, var(--black) 0%, var(--black-deep) 100%);padding:30px 22px 26px;color:#fff;border-radius:var(--r-sm);display:flex;gap:18px;align-items:flex-end;position:relative;z-index:2}
+.r-bottle{width:106px;height:160px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center}
+.r-bottle img{max-height:160px;width:auto;display:block;filter:drop-shadow(-2px 12px 18px rgba(0,0,0,0.5)) drop-shadow(0 24px 40px rgba(0,0,0,0.35))}
+.r-info{flex:1;min-width:0;padding-bottom:4px}
+.r-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:8px}
+.r-name{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.08;letter-spacing:-0.012em;margin-bottom:4px;color:#fff}
+.r-brewery{font-family:var(--serif);font-style:italic;font-size:12.5px;color:rgba(255,255,255,0.65);letter-spacing:0;margin-bottom:14px}
+.match-tag{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:100px;background:rgba(45,107,79,0.22);color:#86c69f;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;border:1px solid rgba(45,107,79,0.4)}
+.match-tag .dot{width:5px;height:5px;border-radius:50%;background:#86c69f}
+
+/* ACTIONS */
+.actions{padding:18px 22px 0;display:grid;grid-template-columns:1fr;gap:10px;position:relative;z-index:2}
+.act{padding:14px 12px;background:transparent;border:1px solid var(--ink);border-radius:100px;text-align:center;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:7px}
+.act svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.act.primary{background:var(--crimson);color:#fff;border-color:var(--crimson);box-shadow:0 2px 6px rgba(155,27,27,0.18), 0 8px 18px -4px rgba(155,27,27,0.20)}
+
+/* SECTION */
+.sec-label{padding:32px 22px 4px;position:relative;z-index:2}
+.sec-lbl{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:12px;margin:0}
+.sec-lbl::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sec-sub{padding:8px 22px 14px;font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--ink-mute);letter-spacing:0;line-height:1.5;max-width:42ch;position:relative;z-index:2}
+
+/* ALTERNATES */
+.alts{padding:0 22px;position:relative;z-index:2}
+.alt{display:flex;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--hair);text-decoration:none;color:inherit}
+.alt:first-child{border-top:1px solid rgba(16,24,32,0.16)}
+.alt:last-child{border-bottom:1px solid var(--hair)}
+.alt-bottle{width:40px;height:68px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center}
+.alt-bottle img{max-height:68px;width:auto;display:block;filter:drop-shadow(-1px 4px 6px rgba(0,0,0,0.22))}
+.alt-body{flex:1;min-width:0}
+.alt-name{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--ink);letter-spacing:-0.012em;line-height:1.2;margin-bottom:3px}
+.alt-brewery{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-mute);letter-spacing:0}
+.alt-conf{flex-shrink:0;font-family:var(--sans);font-size:10px;color:var(--ink-faint);letter-spacing:0.14em;text-transform:uppercase;font-weight:600;text-align:right}
+.alt-conf strong{display:block;font-family:var(--serif);font-style:italic;font-size:18px;font-weight:400;color:var(--ink-mute);letter-spacing:-0.012em;line-height:1;margin-bottom:3px;text-transform:none}
+
+/* FOOTER */
+.foot{padding:36px 22px 14px;text-align:center;position:relative;z-index:2}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none;margin-bottom:4px}
+.foot-tag{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:0}
+
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body data-screen-label="Scan · Result · Kinfolk">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="sakeyo_Scan_Capture2.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Alerts.html" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a>
+    <a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<div class="scan-banner">
+  <div class="shot-thumb"><img src="Images/sakeyo_bottle_detail_Hakkaisan Tokubetsu Junmai.png" alt="Your shot"></div>
+  <div class="banner-body">
+    <div class="banner-over"><span class="dot"></span>94% match</div>
+    <div class="banner-ttl">We think this is…</div>
+    <div class="banner-sub">1 strong match · 3 close ones</div>
+  </div>
+  <a class="retake" href="sakeyo_Scan_Capture.html">Retake</a>
+</div>
+
+<div class="r-hero">
+  <div class="r-bottle"><img src="Images/sakeyo_bottle_detail_Hakkaisan Tokubetsu Junmai.png" alt="Hakkaisan Tokubetsu Junmai"></div>
+  <div class="r-info">
+    <div class="r-over">Recognized</div>
+    <div class="r-name">Hakkaisan Tokubetsu Junmai</div>
+    <div class="r-brewery">Hakkaisan Shuzo · Niigata</div>
+    <span class="match-tag"><span class="dot"></span>94% for you</span>
+  </div>
+</div>
+
+<div class="actions">
+  <a class="act primary" href="SakeYo_Bottle_Detail.html">
+    <svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
+    Yes, this is it
+  </a>
+  <a class="act" href="sakeyo_Scan_NotFound.html">
+    Not my sake · Can't find mine
+  </a>
+</div>
+
+<div class="sec-label">
+  <h2 class="sec-lbl">Could also be</h2>
+</div>
+<div class="sec-sub">Three close matches from the same brewery family, in case the label angle tricked us.</div>
+
+<div class="alts">
+  <a class="alt" href="SakeYo_Bottle_Detail.html">
+    <div class="alt-bottle"><img src="Images/sakeyo_bottle_detail_Hakkaisan Junmai Ginjo.png" alt="Hakkaisan Junmai Ginjo"></div>
+    <div class="alt-body">
+      <div class="alt-name">Hakkaisan Junmai Ginjo</div>
+      <div class="alt-brewery">Hakkaisan Shuzo · Niigata</div>
+    </div>
+    <div class="alt-conf"><strong>81%</strong>match</div>
+  </a>
+  <a class="alt" href="SakeYo_Bottle_Detail.html">
+    <div class="alt-bottle"><img src="Images/sakeyo_bottle_detail_Hakkaisan Junmai Daiginjo.png" alt="Hakkaisan Junmai Daiginjo"></div>
+    <div class="alt-body">
+      <div class="alt-name">Hakkaisan Junmai Daiginjo</div>
+      <div class="alt-brewery">Hakkaisan Shuzo · Niigata</div>
+    </div>
+    <div class="alt-conf"><strong>67%</strong>match</div>
+  </a>
+  <a class="alt" href="SakeYo_Bottle_Detail.html">
+    <div class="alt-bottle"><img src="Images/sakeyo_bottle_detail_Hakkaisan Tokubetsu Honjozo.png" alt="Hakkaisan Tokubetsu Honjozo"></div>
+    <div class="alt-body">
+      <div class="alt-name">Hakkaisan Tokubetsu Honjozo</div>
+      <div class="alt-brewery">Hakkaisan Shuzo · Niigata</div>
+    </div>
+    <div class="alt-conf"><strong>58%</strong>match</div>
+  </a>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+  <div class="foot-tag">One rung at a time.</div>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+</body></html>

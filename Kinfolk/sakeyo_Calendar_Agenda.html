@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Calendar (Kinfolk)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F;
+  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,0.85);display:flex;align-items:center}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hdr-icon .badge{position:absolute;top:-1px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+
+/* MASTHEAD */
+.greet{background:var(--black);padding:14px 22px 28px;position:relative;overflow:hidden}
+.greet-ovr{font-size:12px;font-weight:500;letter-spacing:-0.005em;color:rgba(255,255,255,0.55);display:flex;justify-content:space-between;align-items:baseline}
+.greet-ovr .range{font-family:var(--serif);font-style:italic;font-size:12.5px;color:rgba(255,255,255,0.55);font-weight:400;letter-spacing:0}
+.greet-name{font-family:var(--serif);font-size:28px;font-weight:400;color:var(--cream);margin-top:4px;line-height:1.18;letter-spacing:-0.012em;max-width:22ch}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;padding:22px 22px 0;gap:0;background:var(--cream);position:relative;z-index:2}
+.vt{flex:1;padding:11px 0;font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:-0.005em;color:var(--ink-mute);background:transparent;border:none;border-bottom:1px solid var(--hair);cursor:pointer;text-align:center;text-decoration:none;display:block}
+.vt.on{color:var(--ink);border-bottom-color:var(--crimson);border-bottom-width:1.5px;font-weight:600}
+
+/* FEATURED EVENT HERO */
+.agenda-hero{display:block;margin:24px 22px 6px;text-decoration:none;color:inherit;position:relative;z-index:2}
+.agenda-hero-img{position:relative;aspect-ratio:4/3;border-radius:var(--r-sm);overflow:hidden;margin-bottom:16px;background:#222}
+.agenda-hero-img img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(1.04) contrast(0.88) saturate(0.82) sepia(0.06)}
+.agenda-hero-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px}
+.agenda-hero-title{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.12;letter-spacing:-0.012em;color:var(--ink);margin-bottom:10px;max-width:24ch}
+.agenda-hero-dek{font-family:var(--serif);font-style:italic;font-size:14.5px;font-weight:500;line-height:1.5;color:var(--ink-mute);letter-spacing:-0.005em;margin-bottom:14px;max-width:42ch}
+.agenda-hero-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-mute);letter-spacing:0;margin-bottom:14px}
+.agenda-hero-meta .sep{font-style:normal;width:2.5px;height:2.5px;border-radius:50%;background:var(--ink-faint)}
+.agenda-hero-cta{display:inline-flex;align-items:center;gap:4px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;border-bottom:1px solid rgba(155,27,27,0.3);padding-bottom:2px}
+
+/* FILTER */
+.filter-bar{padding:16px 22px 4px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;background:var(--cream);position:relative;z-index:2;margin-right:-22px}
+.filter-bar::-webkit-scrollbar{display:none}
+.filter-bar .chip{flex-shrink:0;padding:7px 14px;border-radius:100px;border:1px solid var(--hair-strong);background:transparent;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-mute);letter-spacing:-0.005em;white-space:nowrap;cursor:pointer;text-decoration:none}
+.filter-bar .chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.filter-bar .chip:last-child{margin-right:22px}
+
+/* MONTH HEADER */
+.month{padding:30px 22px 10px;display:flex;align-items:baseline;gap:14px;position:relative;z-index:2}
+.month-ovr{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson)}
+.month-name{font-family:var(--sans);font-weight:600;font-size:22px;letter-spacing:-0.022em;color:var(--ink);line-height:1}
+.month-rule{flex:1;height:1px;background:var(--hair)}
+.month-count{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-mute);letter-spacing:0}
+
+/* EVENT ROW */
+.events{padding:0 22px;display:flex;flex-direction:column;position:relative;z-index:2}
+.event{display:flex;gap:16px;text-decoration:none;color:inherit;padding:20px 0;border-top:1px solid var(--hair);position:relative;align-items:flex-start}
+.event:first-child{border-top:1px solid rgba(16,24,32,0.16)}
+.event:last-child{border-bottom:1px solid var(--hair)}
+.event.saved .saved-flag{display:inline-block}
+.date-block{width:54px;flex-shrink:0;text-align:center;border-right:1px solid var(--hair);padding-right:14px;padding-top:2px}
+.date-mo{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--crimson);margin-bottom:4px;line-height:1}
+.date-day{font-family:var(--serif);font-weight:400;font-size:30px;line-height:1;letter-spacing:-0.012em;color:var(--ink)}
+.date-dow{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-mute);letter-spacing:0;margin-top:4px}
+
+.event-body{flex:1;min-width:0;padding-top:2px}
+.event-over{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.event-type{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
+.saved-flag{display:none;font-family:var(--serif);font-style:italic;font-size:12px;color:var(--crimson);letter-spacing:0}
+.event-name{font-family:var(--serif);font-weight:400;font-size:20px;line-height:1.18;letter-spacing:-0.01em;margin-bottom:5px;color:var(--ink)}
+.event-where{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-mute);margin-bottom:10px;letter-spacing:0}
+.event-host{font-family:var(--sans);font-size:13.5px;font-weight:400;line-height:1.5;color:var(--ink-mute);margin-bottom:12px;letter-spacing:-0.008em;max-width:42ch}
+.event-host em{font-style:italic;font-family:var(--serif);font-size:14px;color:var(--ink);font-weight:400}
+.event-foot{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:11.5px;color:var(--ink-faint);letter-spacing:-0.005em;flex-wrap:wrap}
+.event-foot .sep{width:3px;height:3px;border-radius:50%;background:var(--ink-faint)}
+.event-foot .time{font-weight:500;color:var(--ink-mute)}
+.event-foot .price{color:var(--ink);font-weight:600}
+.event-foot .seats-low{color:var(--crimson);font-weight:600}
+
+/* TAIL */
+.tail{padding:44px 22px 12px;text-align:center;position:relative;z-index:2}
+.tail-line{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink-mute);margin-bottom:12px;letter-spacing:0}
+.tail-cta{display:inline-flex;align-items:center;gap:4px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;border-bottom:1px solid rgba(155,27,27,0.3);padding-bottom:2px}
+
+/* FOOTER */
+.foot{padding:36px 22px 16px;text-align:center;position:relative;z-index:2}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none;letter-spacing:0;margin-bottom:4px}
+.foot-tag{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:0}
+
+/* BOTTOM NAV */
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body data-screen-label="Calendar · Kinfolk">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Alerts.html" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a>
+    <a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<!-- MASTHEAD -->
+<div class="greet">
+  <div class="greet-ovr"><span>Calendar</span><span class="range">Apr – Jun 2026</span></div>
+  <div class="greet-name">Where to be, and when.</div>
+</div>
+
+<!-- VIEW TOGGLE -->
+<div class="view-toggle">
+  <a class="vt" href="sakeyo_Calendar.html">Month</a>
+  <a class="vt on" href="sakeyo_Calendar_Agenda.html">Agenda</a>
+</div>
+
+<!-- FEATURED EVENT HERO -->
+<a class="agenda-hero" href="sakeyo_Event_Detail.html">
+  <div class="agenda-hero-img"><img src="Images/DSC09356.jpeg" alt="A Hiroshima ceramicist's vessels and sake"></div>
+  <div class="agenda-hero-over">Featured · Tasting + craft</div>
+  <h2 class="agenda-hero-title">An evening with a Hiroshima ceramicist</h2>
+  <p class="agenda-hero-dek">A potter from Hiroshima brings a season's work, and we drink five sake through her vessels. How the cup shapes the taste — and the other way around.</p>
+  <div class="agenda-hero-meta"><span>Sat, May 16</span><span class="sep"></span><span>7:00 pm</span><span class="sep"></span><span>SakeYō Studio</span><span class="sep"></span><span>$85</span></div>
+  <span class="agenda-hero-cta">Reserve →</span>
+</a>
+
+<!-- FILTER -->
+<div class="filter-bar">
+  <a class="chip active" href="#">All</a>
+  <a class="chip" href="#">Near me</a>
+  <a class="chip" href="#">Tastings</a>
+  <a class="chip" href="#">Brewer visits</a>
+  <a class="chip" href="#">Pairing dinners</a>
+  <a class="chip" href="#">Classes</a>
+</div>
+
+<!-- APRIL -->
+<div class="month">
+  <span class="month-ovr">Month</span>
+  <div class="month-name">April 2026</div>
+  <div class="month-rule"></div>
+  <div class="month-count">4 events</div>
+</div>
+<div class="events">
+  <a class="event" href="sakeyo_Event_Detail.html">
+    <div class="date-block"><div class="date-mo">Apr</div><div class="date-day">18</div><div class="date-dow">Sat</div></div>
+    <div class="event-body">
+      <div class="event-over"><span class="event-type">Tasting</span><span class="saved-flag">Saved</span></div>
+      <div class="event-name">An evening with Niigata sake</div>
+      <div class="event-where">Hashida Sushi · Tanjong Pagar</div>
+      <div class="event-host">A structured walk through what makes Niigata sake taste like Niigata. Led by Kenji Yamamoto, eight years brewing at Kikuhime.</div>
+      <div class="event-foot"><span class="time">7:00 pm</span><span class="sep"></span><span class="price">$65</span><span class="sep"></span><span class="seats-low">3 seats left</span></div>
+    </div>
+  </a>
+
+  <a class="event" href="sakeyo_Event_Detail.html">
+    <div class="date-block"><div class="date-mo">Apr</div><div class="date-day">24</div><div class="date-dow">Fri</div></div>
+    <div class="event-body">
+      <div class="event-over"><span class="event-type">Class</span><span class="saved-flag">Saved</span></div>
+      <div class="event-name">Reading a sake label</div>
+      <div class="event-where">SakeYō Studio · Online</div>
+      <div class="event-host">A working session on junmai, ginjo, daiginjo, and the numbers that actually matter. Bring a bottle.</div>
+      <div class="event-foot"><span class="time">8:00 pm</span><span class="sep"></span><span class="price">Free</span><span class="sep"></span><span>42 going</span></div>
+    </div>
+  </a>
+
+  <a class="event saved" href="sakeyo_Event_Detail.html">
+    <div class="date-block"><div class="date-mo">Apr</div><div class="date-day">27</div><div class="date-dow">Mon</div></div>
+    <div class="event-body">
+      <div class="event-over"><span class="event-type">Bar takeover</span><span class="saved-flag">Saved</span></div>
+      <div class="event-name">Ishikawa night at Orihara</div>
+      <div class="event-where">Orihara Shoten · Robertson Quay</div>
+      <div class="event-host">Six Ishikawa producers across one evening. Walk in, order what you want, stay as long as you like.</div>
+      <div class="event-foot"><span class="time">6–11 pm</span><span class="sep"></span><span class="price">Pay as you go</span></div>
+    </div>
+  </a>
+</div>
+
+<!-- MAY -->
+<div class="month">
+  <span class="month-ovr">Month</span>
+  <div class="month-name">May 2026</div>
+  <div class="month-rule"></div>
+  <div class="month-count">5 events</div>
+</div>
+<div class="events">
+  <a class="event" href="sakeyo_Event_Detail.html">
+    <div class="date-block"><div class="date-mo">May</div><div class="date-day">09</div><div class="date-dow">Sat</div></div>
+    <div class="event-body">
+      <div class="event-over"><span class="event-type">Pairing dinner</span><span class="saved-flag">Saved</span></div>
+      <div class="event-name">Aged sake and smoked cheese</div>
+      <div class="event-where">Fura · Keong Saik</div>
+      <div class="event-host">Five koshu across a five-course menu built around smoke, fat, and fermentation. Chef Rin cooking.</div>
+      <div class="event-foot"><span class="time">7:30 pm</span><span class="sep"></span><span class="price">$145</span><span class="sep"></span><span class="seats-low">6 seats left</span></div>
+    </div>
+  </a>
+
+  <a class="event" href="sakeyo_Event_Detail.html">
+    <div class="date-block"><div class="date-mo">May</div><div class="date-day">15</div><div class="date-dow">Fri</div></div>
+    <div class="event-body">
+      <div class="event-over"><span class="event-type">Brewer visit · Japan</span><span class="saved-flag">Saved</span></div>
+      <div class="event-name">Tedorigawa open house</div>
+      <div class="event-where">Yoshida Shuzō · Hakusan, Ishikawa</div>
+      <div class="event-host">The brewery featured in <em>The Birth of Saké</em> opens its doors once a year. Koji room, press, and a full tasting of the new vintage.</div>
+      <div class="event-foot"><span class="time">All day</span><span class="sep"></span><span class="price">¥3,500</span></div>
+    </div>
+  </a>
+
+  <a class="event saved" href="sakeyo_Event_Detail.html">
+    <div class="date-block"><div class="date-mo">May</div><div class="date-day">22</div><div class="date-dow">Fri</div></div>
+    <div class="event-body">
+      <div class="event-over"><span class="event-type">Tasting</span><span class="saved-flag">Saved</span></div>
+      <div class="event-name">Sparkling sake, properly</div>
+      <div class="event-where">Bar Cicheti · Kampong Glam</div>
+      <div class="event-host">The bottle-fermented sparkling sake category has quietly gotten interesting. An evening on the ones doing it properly, and why it matters.</div>
+      <div class="event-foot"><span class="time">7:00 pm</span><span class="sep"></span><span class="price">$55</span></div>
+    </div>
+  </a>
+</div>
+
+<!-- TAIL -->
+<div class="tail">
+  <div class="tail-line">Host an event of your own.</div>
+  <a class="tail-cta" href="#">Submit an event →</a>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+  <div class="foot-tag">One rung at a time.</div>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+</body></html>

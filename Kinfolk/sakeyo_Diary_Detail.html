@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Diary Detail (Kinfolk)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F; --gold:#B8892B; --navy:#1A2E3D;
+  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,0.85);display:flex;align-items:center}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hdr-icon .badge{position:absolute;top:-1px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+
+/* HERO — chiaroscuro */
+.d-hero{background:
+    radial-gradient(ellipse 60% 45% at 62% 42%, rgba(255,240,210,0.08) 0%, transparent 60%),
+    linear-gradient(180deg, var(--black) 0%, var(--black-deep) 100%);
+  padding:30px 22px 30px;color:#fff;display:flex;gap:20px;align-items:flex-end}
+.d-bottle{width:110px;height:170px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center}
+.d-bottle img{max-height:170px;width:auto;display:block;filter:drop-shadow(-2px 12px 18px rgba(0,0,0,0.5)) drop-shadow(0 24px 40px rgba(0,0,0,0.35))}
+.d-info{flex:1;padding-bottom:2px;min-width:0}
+.d-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px}
+.d-name{font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.05;letter-spacing:-0.014em;margin-bottom:5px;color:#fff}
+.d-brewery{font-family:var(--serif);font-style:italic;font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:14px;letter-spacing:0}
+.d-stars{display:flex;gap:2px;color:var(--crimson);font-size:14px;letter-spacing:2px}
+.d-stars .off{color:rgba(255,255,255,0.25)}
+
+/* LEAD NOTE — pullquote */
+.lead{padding:26px 22px 6px;position:relative;z-index:2}
+.lead p{font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.48;letter-spacing:-0.005em;color:var(--ink);font-weight:500;max-width:42ch;padding:6px 0 6px 16px;border-left:2px solid var(--crimson)}
+
+/* SECTION HEADER */
+.sec{padding:30px 0 0;position:relative;z-index:2}
+.sec-head{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:baseline;padding:0 22px;gap:6px 12px;margin-bottom:14px}
+.sec-head .sec-ovr{grid-column:1;grid-row:1;display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
+.sec-head .sec-ovr::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sec-head .sec-title{grid-column:1;grid-row:2;font-family:var(--sans);font-size:22px;font-weight:600;line-height:1.1;letter-spacing:-0.022em;color:var(--ink)}
+.sec-head .edit{grid-column:2;grid-row:2;align-self:end;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em}
+
+/* FACTS */
+.facts{margin:0 22px;display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid rgba(16,24,32,0.16)}
+.fact{padding:14px 0;border-bottom:1px solid var(--hair)}
+.fact:nth-child(odd){padding-right:14px;border-right:1px solid var(--hair)}
+.fact:nth-child(even){padding-left:14px}
+.fact .fk{font-family:var(--sans);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:4px}
+.fact .fv{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--ink);letter-spacing:-0.008em;line-height:1.2}
+.fact .fs{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-faint);letter-spacing:0;margin-top:3px}
+
+/* TAG CHIPS */
+.tag-row{padding:0 22px;display:flex;flex-wrap:wrap;gap:7px}
+.tag{padding:6px 12px;border:1px solid var(--hair-strong);border-radius:100px;font-family:var(--sans);font-size:12px;color:var(--ink-mute);font-weight:500;letter-spacing:-0.005em}
+.tag.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* PAIRINGS */
+.pair-list{padding:0 22px}
+.pair-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--hair)}
+.pair-row:first-child{border-top:1px solid rgba(16,24,32,0.16)}
+.pair-row:last-child{border-bottom:1px solid var(--hair)}
+.pair-row .pr-name{font-family:var(--serif);font-size:16px;font-weight:400;color:var(--ink);letter-spacing:-0.008em;flex:1}
+.pair-row .pr-note{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-mute);letter-spacing:0;flex:0 0 auto;text-align:right;max-width:20ch}
+
+/* BOTTLE LINK */
+.bottle-link{margin:28px 22px 0;padding:18px 20px;background:var(--cream-deep);border:1px solid var(--hair-soft);border-radius:var(--r-sm);display:flex;gap:14px;align-items:center;text-decoration:none;color:inherit}
+.bottle-link .ico{width:34px;height:34px;border-radius:50%;background:var(--cream);border:1px solid var(--hair-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bottle-link .ico svg{width:15px;height:15px;stroke:var(--crimson);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.bottle-link .body{flex:1;min-width:0}
+.bottle-link .over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);margin-bottom:4px}
+.bottle-link .txt{font-family:var(--sans);font-size:13px;color:var(--ink);line-height:1.45;letter-spacing:-0.008em}
+.bottle-link .arrow{color:var(--crimson);flex-shrink:0}
+.bottle-link .arrow svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ACTIONS */
+.actions{padding:28px 22px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative;z-index:2}
+.act{padding:13px 12px;background:transparent;border:1px solid var(--hair-strong);border-radius:var(--r-sm);text-align:center;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:-0.005em;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer}
+.act svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.act.primary{border-color:var(--crimson);color:var(--crimson);grid-column:1/-1;font-weight:600;font-size:12px;letter-spacing:0.12em;text-transform:uppercase}
+.act.danger{color:var(--crimson);border-color:rgba(155,27,27,0.28)}
+
+.foot{padding:36px 22px 16px;text-align:center}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none;margin-bottom:4px}
+.foot-tag{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:0}
+
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body data-screen-label="Diary Detail · Kinfolk">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="sakeyo_Diary.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Alerts.html" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a>
+    <a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="d-hero">
+  <div class="d-bottle"><img src="Images/sakeyo_diary_Tengumai Junmai Yamahai.png" alt="Tengumai Yamahai Junmai"></div>
+  <div class="d-info">
+    <div class="d-over">Diary entry</div>
+    <div class="d-name">Tengumai Yamahai Junmai</div>
+    <div class="d-brewery">Shata Shuzō · Ishikawa</div>
+    <div class="d-stars">★★★★★</div>
+  </div>
+</div>
+
+<!-- LEAD NOTE -->
+<div class="lead">
+  <p>"Ordered at Shu Shu on Yamagami's recommendation. Heavier than I expected — a good warm cup. The kind of bottle I'd come back for."</p>
+</div>
+
+<!-- WHEN + WHERE -->
+<section class="sec">
+  <div class="sec-head">
+    <div class="sec-ovr">When and where</div>
+    <h2 class="sec-title">Context</h2>
+    <a class="edit" href="#">Edit</a>
+  </div>
+  <div class="facts">
+    <div class="fact"><div class="fk">Date</div><div class="fv">Apr 11, 2026</div><div class="fs">Friday evening</div></div>
+    <div class="fact"><div class="fk">Place</div><div class="fv">Kanazawa Shu Shu</div><div class="fs">Oyamamachi, Kanazawa</div></div>
+    <div class="fact"><div class="fk">Temperature</div><div class="fv">Warmed · 45°C</div><div class="fs">Nurukan</div></div>
+    <div class="fact"><div class="fk">Vessel</div><div class="fv">Ochoko</div><div class="fs">Iga-yaki</div></div>
+  </div>
+</section>
+
+<!-- STYLE -->
+<section class="sec">
+  <div class="sec-head">
+    <div class="sec-ovr">How it tasted</div>
+    <h2 class="sec-title">Style</h2>
+  </div>
+  <div class="tag-row">
+    <span class="tag on">Heavy</span>
+    <span class="tag on">Aged</span>
+    <span class="tag on">Mellow</span>
+    <span class="tag">Fruity</span>
+    <span class="tag">Dry</span>
+    <span class="tag">Light</span>
+  </div>
+</section>
+
+<!-- PAIRINGS -->
+<section class="sec">
+  <div class="sec-head">
+    <div class="sec-ovr">With</div>
+    <h2 class="sec-title">Paired with</h2>
+  </div>
+  <div class="pair-list">
+    <div class="pair-row">
+      <span class="pr-name">Oden — daikon, tofu, fishcake</span>
+      <span class="pr-note">lifted the dashi</span>
+    </div>
+    <div class="pair-row">
+      <span class="pr-name">Yaki saba</span>
+      <span class="pr-note">rich fat, salt, warmth</span>
+    </div>
+    <div class="pair-row">
+      <span class="pr-name">Amaebi cured in salt</span>
+      <span class="pr-note">clean palate reset</span>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTLE LINK -->
+<a class="bottle-link" href="SakeYo_Bottle_Detail.html">
+  <div class="ico"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="0.5"/><line x1="6" y1="9" x2="18" y2="9"/><line x1="9" y1="3" x2="9" y2="9"/><line x1="15" y1="3" x2="15" y2="9"/></svg></div>
+  <div class="body">
+    <div class="over">The bottle</div>
+    <div class="txt">See specs, brewery notes, temperature map, and more pairings.</div>
+  </div>
+  <div class="arrow"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+</a>
+
+<!-- ACTIONS -->
+<div class="actions">
+  <a class="act primary" href="#">
+    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>
+    Edit entry
+  </a>
+  <a class="act" href="#">
+    <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+    Share
+  </a>
+  <a class="act danger" href="#">
+    <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+    Delete
+  </a>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+  <div class="foot-tag">One rung at a time.</div>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+</body></html>

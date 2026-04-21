@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — UI Kit (Kinfolk direction)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F;
+  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);letter-spacing:-0.011em;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;padding:50px 32px 80px}
+a{color:inherit;text-decoration:none}
+
+.page{max-width:1040px;margin:0 auto}
+
+/* MASTHEAD */
+.kit-masthead{margin-bottom:44px;padding-bottom:32px;border-bottom:1px solid var(--hair-strong)}
+.kit-ovr{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--crimson);margin-bottom:10px}
+.kit-title{font-family:var(--serif);font-size:56px;font-weight:400;line-height:1.02;letter-spacing:-0.02em;color:var(--ink);margin-bottom:14px}
+.kit-dek{font-family:var(--sans);font-size:16px;color:var(--ink-mute);line-height:1.55;max-width:56ch;letter-spacing:-0.008em}
+.kit-meta{margin-top:20px;font-size:12px;color:var(--ink-faint);display:flex;gap:22px;font-family:var(--sans);letter-spacing:-0.005em}
+
+/* SECTION */
+.kit-sec{padding:48px 0;border-top:1px solid var(--hair)}
+.kit-sec:first-of-type{border-top:none;padding-top:32px}
+.sec-label{display:flex;align-items:baseline;gap:16px;margin-bottom:28px}
+.sec-label .sec-num{font-family:var(--serif);font-style:italic;font-size:24px;color:var(--crimson);font-weight:400;font-variant-numeric:tabular-nums;line-height:1}
+.sec-label .sec-h{font-family:var(--sans);font-size:26px;font-weight:600;letter-spacing:-0.022em;color:var(--ink);line-height:1}
+.sec-label .sec-sub{margin-left:auto;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink-mute)}
+.sec-note{font-family:var(--sans);font-size:13.5px;color:var(--ink-mute);line-height:1.55;letter-spacing:-0.008em;max-width:58ch;margin-bottom:22px}
+
+/* ANNOTATION */
+.ann{margin-top:10px;padding-left:14px;border-left:2px solid var(--crimson);font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--ink-mute);line-height:1.55;max-width:60ch}
+.ann code{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-style:normal;font-size:12px;background:rgba(16,24,32,0.05);padding:1px 6px;border-radius:3px;color:var(--ink)}
+
+/* COLOR SWATCHES */
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.swatch{border:1px solid var(--hair);border-radius:8px;overflow:hidden;background:#fff}
+.swatch .ch{height:72px}
+.swatch .lb{padding:10px 12px;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--ink);letter-spacing:-0.005em}
+.swatch .hex{font-family:ui-monospace,monospace;font-size:11px;color:var(--ink-faint);margin-top:2px}
+
+/* TYPE SPECIMENS */
+.type-row{display:grid;grid-template-columns:160px 1fr;gap:28px;padding:18px 0;border-top:1px solid var(--hair)}
+.type-row:first-child{border-top:none;padding-top:0}
+.type-meta{font-family:var(--sans);font-size:11px;color:var(--ink-faint);letter-spacing:-0.005em;line-height:1.5}
+.type-meta b{display:block;color:var(--ink-mute);font-weight:500;margin-bottom:3px}
+.type-spec{min-width:0}
+
+.type-greeting{font-family:var(--serif);font-size:36px;font-weight:400;color:var(--ink);line-height:1.08;letter-spacing:-0.018em}
+.type-hero{font-family:var(--serif);font-size:44px;font-weight:400;color:var(--ink);line-height:1.02;letter-spacing:-0.018em}
+.type-feat{font-family:var(--serif);font-size:26px;font-weight:400;color:var(--ink);line-height:1.12;letter-spacing:-0.012em}
+.type-pullquote{font-family:var(--serif);font-style:italic;font-weight:500;font-size:18px;line-height:1.45;color:var(--ink);letter-spacing:-0.005em;padding:4px 0 4px 14px;border-left:2px solid var(--crimson);max-width:44ch}
+.type-section{font-family:var(--sans);font-size:24px;font-weight:600;color:var(--ink);line-height:1.1;letter-spacing:-0.022em}
+.type-overline{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
+.type-body{font-family:var(--sans);font-size:14.5px;font-weight:400;color:var(--ink-mute);line-height:1.55;letter-spacing:-0.008em;max-width:58ch}
+.type-bot-name{font-family:var(--sans);font-size:14.5px;font-weight:600;color:var(--ink);letter-spacing:-0.018em}
+.type-bot-cat{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-mute)}
+.type-caption{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-faint)}
+
+/* BUTTONS / CHIPS */
+.row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.row + .row{margin-top:6px}
+.btn-primary{padding:14px 22px;background:var(--crimson);color:#fff;border-radius:100px;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:-0.008em;border:none;cursor:pointer;box-shadow:0 2px 6px rgba(155,27,27,0.18), 0 10px 20px -4px rgba(155,27,27,0.22)}
+.btn-text-crimson{font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em}
+.btn-outline{padding:13px 20px;background:transparent;border:1px solid var(--ink);color:var(--ink);border-radius:100px;font-family:var(--sans);font-size:14px;font-weight:500;letter-spacing:-0.005em}
+.hero-pill{display:inline-block;padding:6px 13px;background:var(--crimson);color:#fff;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;box-shadow:0 2px 4px rgba(122,21,21,0.4), 0 6px 16px -4px rgba(155,27,27,0.5)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:100px;border:1px solid rgba(16,24,32,0.22);font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-mute);letter-spacing:-0.005em;background:transparent}
+.chip .dot{width:5px;height:5px;border-radius:50%;background:var(--crimson)}
+.chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+.fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25)}
+.fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* CARDS */
+.card-row{display:flex;gap:22px;flex-wrap:wrap}
+
+/* Bottle card with lit stage */
+.bot-card{width:220px;background:#fff;border:1px solid var(--hair-soft);border-radius:var(--r-sm);overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;box-shadow:0 1px 2px rgba(16,24,32,0.04)}
+.bot-img{position:relative;height:240px;padding:14px;display:flex;align-items:flex-end;justify-content:center;
+  background:radial-gradient(ellipse 70% 55% at 35% 70%, var(--cream-lit) 0%, var(--cream-warm) 40%, var(--cream-shadow) 100%);
+  border-bottom:1px solid var(--hair-soft);overflow:hidden}
+.bot-img::before{content:'';position:absolute;left:50%;bottom:14px;width:70px;height:10px;transform:translateX(-46%);background:radial-gradient(ellipse at center, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.14) 45%, transparent 75%);filter:blur(3px);z-index:1}
+.bot-img::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 80% 20%, rgba(0,0,0,0.18) 0%, transparent 60%);pointer-events:none}
+.bot-img .bot-photo{position:relative;z-index:2;max-height:100%;width:auto;filter:drop-shadow(-1px 4px 6px rgba(0,0,0,0.3))}
+.bot-img .bot-match{position:absolute;top:10px;right:10px;z-index:3}
+.bot-body{padding:12px 14px 14px}
+.bot-cat-label{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-mute);margin-bottom:3px}
+.bot-name-label{font-family:var(--sans);font-size:14.5px;font-weight:600;line-height:1.2;color:var(--ink);letter-spacing:-0.018em;margin-bottom:3px}
+.bot-brew-label{font-family:var(--sans);font-size:11.5px;color:var(--ink-faint);letter-spacing:-0.005em}
+
+/* Match ring */
+.match-ring{width:36px;height:36px;position:relative;display:flex;align-items:center;justify-content:center}
+.match-ring svg{width:100%;height:100%;transform:rotate(-90deg);position:absolute;inset:0}
+.match-ring svg .track{fill:none;stroke:rgba(255,255,255,0.5);stroke-width:2.5}
+.match-ring svg .val{fill:none;stroke:var(--sage);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:calc(var(--pct)*1.005) 999}
+.match-ring .txt{position:relative;z-index:1;font-family:var(--serif);font-size:12px;font-weight:500;color:var(--sage);letter-spacing:-0.02em;line-height:1;display:flex;align-items:baseline}
+.match-ring .txt .pct{font-size:0.7em;font-weight:400;margin-left:0.5px}
+.match-ring.on-cream svg .track{stroke:var(--hair)}
+
+/* Event card */
+.event-card{width:260px;background:#fff;border:1px solid var(--hair-soft);border-radius:var(--r-sm);overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;box-shadow:0 1px 2px rgba(16,24,32,0.04)}
+.event-img{position:relative;aspect-ratio:4/3;background:linear-gradient(135deg,#3a3a3a,#1a1a1a)}
+.event-pill{position:absolute;top:12px;left:12px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--crimson);background:rgba(255,255,255,0.94);padding:4px 9px;border-radius:3px;z-index:2}
+.event-date-stamp{position:absolute;top:10px;right:10px;background:rgba(16,24,32,0.78);color:#fff;padding:6px 9px;border-radius:4px;text-align:center;z-index:2;backdrop-filter:blur(4px)}
+.event-date-stamp .m{font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;opacity:0.85;line-height:1}
+.event-date-stamp .d{font-family:var(--serif);font-size:18px;font-weight:400;line-height:1;margin-top:2px}
+.event-body{padding:12px 14px 14px}
+.event-title-l{font-family:var(--sans);font-size:14.5px;font-weight:600;color:var(--ink);letter-spacing:-0.018em;margin-bottom:3px}
+.event-meta-l{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-mute)}
+
+/* Section-header demo */
+.sec-head{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:baseline;gap:6px 12px;padding:22px;background:var(--cream);border-radius:8px;border:1px solid var(--hair-soft)}
+.sec-head .sec-ovr{grid-column:1;grid-row:1;display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
+.sec-head .sec-ovr::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sec-head .sec-title{grid-column:1;grid-row:2;font-family:var(--sans);font-size:24px;font-weight:600;line-height:1.1;letter-spacing:-0.022em;color:var(--ink)}
+.sec-head .sec-link{grid-column:2;grid-row:2;align-self:end;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;white-space:nowrap}
+
+/* Numbered list row demo */
+.jour-demo{padding:22px;background:var(--cream);border-radius:8px;border:1px solid var(--hair-soft)}
+.jour-row{display:flex;gap:18px;padding:18px 0;border-top:1px solid var(--hair);align-items:flex-start}
+.jour-row:first-child{border-top:1px solid rgba(16,24,32,0.16)}
+.jour-row:last-child{border-bottom:1px solid var(--hair)}
+.jour-num{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--crimson);font-weight:400;flex-shrink:0;width:26px;padding-top:2px;font-variant-numeric:tabular-nums}
+.jour-body{flex:1;min-width:0}
+.jour-cat{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:5px}
+.jour-title{font-family:var(--serif);font-size:19px;font-weight:400;line-height:1.2;letter-spacing:-0.01em;color:var(--ink);margin-bottom:5px}
+.jour-dek{font-family:var(--sans);font-size:13.5px;color:var(--ink-mute);line-height:1.5;letter-spacing:-0.008em}
+
+/* Mini-menu tile demo */
+.tile-demo{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;background:var(--cream);padding:22px 14px;border-radius:8px;border:1px solid var(--hair-soft);max-width:480px}
+.tile{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 2px}
+.tile-ic{width:44px;height:44px;border-radius:50%;background:var(--cream-deep);border:1px solid var(--hair-soft);display:flex;align-items:center;justify-content:center}
+.tile-ic svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tile span{font-size:11px;font-weight:500;color:var(--ink);text-align:center;letter-spacing:-0.005em;font-family:var(--sans)}
+
+/* Hero demo — dark bg */
+.hero-demo{position:relative;height:320px;border-radius:8px;overflow:hidden;
+  background:
+    linear-gradient(180deg, transparent 48%, rgba(0,0,0,0.7) 100%),
+    radial-gradient(ellipse 78% 58% at 22% 76%, rgba(255,185,80,0.78) 0%, rgba(210,140,50,0.3) 32%, transparent 72%),
+    linear-gradient(180deg, #1a1510 0%, #0a0806 100%)}
+.hero-inner{position:absolute;left:0;right:0;bottom:0;padding:26px 26px 28px;color:#fff}
+.hero-inner .hero-h1{font-family:var(--serif);font-size:44px;font-weight:400;line-height:1.02;letter-spacing:-0.018em;color:#fff;margin:12px 0 12px;max-width:80%}
+.hero-inner .hero-dek{font-family:var(--sans);font-size:14.5px;color:rgba(245,240,235,0.78);line-height:1.5;max-width:70%;margin-bottom:16px;letter-spacing:-0.008em}
+.hero-inner .hero-cta{font-family:var(--sans);font-size:13px;font-weight:500;color:rgba(255,255,255,0.92);border-bottom:1px solid rgba(255,255,255,0.4);padding-bottom:2px}
+
+/* RULES box */
+.rules{background:#fff;border:1px solid var(--hair);border-radius:8px;padding:26px 30px}
+.rule-item{display:flex;gap:18px;padding:14px 0;border-top:1px solid var(--hair)}
+.rule-item:first-child{border-top:none;padding-top:0}
+.rule-item:last-child{padding-bottom:0}
+.rule-n{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--crimson);width:30px;flex-shrink:0;font-variant-numeric:tabular-nums;line-height:1.2}
+.rule-body h4{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:-0.018em;color:var(--ink);margin-bottom:4px}
+.rule-body p{font-family:var(--sans);font-size:13.5px;color:var(--ink-mute);line-height:1.55;letter-spacing:-0.008em;max-width:60ch}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- MASTHEAD -->
+<div class="kit-masthead">
+  <div class="kit-ovr">UI Kit · Kinfolk direction</div>
+  <h1 class="kit-title">The brand, made readable on one page.</h1>
+  <p class="kit-dek">Every token, pattern, and rule used across the 37 Apple screens. The principle: move from "tech product in Inter" to "editorial Japanese brand" — Kinfolk-adjacent, quietly confident, no marketing gloss. Use this page as the spec when rebuilding any screen.</p>
+  <div class="kit-meta">
+    <span>v1 · Kinfolk direction</span>
+    <span>Typography: Switzer + Instrument Serif</span>
+    <span>Reference screen: SakeYo_Home_v3_Kinfolk_TypeC</span>
+  </div>
+</div>
+
+<!-- 01 COLOR -->
+<section class="kit-sec">
+  <div class="sec-label">
+    <div class="sec-num">01</div>
+    <div class="sec-h">Color</div>
+    <div class="sec-sub">Editorial cream, quiet crimson, sage for positive signals.</div>
+  </div>
+
+  <div class="swatch-grid">
+    <div class="swatch"><div class="ch" style="background:#0d131a"></div><div class="lb">--black <div class="hex">#0D131A</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#05080c"></div><div class="lb">--black-deep <div class="hex">#05080C</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#9B1B1B"></div><div class="lb">--crimson <div class="hex">#9B1B1B</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#7A1515"></div><div class="lb">--crimson-deep <div class="hex">#7A1515</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#2D6B4F"></div><div class="lb">--sage <div class="hex">#2D6B4F</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#101820"></div><div class="lb">--ink <div class="hex">#101820</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#5F5E5A"></div><div class="lb">--ink-mute <div class="hex">#5F5E5A</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#8A8880"></div><div class="lb">--ink-faint <div class="hex">#8A8880</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#F5F0EB"></div><div class="lb">--cream <div class="hex">#F5F0EB</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#EDE6DD"></div><div class="lb">--cream-deep <div class="hex">#EDE6DD</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#E8DFD2"></div><div class="lb">--cream-warm <div class="hex">#E8DFD2</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#F5EBD8"></div><div class="lb">--cream-lit <div class="hex">#F5EBD8</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#D4C5AA"></div><div class="lb">--cream-shadow <div class="hex">#D4C5AA</div></div></div>
+  </div>
+
+  <div class="ann"><code>--cream-lit</code> and <code>--cream-shadow</code> are new. They only appear inside the bottle lit-stage gradient (<code>radial-gradient(ellipse 70% 55% at 35% 70%, var(--cream-lit) 0%, var(--cream-warm) 40%, var(--cream-shadow) 100%)</code>). Nowhere else.</div>
+</section>
+
+<!-- 02 TYPOGRAPHY -->
+<section class="kit-sec">
+  <div class="sec-label">
+    <div class="sec-num">02</div>
+    <div class="sec-h">Typography</div>
+    <div class="sec-sub">Instrument Serif for four editorial moments · Switzer for everything else.</div>
+  </div>
+
+  <p class="sec-note">Serif is used sparingly — only where the reader pauses to read. Section titles, bottle names, chips, and meta rows are all Switzer. If you find yourself applying serif to a scanning label, stop.</p>
+
+  <div class="type-row">
+    <div class="type-meta"><b>Greeting</b>serif · 36px / 400<br>1.08 · -0.018em</div>
+    <div class="type-spec"><div class="type-greeting">Welcome back, Marcus</div></div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Hero H1</b>serif · 44px / 400<br>1.02 · -0.018em</div>
+    <div class="type-spec"><div class="type-hero">Inside Aoki Brewery, Niigata</div></div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Feature article title</b>serif · 26px / 400<br>1.12 · -0.012em</div>
+    <div class="type-spec"><div class="type-feat">Why a cold junmai is the only thing an oyster actually wants</div></div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Pullquote</b>serif italic · 18px / 500<br>crimson left-rule</div>
+    <div class="type-spec"><div class="type-pullquote">"Oyster season. I've been chasing anything made with black or white koji — it's a killer combination."</div></div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Section title</b>sans · 24px / 600<br>1.1 · -0.022em</div>
+    <div class="type-spec"><div class="type-section">Match for you</div></div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Overline</b>sans · 10px / 600<br>0.20em · uppercase</div>
+    <div class="type-spec"><div class="type-overline">For you</div></div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Body / dek</b>sans · 14.5px / 400<br>1.55 · -0.008em</div>
+    <div class="type-spec"><div class="type-body">The reflex is muscadet, or champagne if someone else is buying. Both are fine. Neither is doing what a cold junmai does to a Hiroshima oyster.</div></div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Bottle name</b>sans · 14.5px / 600<br>-0.018em</div>
+    <div class="type-spec"><div class="type-bot-name">Hakkaisan Tokubetsu Junmai</div></div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Italic cat / meta</b>serif italic · 12px<br>for bottle category, event meta, byline date</div>
+    <div class="type-spec"><div class="type-bot-cat">Junmai Daiginjo</div></div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Caption (removed)</b>Global rule: no photo captions anywhere.</div>
+    <div class="type-spec"><div class="type-caption" style="text-decoration:line-through;opacity:0.5">The Aoki kura in early spring. Photograph by Kenji Tanaka.</div></div>
+  </div>
+</section>
+
+<!-- 03 BUTTONS / CHIPS / LINKS -->
+<section class="kit-sec">
+  <div class="sec-label">
+    <div class="sec-num">03</div>
+    <div class="sec-h">Buttons, chips, links</div>
+    <div class="sec-sub">Filled crimson reserved. Everything else flat or hairline.</div>
+  </div>
+
+  <p class="sec-note">Filled crimson appears only as: the hero pill, the scan FAB, the "Yes, this is it" scan-result primary, and the Thank-you page primary. Every other accent is a flat crimson text link. No gradient buttons in editorial contexts.</p>
+
+  <div class="row">
+    <span class="hero-pill">Featured brewery</span>
+    <button class="btn-primary">Yes, this is it</button>
+    <div class="fab"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+  </div>
+  <div class="row">
+    <button class="btn-outline">Not my sake · Can't find mine</button>
+    <a class="btn-text-crimson">All →</a>
+    <a class="btn-text-crimson">Follow Alex →</a>
+  </div>
+  <div class="row" style="margin-top:24px">
+    <span class="chip"><span class="dot"></span>Ishikawa</span>
+    <span class="chip">Sake 101</span>
+    <span class="chip">Japan</span>
+    <span class="chip active">All</span>
+    <span class="chip">Culture</span>
+    <span class="chip">Breweries</span>
+  </div>
+
+  <div class="ann">Chips are hairline-bordered pills on transparent background. A filled-ink variant (<code>.chip.active</code>) is used only for filter state.</div>
+</section>
+
+<!-- 04 SECTION HEADER -->
+<section class="kit-sec">
+  <div class="sec-label">
+    <div class="sec-num">04</div>
+    <div class="sec-h">Section header</div>
+    <div class="sec-sub">Overline + trailing hairline + title + crimson link.</div>
+  </div>
+
+  <p class="sec-note">Every content section on every screen uses this pattern. The trailing hairline is what makes the page feel like a magazine contents spread instead of a product screen.</p>
+
+  <div class="sec-head">
+    <div class="sec-ovr">For you</div>
+    <h2 class="sec-title">Match for you</h2>
+    <a href="#" class="sec-link">All →</a>
+  </div>
+</section>
+
+<!-- 05 MINI-MENU TILES -->
+<section class="kit-sec">
+  <div class="sec-label">
+    <div class="sec-num">05</div>
+    <div class="sec-h">Mini-menu tiles</div>
+    <div class="sec-sub">Flat cream-deep discs, hairline border, ink glyphs.</div>
+  </div>
+
+  <p class="sec-note">Used on Home + Sake 101 Hub. 44px circles, <code>var(--cream-deep)</code> fill, <code>var(--hair-soft)</code> border, 20px stroked icons. No shadows, no gradients, no glow — the previous glossy version is gone.</p>
+
+  <div class="tile-demo">
+    <div class="tile"><div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M4 4h12a2 2 0 012 2v14H6a2 2 0 01-2-2V4z"/><line x1="8" y1="9" x2="14" y2="9"/></svg></div><span>Diary</span></div>
+    <div class="tile"><div class="tile-ic"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="0.5"/><line x1="6" y1="9" x2="18" y2="9"/></svg></div><span>Cellar</span></div>
+    <div class="tile"><div class="tile-ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="0.5"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span>Events</span></div>
+    <div class="tile"><div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M5 3v18M5 12h6l-1.2-9H6.2L5 12zM15 3v18M19 7v14"/></svg></div><span>Pairings</span></div>
+    <div class="tile"><div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-9 8.5 8.5 8.5 0 01-7.6-4.7L3 21l1.9-5.7A8.4 8.4 0 0112 3a8.5 8.5 0 019 8.5z"/></svg></div><span>Community</span></div>
+    <div class="tile"><div class="tile-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18"/></svg></div><span>Explore</span></div>
+  </div>
+</section>
+
+<!-- 06 BOTTLE CARD -->
+<section class="kit-sec">
+  <div class="sec-label">
+    <div class="sec-num">06</div>
+    <div class="sec-h">Bottle card with lit stage</div>
+    <div class="sec-sub">Warm radial under every bottle that sits on cream.</div>
+  </div>
+
+  <p class="sec-note">Used in Home "Match for you", Cellar rows, Diary entries, Bottle Detail related-tiles, Counter Note bottle thumbs, and the expert card on Home. Not used where the bottle already sits on a dark chiaroscuro hero (Bottle Detail main, Cellar Detail, Scan Result — those keep their dark stages).</p>
+
+  <div class="card-row">
+    <a class="bot-card">
+      <div class="bot-img">
+        <img class="bot-photo" src="Images/sakeyo_home_yuki otoko junmai.png" alt="Yuki Otoko Junmai" style="height:100%;width:auto;">
+        <div class="bot-match">
+          <div class="match-ring" style="--pct:99">
+            <svg viewBox="0 0 36 36"><circle class="track" cx="18" cy="18" r="16"/><circle class="val" cx="18" cy="18" r="16"/></svg>
+            <div class="txt">99<span class="pct">%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="bot-body">
+        <div class="bot-cat-label">Junmai</div>
+        <div class="bot-name-label">Yuki Otoko Junmai</div>
+        <div class="bot-brew-label">Aoki Brewery · Niigata</div>
+      </div>
+    </a>
+    <a class="bot-card">
+      <div class="bot-img">
+        <img class="bot-photo" src="Images/sakeyo_home_tokubetsu.png" alt="Hakkaisan Tokubetsu" style="height:100%;width:auto;">
+        <div class="bot-match">
+          <div class="match-ring" style="--pct:91">
+            <svg viewBox="0 0 36 36"><circle class="track" cx="18" cy="18" r="16"/><circle class="val" cx="18" cy="18" r="16"/></svg>
+            <div class="txt">91<span class="pct">%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="bot-body">
+        <div class="bot-cat-label">Tokubetsu Junmai</div>
+        <div class="bot-name-label">Hakkaisan Tokubetsu</div>
+        <div class="bot-brew-label">Hakkaisan Shuzo · Niigata</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- 07 MATCH RING -->
+<section class="kit-sec">
+  <div class="sec-label">
+    <div class="sec-num">07</div>
+    <div class="sec-h">Match ring</div>
+    <div class="sec-sub">Sage arc, serif digit, no white disc behind it.</div>
+  </div>
+
+  <p class="sec-note">Two variants. On warm bottle stages, the track is <code>rgba(255,255,255,0.5)</code> so it reads against the cream. On pure cream, use <code>var(--hair)</code>.</p>
+
+  <div class="row">
+    <div class="match-ring" style="--pct:99;background:radial-gradient(ellipse 70% 55% at 35% 70%, var(--cream-lit) 0%, var(--cream-warm) 40%, var(--cream-shadow) 100%);padding:6px;width:48px;height:48px"><svg viewBox="0 0 36 36"><circle class="track" cx="18" cy="18" r="16"/><circle class="val" cx="18" cy="18" r="16"/></svg><div class="txt" style="font-size:13px">99<span class="pct">%</span></div></div>
+    <div class="match-ring on-cream" style="--pct:78;width:48px;height:48px"><svg viewBox="0 0 36 36"><circle class="track" cx="18" cy="18" r="16"/><circle class="val" cx="18" cy="18" r="16"/></svg><div class="txt" style="font-size:13px">78<span class="pct">%</span></div></div>
+    <div style="font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-mute);margin-left:10px">← on warm stage · on cream →</div>
+  </div>
+</section>
+
+<!-- 08 NUMBERED CONTENTS LIST -->
+<section class="kit-sec">
+  <div class="sec-label">
+    <div class="sec-num">08</div>
+    <div class="sec-h">Numbered contents list</div>
+    <div class="sec-sub">Kinfolk magazine table of contents. Used on Home "Stories & reading" and Sake 101 pieces.</div>
+  </div>
+
+  <div class="jour-demo">
+    <a class="jour-row">
+      <div class="jour-num">01</div>
+      <div class="jour-body">
+        <div class="jour-cat">Food</div>
+        <div class="jour-title">Katsuo crosses Japan twice a year</div>
+        <div class="jour-dek">The spring fish wants a sharp junmai served cool. The autumn fish wants a hiyaoroshi with weight.</div>
+      </div>
+    </a>
+    <a class="jour-row">
+      <div class="jour-num">02</div>
+      <div class="jour-body">
+        <div class="jour-cat">Japan</div>
+        <div class="jour-title">Twenty-four hours in Kanazawa, ordered around the sake</div>
+        <div class="jour-dek">Coffee at Sunny Bell. Ōmichō market before the crowds. End at Shu Shu, counter only.</div>
+      </div>
+    </a>
+    <a class="jour-row">
+      <div class="jour-num">03</div>
+      <div class="jour-body">
+        <div class="jour-cat">Culture</div>
+        <div class="jour-title">Kuroemon Kumano fires kilns in Fukui and does not explain himself</div>
+        <div class="jour-dek">The vessels come out of the kiln rough, glazed in dragged whites and iron browns, the rims unfinished where the fire decided.</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- 09 EVENT CARD -->
+<section class="kit-sec">
+  <div class="sec-label">
+    <div class="sec-num">09</div>
+    <div class="sec-h">Event card</div>
+    <div class="sec-sub">White card, event pill, dark date stamp.</div>
+  </div>
+
+  <div class="card-row">
+    <a class="event-card">
+      <div class="event-img" style="background:linear-gradient(135deg,#4a3a2a,#1a1a1a)">
+        <div class="event-pill">Tasting</div>
+        <div class="event-date-stamp"><div class="m">Apr</div><div class="d">26</div></div>
+      </div>
+      <div class="event-body">
+        <div class="event-title-l">Niigata Spring Flight</div>
+        <div class="event-meta-l">Orihara Shoten · 7pm</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- 10 HERO -->
+<section class="kit-sec">
+  <div class="sec-label">
+    <div class="sec-num">10</div>
+    <div class="sec-h">Hero (chiaroscuro)</div>
+    <div class="sec-sub">Warm lantern pool + deep upper-right shadow + serif H1.</div>
+  </div>
+
+  <div class="hero-demo">
+    <div class="hero-inner">
+      <span class="hero-pill">Featured brewery</span>
+      <h1 class="hero-h1">Inside Aoki Brewery, Niigata</h1>
+      <p class="hero-dek">A fifth-generation tōji on rice, water, and the sake that made his valley.</p>
+      <a class="hero-cta">Read the story →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 11 GLOBAL RULES -->
+<section class="kit-sec">
+  <div class="sec-label">
+    <div class="sec-num">11</div>
+    <div class="sec-h">Global rules</div>
+    <div class="sec-sub">Apply to every screen, no exceptions.</div>
+  </div>
+
+  <div class="rules">
+    <div class="rule-item">
+      <div class="rule-n">i</div>
+      <div class="rule-body"><h4>No "X min read" anywhere</h4><p>Strip all read-time meta. Bylines collapse to just the author name (e.g. "Brad Brown"), or the meta row is removed entirely.</p></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-n">ii</div>
+      <div class="rule-body"><h4>No photo captions anywhere</h4><p>Italic caption lines below hero images and feature article images are removed. This includes Shu Shu article, Daiginjo piece, brewery heroes, event hero galleries.</p></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-n">iii</div>
+      <div class="rule-body"><h4>Phone frame: 42px radius + 1px inset rim</h4><p><code>.phone{border-radius:42px; box-shadow:inset 0 0 0 1px #0a0a0a}</code>. Eliminates rounded-corner edge artifact. Do not use 44px or 46px.</p></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-n">iv</div>
+      <div class="rule-body"><h4>"Community" never "Counter" as visible label</h4><p>The file is still named <code>sakeyo_Counter_TypeC.html</code> (invisible to users), but every on-screen mention must say Community. Alerts forum card overline is "Community · New reply".</p></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-n">v</div>
+      <div class="rule-body"><h4>Sentence case everywhere</h4><p>Only the <code>SAKEYŌ</code> wordmark is uppercase. Section titles, bottle names, article titles — all sentence case.</p></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-n">vi</div>
+      <div class="rule-body"><h4>代 footer on every screen</h4><p>72px kanji in <code>rgba(16,24,32,0.10)</code> + "One rung at a time." in <code>var(--ink-mute)</code>, centered.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div style="padding:56px 0 20px;text-align:center">
+  <div style="font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);user-select:none">代</div>
+  <div style="font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink-mute);margin-top:4px">One rung at a time.</div>
+</div>
+
+</div>
+
+</body></html>

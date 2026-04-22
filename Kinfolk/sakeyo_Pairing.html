@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Pairing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F;
+  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-left,.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-icon{position:relative;color:rgba(255,255,255,0.85);display:flex}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hdr-back{width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.85)}
+.hdr-back svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+.greet{background:var(--black);padding:14px 22px 26px;position:relative;overflow:hidden}
+.greet-ovr{font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,235,0.55)}
+.greet-name{font-family:var(--serif);font-size:40px;font-weight:400;color:var(--cream);margin-top:6px;line-height:1.05;letter-spacing:-0.018em}
+.greet-dek{font-family:var(--serif);font-style:italic;font-size:14.5px;color:rgba(245,240,235,0.65);line-height:1.5;margin-top:8px;max-width:36ch;letter-spacing:0}
+
+/* VIEW TOGGLE — matches calendar pattern */
+.view-toggle{display:flex;padding:22px 22px 0;gap:0;background:var(--cream);position:relative;z-index:2}
+.vt{flex:1;padding:11px 0;font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:-0.005em;color:var(--ink-mute);background:transparent;border:none;border-bottom:1px solid var(--hair);cursor:pointer;text-align:center;text-decoration:none;display:block}
+.vt.on{color:var(--ink);border-bottom-color:var(--crimson);border-bottom-width:1.5px;font-weight:600}
+
+.search-wrap{padding:18px 22px 6px}
+.search{position:relative;display:flex;align-items:center;background:#fff;border:1px solid var(--hair);border-radius:999px;padding:0 16px;height:44px;box-shadow:0 1px 2px rgba(16,24,32,0.03)}
+.search svg{width:16px;height:16px;fill:none;stroke:var(--ink-faint);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.search input{flex:1;border:none;outline:none;background:transparent;font-family:var(--sans);font-size:14px;color:var(--ink);letter-spacing:-0.008em;padding:0 10px}
+.search input::placeholder{color:var(--ink-faint);font-weight:400}
+
+.sec-head-mini{display:flex;align-items:center;gap:12px;padding:22px 22px 14px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
+.sec-head-mini::after{content:"";flex:1;height:1px;background:var(--hair)}
+
+.dishes{padding:0 22px 6px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.dish{background:var(--cream-warm);border:1px solid var(--hair);border-radius:var(--r-md);padding:16px 14px;text-align:left;display:flex;flex-direction:column;gap:3px;position:relative;cursor:pointer;transition:background .18s ease, transform .12s ease;min-height:80px;justify-content:center;font-family:inherit;color:inherit;width:100%}
+.dish:active{transform:scale(0.98)}
+.dish-name{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--ink);letter-spacing:-0.012em;line-height:1.15;padding-right:18px}
+.dish-en{font-family:var(--sans);font-size:11.5px;color:var(--ink-mute);letter-spacing:-0.005em;line-height:1.35}
+.dish-arr{position:absolute;top:14px;right:14px;width:12px;height:12px;color:var(--ink-faint);opacity:0.5}
+.dish-arr svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.dish.expanded{grid-column:span 2;background:var(--black);border-color:var(--black);padding:20px 18px 16px;min-height:unset;cursor:default}
+.dish.expanded:active{transform:none}
+.dish.expanded .dish-name{color:var(--cream);font-size:19px;padding-right:32px}
+.dish.expanded .dish-en{color:rgba(245,240,235,0.55);margin-bottom:2px}
+.dish.expanded .dish-arr{display:none}
+.dish.expanded .dish-close{position:absolute;top:14px;right:12px;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none}
+.dish.expanded .dish-close:hover{background:rgba(255,255,255,0.14)}
+.dish.expanded .dish-close svg{width:10px;height:10px;fill:none;stroke:var(--cream);stroke-width:2.2;stroke-linecap:round}
+.branch-prompt{font-family:var(--serif);font-style:italic;font-size:13px;color:rgba(245,240,235,0.7);margin-top:12px;letter-spacing:0}
+.branches{margin-top:10px;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.branches.tri{grid-template-columns:repeat(3,1fr)}
+.branch{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:var(--r-sm);padding:10px 12px;text-align:left;display:flex;flex-direction:column;gap:2px;cursor:pointer;transition:background .12s ease;font-family:inherit;color:inherit;text-decoration:none}
+.branch:hover{background:rgba(255,255,255,0.10)}
+.branch:active{transform:scale(0.98)}
+.branch-name{font-family:var(--serif);font-size:15.5px;font-weight:400;color:var(--cream);letter-spacing:-0.01em;line-height:1.2}
+.branch-en{font-family:var(--sans);font-size:10.5px;color:rgba(245,240,235,0.55);letter-spacing:-0.005em;line-height:1.35}
+
+.fallback{padding:28px 22px 18px;text-align:center}
+.fallback-q{font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--ink-mute);margin-bottom:8px;line-height:1.5}
+.fallback-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;border-bottom:1px solid rgba(155,27,27,0.3);padding-bottom:2px}
+.fallback-link svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.foot{padding:36px 22px 14px;text-align:center;position:relative;z-index:2}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none;margin-bottom:4px}
+.foot-tag{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:0}
+
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}
+</style>
+</head>
+<body data-screen-label="Pairing · JP/Non-JP toggle">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <div class="hdr-left">
+    <a class="hdr-back" href="SakeYo_Home.html" aria-label="Back">
+      <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+    </a>
+  </div>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Alerts.html" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></a>
+    <a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<div class="greet">
+  <div class="greet-ovr">Pairing</div>
+  <div class="greet-name">What are you eating?</div>
+  <div class="greet-dek">Tap a dish and we'll pour the right sake.</div>
+</div>
+
+<!-- VIEW TOGGLE: JAPANESE / NON-JAPANESE -->
+<div class="view-toggle">
+  <button type="button" class="vt on" data-view="jp">Japanese</button>
+  <button type="button" class="vt" data-view="nj">Non-Japanese</button>
+</div>
+
+<div class="search-wrap">
+  <div class="search">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg>
+    <input type="text" id="searchInput" placeholder="Search a dish — tonkatsu, unagi, saba shioyaki">
+  </div>
+</div>
+
+<div class="sec-head-mini">Start here</div>
+
+<!-- JAPANESE GRID -->
+<div class="dishes" id="jpGrid">
+
+  <button type="button" class="dish" data-root="sushi" data-kind="root" data-name="Sushi &amp; sashimi" data-en="raw fish, rice optional" data-prompt="What kind?" data-branches='[
+    {"id":"fatty","name":"Fatty","en":"toro, chutoro, salmon belly"},
+    {"id":"nigiri","name":"Nigiri","en":"saba, kohada, tai, ebi"},
+    {"id":"sashimi","name":"Sashimi","en":"white fish, tai, hirame"},
+    {"id":"oysters","name":"Oysters","en":"raw, briny, koji-friendly"},
+    {"id":"shellfish","name":"Shellfish &amp; roe","en":"uni, ikura, clams, amaebi"},
+    {"id":"spicy","name":"Spicy","en":"spicy tuna, spicy salmon rolls"},
+    {"id":"omakase","name":"Omakase","en":"chef&apos;s mix of types"}
+  ]'>
+    <div class="dish-name">Sushi &amp; sashimi</div>
+    <div class="dish-en">toro, nigiri, oysters, omakase</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="yakitori" data-kind="root" data-name="Yakitori" data-en="grilled chicken skewers" data-prompt="How seasoned?" data-tri="true" data-branches='[
+    {"id":"shio","name":"Shio","en":"salt only, smoky"},
+    {"id":"tare","name":"Tare","en":"sweet soy glaze"},
+    {"id":"omakase","name":"Omakase","en":"mixed skewers"}
+  ]'>
+    <div class="dish-name">Yakitori</div>
+    <div class="dish-en">shio, tare, mixed skewers</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="grilled-fish" data-kind="root" data-name="Grilled fish" data-en="yakizakana" data-prompt="White or oily?" data-branches='[
+    {"id":"white","name":"White fish","en":"tai, hirame, cod, gindara"},
+    {"id":"oily","name":"Oily fish","en":"saba, sanma, sawara"}
+  ]'>
+    <div class="dish-name">Grilled fish</div>
+    <div class="dish-en">saba, sanma, gindara, tai</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="unagi" data-kind="direct" data-name="Unagi" data-en="grilled eel, sweet tare">
+    <div class="dish-name">Unagi</div>
+    <div class="dish-en">grilled, unagi don</div>
+  </button>
+
+  <button type="button" class="dish" data-root="yakiniku" data-kind="root" data-name="Yakiniku" data-en="grilled meat" data-prompt="Marinated or plain?" data-branches='[
+    {"id":"shio","name":"Salt-grilled","en":"shio, plain cuts, tan"},
+    {"id":"marinated","name":"Marinated","en":"kalbi, sweet-soy, karubi"}
+  ]'>
+    <div class="dish-name">Yakiniku</div>
+    <div class="dish-en">salt-grilled, kalbi, karubi</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="fried" data-kind="root" data-name="Fried" data-en="tempura, karaage, katsu" data-prompt="Which style?" data-tri="true" data-branches='[
+    {"id":"tempura","name":"Tempura","en":"light, airy batter"},
+    {"id":"karaage","name":"Karaage","en":"crisp, juicy, no sauce"},
+    {"id":"katsu","name":"Katsu","en":"fried with sauce"}
+  ]'>
+    <div class="dish-name">Fried</div>
+    <div class="dish-en">tempura, karaage, katsu</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="ramen" data-kind="root" data-name="Ramen" data-en="broth noodles" data-prompt="Which broth?" data-branches='[
+    {"id":"tonkotsu","name":"Tonkotsu","en":"rich, cloudy pork bone"},
+    {"id":"shio","name":"Shio","en":"clear, salt-forward"},
+    {"id":"shoyu","name":"Shoyu","en":"clear, soy-based"},
+    {"id":"miso","name":"Miso","en":"fermented, rich"},
+    {"id":"spicy","name":"Spicy miso","en":"with chili, numbing heat"}
+  ]'>
+    <div class="dish-name">Ramen</div>
+    <div class="dish-en">tonkotsu, shoyu, miso, spicy</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="udon-soba" data-kind="root" data-name="Udon &amp; soba" data-en="wheat and buckwheat noodles" data-prompt="Hot or cold?" data-branches='[
+    {"id":"hot","name":"Hot","en":"kake, kitsune, tempura udon"},
+    {"id":"cold","name":"Cold with tsuyu","en":"zaru, mori soba"}
+  ]'>
+    <div class="dish-name">Udon &amp; soba</div>
+    <div class="dish-en">hot broth or cold with tsuyu</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="nabe" data-kind="root" data-name="Nabe &amp; sukiyaki" data-en="hot pot" data-prompt="Which kind?" data-branches='[
+    {"id":"sukiyaki","name":"Sukiyaki","en":"sweet-soy beef pot"},
+    {"id":"shabu","name":"Shabu &amp; chanko","en":"clear broth, mixed"}
+  ]'>
+    <div class="dish-name">Nabe &amp; sukiyaki</div>
+    <div class="dish-en">sukiyaki, shabu, chanko</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="curry" data-kind="direct" data-name="Curry" data-en="rice, udon, katsu curry">
+    <div class="dish-name">Curry</div>
+    <div class="dish-en">rice, udon, katsu curry</div>
+  </button>
+
+</div>
+
+<!-- NON-JAPANESE GRID (hidden by default) -->
+<div class="dishes" id="njGrid" style="display:none">
+
+  <button type="button" class="dish" data-root="cold-raw" data-kind="root" data-name="Cold &amp; raw" data-en="cold starters, cured, raw" data-prompt="Which style?" data-tri="true" data-branches='[
+    {"id":"ceviche","name":"Ceviche","en":"citrus-cured fish, aguachile"},
+    {"id":"tartare","name":"Tartare","en":"tuna, beef, carpaccio"},
+    {"id":"burrata","name":"Burrata-style","en":"fresh cheese, caprese"}
+  ]'>
+    <div class="dish-name">Cold &amp; raw</div>
+    <div class="dish-en">ceviche, tartare, burrata</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="salad" data-kind="direct" data-name="Salad &amp; herbs" data-en="fresh greens, herb-forward">
+    <div class="dish-name">Salad &amp; herbs</div>
+    <div class="dish-en">Greek, larb, papaya, tabbouleh</div>
+  </button>
+
+  <button type="button" class="dish" data-root="soup" data-kind="root" data-name="Soup &amp; broth" data-en="soups and broth-based dishes" data-prompt="Light or rich?" data-branches='[
+    {"id":"light","name":"Light broth","en":"pho, wonton, consommé"},
+    {"id":"rich","name":"Rich broth","en":"laksa, clam chowder, French onion"}
+  ]'>
+    <div class="dish-name">Soup &amp; broth</div>
+    <div class="dish-en">pho, laksa, chowder, consommé</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="roasts" data-kind="root" data-name="Roasts &amp; grills" data-en="roasted and grilled meats" data-prompt="Which protein?" data-tri="true" data-branches='[
+    {"id":"white","name":"White meat","en":"roast chicken, pork"},
+    {"id":"red","name":"Red meat","en":"beef, lamb, asado"},
+    {"id":"bbq","name":"BBQ &amp; glazed","en":"ribs, char siu, Peking duck"}
+  ]'>
+    <div class="dish-name">Roasts &amp; grills</div>
+    <div class="dish-en">roast chicken, ribs, char siu</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="fried-nj" data-kind="root" data-name="Fried" data-en="battered, breaded, crispy" data-prompt="Crisp or saucy?" data-branches='[
+    {"id":"crisp","name":"Crisp &amp; light","en":"spring rolls, calamari, fish &amp; chips"},
+    {"id":"saucy","name":"Saucy &amp; heavy","en":"Korean fried chicken, Nashville, parm"}
+  ]'>
+    <div class="dish-name">Fried</div>
+    <div class="dish-en">spring rolls, fried chicken, parm</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="pasta" data-kind="root" data-name="Pasta &amp; sauce" data-en="pasta by sauce type" data-prompt="Which sauce?" data-tri="true" data-branches='[
+    {"id":"tomato","name":"Tomato &amp; red","en":"meatballs, arrabiata, ragu"},
+    {"id":"creamy","name":"Creamy &amp; cheesy","en":"carbonara, mac &amp; cheese"},
+    {"id":"oil","name":"Oil &amp; anchovy","en":"aglio olio, puttanesca"}
+  ]'>
+    <div class="dish-name">Pasta &amp; sauce</div>
+    <div class="dish-en">tomato, creamy, oil-based</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="curry-stew" data-kind="root" data-name="Curry &amp; stew" data-en="rich, aromatic, slow-cooked" data-prompt="Which region?" data-tri="true" data-branches='[
+    {"id":"indian","name":"Indian","en":"butter chicken, tikka, korma"},
+    {"id":"seasian","name":"SE Asian","en":"green curry, rendang, massaman"},
+    {"id":"euro","name":"European &amp; Latin","en":"beef stew, mole, chili"}
+  ]'>
+    <div class="dish-name">Curry &amp; stew</div>
+    <div class="dish-en">butter chicken, rendang, mole</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="cheese" data-kind="root" data-name="Cheese &amp; charcuterie" data-en="boards, plates, cheese courses" data-prompt="Which kind?" data-branches='[
+    {"id":"fresh","name":"Fresh &amp; creamy","en":"burrata, mozzarella, brie"},
+    {"id":"aged","name":"Aged &amp; hard","en":"parmesan, gouda, manchego"},
+    {"id":"blue","name":"Blue &amp; funky","en":"gorgonzola, roquefort, stilton"},
+    {"id":"charcuterie","name":"Charcuterie board","en":"salami, prosciutto, olives"}
+  ]'>
+    <div class="dish-name">Cheese &amp; charcuterie</div>
+    <div class="dish-en">burrata, aged gouda, prosciutto</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="spicy" data-kind="direct" data-name="Spicy wings &amp; bites" data-en="chili-forward small plates">
+    <div class="dish-name">Spicy wings &amp; bites</div>
+    <div class="dish-en">buffalo, dakgalbi, Sichuan</div>
+  </button>
+
+</div>
+
+<div class="fallback">
+  <div class="fallback-q">Something else on the table?</div>
+  <a class="fallback-link" href="sakeyo_Search.html">
+    Describe it instead
+    <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+  <div class="foot-tag">One rung at a time.</div>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+
+<script>
+(function(){
+  const jpGrid = document.getElementById('jpGrid');
+  const njGrid = document.getElementById('njGrid');
+  const toggleBtns = document.querySelectorAll('.vt');
+  const searchInput = document.getElementById('searchInput');
+
+  const placeholders = {
+    jp: 'Search a dish — tonkatsu, unagi, saba shioyaki',
+    nj: 'Search a dish — butter chicken, burrata, ribs'
+  };
+
+  function collapseAllIn(grid){
+    grid.querySelectorAll('.dish.expanded').forEach(tile => {
+      const name = tile.dataset.name;
+      const en = tile.dataset.en;
+      tile.classList.remove('expanded');
+      tile.innerHTML = `
+        <div class="dish-name">${name}</div>
+        <div class="dish-en">${en}</div>
+        <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+      `;
+    });
+  }
+
+  function expandRoot(tile){
+    collapseAllIn(tile.parentElement);
+    const name = tile.dataset.name;
+    const en = tile.dataset.en;
+    const prompt = tile.dataset.prompt || 'Which?';
+    const tri = tile.dataset.tri === 'true';
+    const branches = JSON.parse(tile.dataset.branches);
+    const rootId = tile.dataset.root;
+    tile.classList.add('expanded');
+    const branchesHtml = branches.map(b => `
+      <a class="branch" href="sakeyo_Pairing_Result.html?dish=${rootId}&amp;branch=${b.id}">
+        <div class="branch-name">${b.name}</div>
+        <div class="branch-en">${b.en}</div>
+      </a>
+    `).join('');
+    tile.innerHTML = `
+      <button type="button" class="dish-close" aria-label="Close">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="dish-name">${name}</div>
+      <div class="dish-en">${en}</div>
+      <div class="branch-prompt">${prompt}</div>
+      <div class="branches${tri ? ' tri' : ''}">${branchesHtml}</div>
+    `;
+    tile.querySelector('.dish-close').addEventListener('click', (e) => {
+      e.stopPropagation();
+      collapseAllIn(tile.parentElement);
+    });
+  }
+
+  function goDirect(tile){
+    const rootId = tile.dataset.root;
+    window.location.href = `sakeyo_Pairing_Result.html?dish=${rootId}`;
+  }
+
+  function handleTileClick(e){
+    const tile = e.target.closest('.dish');
+    if (!tile) return;
+    if (tile.classList.contains('expanded')) return;
+    const kind = tile.dataset.kind;
+    if (kind === 'direct'){
+      goDirect(tile);
+    } else if (kind === 'root'){
+      expandRoot(tile);
+    }
+  }
+
+  jpGrid.addEventListener('click', handleTileClick);
+  njGrid.addEventListener('click', handleTileClick);
+
+  toggleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const view = btn.dataset.view;
+      toggleBtns.forEach(b => b.classList.toggle('on', b === btn));
+      collapseAllIn(jpGrid);
+      collapseAllIn(njGrid);
+      if (view === 'jp'){
+        jpGrid.style.display = '';
+        njGrid.style.display = 'none';
+        searchInput.placeholder = placeholders.jp;
+      } else {
+        jpGrid.style.display = 'none';
+        njGrid.style.display = '';
+        searchInput.placeholder = placeholders.nj;
+      }
+    });
+  });
+})();
+</script>
+
+</body></html>

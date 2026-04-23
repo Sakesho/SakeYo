@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=supreme@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F;
+  --sans:'Supreme','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Newsreader', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{display:flex;align-items:center;gap:14px;width:64px;justify-content:flex-end}
+
+.greet{background:var(--black);padding:14px 22px 30px;position:relative;overflow:hidden}
+.greet-ovr{font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,235,0.55)}
+.greet-name{font-family:var(--sans);font-size:32px;font-weight:400;color:var(--cream);margin-top:6px;line-height:1.1;letter-spacing:-0.015em}
+.greet-dek{font-family:var(--sans);font-style:italic;font-size:14px;color:rgba(245,240,235,0.6);line-height:1.5;margin-top:8px;max-width:32ch}
+
+/* AVATAR */
+.avatar-row{padding:28px 22px 20px;display:flex;align-items:center;gap:18px;border-bottom:1px solid var(--hair)}
+.avatar-circle{width:72px;height:72px;border-radius:50%;background:var(--cream-deep);border:1px solid var(--hair-strong);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:30px;font-weight:400;color:var(--ink);letter-spacing:-0.012em;flex-shrink:0}
+.avatar-meta{flex:1;min-width:0}
+.avatar-name-disp{font-family:var(--sans);font-size:17px;font-weight:600;color:var(--ink);letter-spacing:-0.012em;margin-bottom:4px}
+.avatar-change{font-family:var(--sans);font-size:12px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;display:inline-flex;align-items:center;gap:4px}
+.avatar-change svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* FORM */
+.form-sec{padding:0 22px}
+.form-row{padding:16px 0;border-top:1px solid var(--hair);display:flex;flex-direction:column;gap:6px}
+.form-row:first-child{border-top:none}
+.form-label{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
+.form-input{font-family:var(--sans);font-size:16px;font-weight:400;color:var(--ink);letter-spacing:-0.01em;background:transparent;border:none;padding:0;outline:none;width:100%}
+.form-input::placeholder{color:var(--ink-faint)}
+.form-hint{font-family:var(--sans);font-style:italic;font-size:12px;color:var(--ink-faint);letter-spacing:0;margin-top:2px}
+
+/* SECTION LABEL */
+.sec-label{padding:28px 22px 0;position:relative;z-index:2}
+.sec-lbl{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:12px;margin:0}
+.sec-lbl::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sec-sub{padding:8px 22px 0;font-family:var(--sans);font-style:italic;font-size:13.5px;color:var(--ink-mute);letter-spacing:0;line-height:1.5;max-width:40ch}
+
+/* TASTE CHIPS */
+.taste-chips{padding:14px 22px 0;display:flex;flex-wrap:wrap;gap:7px}
+.taste-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:100px;border:1px solid rgba(16,24,32,0.22);background:transparent;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-mute);letter-spacing:-0.005em;cursor:pointer;user-select:none}
+.taste-chip.active{background:var(--sage);color:#fff;border-color:var(--sage)}
+
+/* TOGGLES */
+.toggle-list{padding:0 22px;margin-top:14px}
+.toggle-row{display:flex;padding:16px 0;border-top:1px solid var(--hair);align-items:center;gap:14px}
+.toggle-row:first-child{border-top:none}
+.toggle-main{flex:1;min-width:0}
+.toggle-label{font-family:var(--sans);font-size:15px;font-weight:500;color:var(--ink);letter-spacing:-0.01em;margin-bottom:2px}
+.toggle-desc{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-faint);letter-spacing:0;line-height:1.4}
+.toggle{width:40px;height:22px;background:var(--hair-strong);border-radius:100px;position:relative;flex-shrink:0;cursor:pointer;transition:background .15s ease}
+.toggle::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.15);transition:left .15s ease}
+.toggle.on{background:var(--sage)}
+.toggle.on::after{left:20px}
+
+/* CTA ZONE — sticky primary save */
+.cta-zone{position:sticky;bottom:58px;z-index:10;padding:12px 18px 14px;background:linear-gradient(180deg,rgba(245,240,235,0) 0%,var(--cream) 40%)}
+.btn-save{width:100%;padding:16px 22px;background:var(--crimson);color:#fff;border-radius:100px;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:-0.005em;border:none;cursor:pointer;box-shadow:0 2px 6px rgba(155,27,27,0.18), 0 10px 20px -4px rgba(155,27,27,0.22);display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-save svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.foot{padding:44px 22px 14px;text-align:center;position:relative;z-index:2}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none}
+
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}
+h1, h2, .art-title, .type-hero, .type-greeting, .kit-title, .greet-name, .hero-h1, .name-primary, .name-secondary { font-variation-settings: "opsz" 44; }
+.prose, .prose p, body { font-variation-settings: "opsz" 16; }
+</style>
+</head>
+<body data-screen-label="Account · Kinfolk">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="sakeyo_Settings.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right"></div>
+</header>
+
+<div class="greet">
+  <div class="greet-ovr">Account</div>
+  <div class="greet-name">About you.</div>
+  <div class="greet-dek">The pieces we use to keep your recommendations honest.</div>
+</div>
+
+<!-- AVATAR -->
+<div class="avatar-row">
+  <div class="avatar-circle">M</div>
+  <div class="avatar-meta">
+    <div class="avatar-name-disp">Marcus Chen</div>
+    <a class="avatar-change" href="#">Change photo <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+  </div>
+</div>
+
+<!-- BASIC FIELDS -->
+<div class="form-sec">
+  <div class="form-row">
+    <label class="form-label">Name</label>
+    <input type="text" class="form-input" value="Marcus Chen">
+  </div>
+  <div class="form-row">
+    <label class="form-label">Email</label>
+    <input type="email" class="form-input" value="marcus@email.com">
+  </div>
+  <div class="form-row">
+    <label class="form-label">Where</label>
+    <input type="text" class="form-input" value="Singapore">
+    <div class="form-hint">We use this for local events and shop listings.</div>
+  </div>
+</div>
+
+<!-- TASTE -->
+<div class="sec-label"><h2 class="sec-lbl">Taste</h2></div>
+<p class="sec-sub">The styles you come back to. We use this for recommendations — you can change it anytime.</p>
+<div class="taste-chips">
+  <span class="taste-chip active">Junmai</span>
+  <span class="taste-chip active">Junmai Ginjo</span>
+  <span class="taste-chip">Daiginjo</span>
+  <span class="taste-chip active">Aged</span>
+  <span class="taste-chip active">Kimoto</span>
+  <span class="taste-chip">Yamahai</span>
+  <span class="taste-chip">Nigori</span>
+  <span class="taste-chip">Sparkling</span>
+  <span class="taste-chip">Nama</span>
+  <span class="taste-chip">Honjozo</span>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div class="sec-label"><h2 class="sec-lbl">Notifications</h2></div>
+<div class="toggle-list">
+  <div class="toggle-row">
+    <div class="toggle-main">
+      <div class="toggle-label">Events near you</div>
+      <div class="toggle-desc">Tastings, brewery visits, dinners</div>
+    </div>
+    <div class="toggle on"></div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-main">
+      <div class="toggle-label">Drinking windows</div>
+      <div class="toggle-desc">When a bottle hits its best</div>
+    </div>
+    <div class="toggle on"></div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-main">
+      <div class="toggle-label">Weekly picks</div>
+      <div class="toggle-desc">Three bottles, every Friday</div>
+    </div>
+    <div class="toggle on"></div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-main">
+      <div class="toggle-label">Community replies</div>
+      <div class="toggle-desc">When someone answers your thread</div>
+    </div>
+    <div class="toggle"></div>
+  </div>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+</div>
+
+<div class="cta-zone">
+  <button class="btn-save">
+    <svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
+    Save
+  </button>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b on" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+<script>
+// Toggle chip active
+document.querySelectorAll('.taste-chip').forEach(c => c.addEventListener('click', () => c.classList.toggle('active')));
+// Toggle notification switch
+document.querySelectorAll('.toggle').forEach(t => t.addEventListener('click', () => t.classList.toggle('on')));
+</script>
+</body></html>

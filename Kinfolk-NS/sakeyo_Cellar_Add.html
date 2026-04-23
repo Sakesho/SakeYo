@@ -124,6 +124,21 @@ h1, h2, .art-title, .type-hero, .type-greeting, .kit-title, .greet-name, .hero-h
     <input type="text" class="form-input" placeholder="Shop, bar, trip — wherever it came from">
   </div>
   <div class="form-row">
+    <label class="form-label">Price &amp; volume</label>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-family:var(--sans);font-size:16px;color:var(--ink-mute)">$</span>
+      <input type="text" class="form-input" placeholder="0" style="flex:0 1 80px">
+    </div>
+    <div class="chip-row" style="margin-top:10px">
+      <span class="f-chip" data-group="volume">180ml</span>
+      <span class="f-chip" data-group="volume">300ml</span>
+      <span class="f-chip" data-group="volume">500ml</span>
+      <span class="f-chip on" data-group="volume">720ml</span>
+      <span class="f-chip" data-group="volume">1.8L</span>
+      <span class="f-chip" data-group="volume">Other</span>
+    </div>
+  </div>
+  <div class="form-row">
     <label class="form-label">Status</label>
     <div class="chip-row">
       <span class="f-chip on" data-group="status">Unopened</span>
@@ -137,6 +152,11 @@ h1, h2, .art-title, .type-hero, .type-greeting, .kit-title, .greet-name, .hero-h
       <span class="f-chip" data-group="storage">Cool cellar</span>
       <span class="f-chip" data-group="storage">Room</span>
     </div>
+  </div>
+  <div class="form-row">
+    <label class="form-label">Location</label>
+    <input type="text" class="form-input" placeholder="Wine fridge · A-3">
+    <div class="form-hint">The specific shelf or slot, if you use one.</div>
   </div>
   <div class="form-row">
     <label class="form-label">Note</label>

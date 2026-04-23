@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Cellar (Kinfolk)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F; --gold:#B8892B; --navy:#1A2E3D;
+  --st-good:#2D6B4F; --st-soon:#B8892B; --st-critical:#9B1B1B; --st-aging:#2C2C2C; --st-open:#1A2E3D;
+  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,0.85);display:flex;align-items:center}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hdr-icon .badge{position:absolute;top:-1px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+
+/* MASTHEAD */
+.greet{background:var(--black);padding:14px 22px 22px}
+.greet-ovr{font-size:12px;font-weight:500;letter-spacing:-0.005em;color:rgba(255,255,255,0.55)}
+.greet-name{font-family:var(--sans);font-size:28px;font-weight:400;color:var(--cream);margin-top:4px;line-height:1.18;letter-spacing:-0.012em;max-width:22ch}
+
+.stats{background:var(--black);padding:18px 22px 26px;border-top:1px solid rgba(255,255,255,0.10);display:flex;gap:0}
+.stats .cell{flex:1;text-align:center;position:relative}
+.stats .cell + .cell::before{content:"";position:absolute;left:0;top:12%;bottom:12%;width:1px;background:rgba(255,255,255,0.12)}
+.stats .num{font-family:var(--sans);font-weight:400;font-size:34px;line-height:1;letter-spacing:-0.012em;color:#fff;margin-bottom:6px}
+.stats .num.alert{color:#e08b8b}
+.stats .lbl{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55)}
+
+/* OPEN BANNER */
+.open-bar{margin:22px 22px 0;padding:16px 0;display:flex;gap:16px;align-items:center;border-top:1px solid rgba(16,24,32,0.16);border-bottom:1px solid var(--hair);position:relative;z-index:2}
+.open-img{width:84px;height:120px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center;position:relative;background:transparent}
+.open-img::before{content:'';position:absolute;left:50%;bottom:4px;width:62px;height:7px;transform:translateX(-46%);background:radial-gradient(ellipse at center,rgba(0,0,0,0.42) 0%,rgba(0,0,0,0.16) 45%,transparent 75%);filter:blur(3px);z-index:1}
+.open-img img{max-height:100%;width:auto;position:relative;z-index:2;filter:drop-shadow(-2px 8px 14px rgba(0,0,0,0.28)) drop-shadow(-1px 3px 4px rgba(0,0,0,0.18))}
+.open-body{flex:1;min-width:0}
+.open-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--st-open);margin-bottom:5px}
+.open-ttl{font-family:var(--sans);font-weight:400;font-size:22px;line-height:1.12;letter-spacing:-0.012em;margin-bottom:3px;color:var(--ink)}
+.open-sub{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-mute);letter-spacing:0}
+.open-urgency{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--st-open);flex-shrink:0}
+
+/* FILTER BAR */
+.filter-bar{padding:20px 22px 0;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;position:relative;z-index:2;margin-right:-22px}
+.filter-bar::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:7px 14px;border-radius:100px;border:1px solid var(--hair-strong);background:transparent;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-mute);letter-spacing:-0.005em;white-space:nowrap}
+.chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.filter-bar .chip:last-child{margin-right:22px}
+
+/* SORT ROW */
+.sort-row{padding:14px 22px 0;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+.sort-row .sort-lbl{font-family:var(--sans);font-style:italic;font-size:13px;color:var(--ink-mute);letter-spacing:0}
+.sort-row .sort-cta{display:inline-flex;align-items:center;gap:4px;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em}
+.sort-row .sort-cta svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* RAIL */
+.rail{padding:28px 22px 6px;display:flex;align-items:center;gap:10px;position:relative;z-index:2}
+.rail-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.rail-dot.good{background:var(--st-good)}
+.rail-dot.soon{background:var(--st-soon)}
+.rail-dot.critical{background:var(--st-critical)}
+.rail-dot.aging{background:var(--st-aging)}
+.rail-dot.open{background:var(--st-open)}
+.rail-name{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink)}
+.rail-rule{flex:1;height:1px;background:var(--hair)}
+.rail-count{font-family:var(--sans);font-style:italic;font-size:13px;color:var(--ink-mute);letter-spacing:0}
+
+/* BOTTLES */
+.bottles{padding:0 22px;display:flex;flex-direction:column;position:relative;z-index:2}
+.bottle{display:flex;gap:16px;text-decoration:none;color:inherit;padding:18px 0;border-top:1px solid var(--hair);align-items:flex-start}
+.bottle:first-child{padding-top:10px;border-top:none}
+.bottle:last-child{border-bottom:1px solid var(--hair)}
+.bot-img{width:80px;height:120px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center;position:relative;background:transparent}
+.bot-img::before{content:'';position:absolute;left:50%;bottom:4px;width:58px;height:7px;transform:translateX(-46%);background:radial-gradient(ellipse at center,rgba(0,0,0,0.42) 0%,rgba(0,0,0,0.16) 45%,transparent 75%);filter:blur(3px);z-index:1}
+.bot-img img{max-height:100%;width:auto;position:relative;z-index:2;filter:drop-shadow(-2px 8px 14px rgba(0,0,0,0.28)) drop-shadow(-1px 3px 4px rgba(0,0,0,0.18))}
+
+.bot-body{flex:1;min-width:0;padding-top:2px}
+.bot-head{margin-bottom:6px}
+.bot-name{font-family:var(--sans);font-weight:400;font-size:20px;line-height:1.15;letter-spacing:-0.012em;color:var(--ink);margin-bottom:3px}
+.bot-brewery{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-mute);margin-bottom:10px;letter-spacing:0}
+.bot-meta{display:flex;flex-wrap:wrap;gap:5px 10px;font-family:var(--sans);font-size:11.5px;color:var(--ink-faint);margin-bottom:10px;letter-spacing:-0.005em}
+.bot-meta .sep{width:2.5px;height:2.5px;border-radius:50%;background:var(--ink-faint);align-self:center}
+
+.status-pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;padding:4px 10px;border-radius:100px;margin-bottom:6px}
+.status-pill .sd{width:5px;height:5px;border-radius:50%}
+.status-pill.good{color:var(--st-good);background:rgba(45,107,79,0.08)}
+.status-pill.good .sd{background:var(--st-good)}
+.status-pill.soon{color:var(--st-soon);background:rgba(184,137,43,0.10)}
+.status-pill.soon .sd{background:var(--st-soon)}
+.status-pill.critical{color:var(--st-critical);background:rgba(155,27,27,0.08)}
+.status-pill.critical .sd{background:var(--st-critical)}
+.status-pill.aging{color:var(--st-aging);background:rgba(44,44,44,0.08)}
+.status-pill.aging .sd{background:var(--st-aging)}
+.status-pill.open{color:var(--st-open);background:rgba(26,46,61,0.08)}
+.status-pill.open .sd{background:var(--st-open)}
+
+.window{height:2px;background:var(--hair);border-radius:2px;position:relative;overflow:hidden;margin-top:2px}
+.window-fill{height:100%;border-radius:2px}
+.window-fill.good{background:var(--st-good);width:20%}
+.window-fill.soon{background:var(--st-soon);width:62%}
+.window-fill.critical{background:var(--st-critical);width:92%}
+.window-fill.aging{background:repeating-linear-gradient(90deg,var(--st-aging) 0 4px,transparent 4px 8px);width:40%}
+
+/* TAIL */
+.tail{padding:40px 22px 12px;text-align:center;position:relative;z-index:2}
+.tail-line{font-family:var(--sans);font-style:italic;font-size:14px;color:var(--ink-mute);margin-bottom:12px;letter-spacing:0}
+.tail-cta{display:inline-flex;align-items:center;gap:4px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;border-bottom:1px solid rgba(155,27,27,0.3);padding-bottom:2px}
+
+/* FOOTER */
+.foot{padding:30px 22px 16px;text-align:center;position:relative;z-index:2}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none;margin-bottom:4px}
+.foot-tag{font-family:var(--sans);font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:0}
+
+/* BOTTOM NAV */
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}</style>
+</head>
+<body data-screen-label="Cellar · Kinfolk">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Alerts.html" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a>
+    <a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<!-- MASTHEAD -->
+<div class="greet">
+  <div class="greet-ovr">Cellar</div>
+  <div class="greet-name">What's in the fridge.</div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="cell"><div class="num">18</div><div class="lbl">Bottles</div></div>
+  <div class="cell"><div class="num">2</div><div class="lbl">Open</div></div>
+  <div class="cell"><div class="num alert">3</div><div class="lbl">Drink soon</div></div>
+</div>
+
+<!-- OPEN BANNER -->
+<div class="open-bar">
+  <div class="open-img"><img src="Images/sakeyo_cellar_Dassai 23.png" alt="Dassai 23"></div>
+  <div class="open-body">
+    <div class="open-over">Open · 1 day ago</div>
+    <div class="open-ttl">Dassai 23</div>
+    <div class="open-sub">Yamaguchi · Junmai Daiginjo</div>
+  </div>
+  <div class="open-urgency">2 days left</div>
+</div>
+
+<!-- FILTER -->
+<div class="filter-bar">
+  <a class="chip active" href="#">All · 18</a>
+  <a class="chip" href="#">Open · 2</a>
+  <a class="chip" href="#">Drink soon · 3</a>
+  <a class="chip" href="#">Aging · 4</a>
+  <a class="chip" href="#">Junmai Daiginjo</a>
+  <a class="chip" href="#">Ishikawa</a>
+</div>
+
+<div class="sort-row">
+  <span class="sort-lbl">Sorted by urgency</span>
+  <a class="sort-cta" href="#">Change <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></a>
+</div>
+
+<!-- DRINK NOW -->
+<div class="rail"><div class="rail-dot critical"></div><div class="rail-name">Drink now</div><div class="rail-rule"></div><div class="rail-count">1</div></div>
+<div class="bottles">
+  <a class="bottle" href="sakeyo_Cellar_Detail.html">
+    <div class="bot-img"><img src="Images/sakeyo_cellar_detail_Kubota.png" alt="Kubota Manju"></div>
+    <div class="bot-body">
+      <div class="bot-head"><span class="status-pill critical"><span class="sd"></span>2 wks left</span></div>
+      <div class="bot-name">Kubota Manju</div>
+      <div class="bot-brewery">Asahi Shuzo · Niigata</div>
+      <div class="bot-meta"><span>Brewed Jan 2025</span><span class="sep"></span><span>Junmai Daiginjo · 15.5%</span></div>
+      <div class="window"><div class="window-fill critical"></div></div>
+    </div>
+  </a>
+</div>
+
+<!-- OPEN -->
+<div class="rail"><div class="rail-dot open"></div><div class="rail-name">Open</div><div class="rail-rule"></div><div class="rail-count">2</div></div>
+<div class="bottles">
+  <a class="bottle" href="#">
+    <div class="bot-img"><img src="Images/sakeyo_cellar_Dassai 23.png" alt="Dassai 23"></div>
+    <div class="bot-body">
+      <div class="bot-head"><span class="status-pill open"><span class="sd"></span>2 days left</span></div>
+      <div class="bot-name">Dassai 23</div>
+      <div class="bot-brewery">Asahi Shuzo · Yamaguchi</div>
+      <div class="bot-meta"><span>Opened Apr 12</span><span class="sep"></span><span>Junmai Daiginjo</span></div>
+    </div>
+  </a>
+  <a class="bottle" href="#">
+    <div class="bot-img"><img src="Images/sakeyo_cellar_Tedorigawa Yshidagura.png" alt="Tedorigawa Yoshidagura"></div>
+    <div class="bot-body">
+      <div class="bot-head"><span class="status-pill open"><span class="sd"></span>4 days left</span></div>
+      <div class="bot-name">Tedorigawa Yoshidagura U</div>
+      <div class="bot-brewery">Yoshida Shuzō · Ishikawa</div>
+      <div class="bot-meta"><span>Opened Apr 5</span><span class="sep"></span><span>Junmai</span></div>
+    </div>
+  </a>
+</div>
+
+<!-- DRINK SOON -->
+<div class="rail"><div class="rail-dot soon"></div><div class="rail-name">Drink soon</div><div class="rail-rule"></div><div class="rail-count">2</div></div>
+<div class="bottles">
+  <a class="bottle" href="#">
+    <div class="bot-img"><img src="Images/sakeyo_cellar_Kakurei Junmai Ginjo.png" alt="Kakurei Junmai Ginjo"></div>
+    <div class="bot-body">
+      <div class="bot-head"><span class="status-pill soon"><span class="sd"></span>2 months left</span></div>
+      <div class="bot-name">Kakurei Junmai Ginjo</div>
+      <div class="bot-brewery">Aoki Shuzo · Niigata</div>
+      <div class="bot-meta"><span>Brewed Feb 2025</span><span class="sep"></span><span>Junmai Ginjo</span></div>
+      <div class="window"><div class="window-fill soon"></div></div>
+    </div>
+  </a>
+</div>
+
+<!-- DRINKING WINDOW -->
+<div class="rail"><div class="rail-dot good"></div><div class="rail-name">Drinking window</div><div class="rail-rule"></div><div class="rail-count">8</div></div>
+<div class="bottles">
+  <a class="bottle" href="#">
+    <div class="bot-img"><img src="Images/sakeyo_cellar_Noguchi.png" alt="Noguchi Naohiko Junmai Ginjo"></div>
+    <div class="bot-body">
+      <div class="bot-head"><span class="status-pill good"><span class="sd"></span>Good</span></div>
+      <div class="bot-name">Noguchi Naohiko Junmai Ginjo</div>
+      <div class="bot-brewery">Noguchi Naohiko · Ishikawa</div>
+      <div class="bot-meta"><span>Brewed Dec 2025</span><span class="sep"></span><span>Junmai Ginjo</span></div>
+      <div class="window"><div class="window-fill good"></div></div>
+    </div>
+  </a>
+  <a class="bottle" href="#">
+    <div class="bot-img"><img src="Images/sakeyo_cellar_sogen junmai.png" alt="Sogen Junmai"></div>
+    <div class="bot-body">
+      <div class="bot-head"><span class="status-pill good"><span class="sd"></span>Good</span></div>
+      <div class="bot-name">Sogen Junmai</div>
+      <div class="bot-brewery">Sogen Shuzo · Ishikawa</div>
+      <div class="bot-meta"><span>Brewed Nov 2025</span><span class="sep"></span><span>Junmai · 15%</span></div>
+      <div class="window"><div class="window-fill good"></div></div>
+    </div>
+  </a>
+</div>
+
+<!-- AGING -->
+<div class="rail"><div class="rail-dot aging"></div><div class="rail-name">Aging intentionally</div><div class="rail-rule"></div><div class="rail-count">4</div></div>
+<div class="bottles">
+  <a class="bottle" href="#">
+    <div class="bot-img"><img src="Images/sakeyo_cellar_Daruma Masamune.png" alt="Daruma Masamune Koshu"></div>
+    <div class="bot-body">
+      <div class="bot-head"><span class="status-pill aging"><span class="sd"></span>Aging · Year 3 of 10</span></div>
+      <div class="bot-name">Daruma Masamune Koshu</div>
+      <div class="bot-brewery">Shiraki Tsunesuke · Gifu</div>
+      <div class="bot-meta"><span>Vintage 2023</span><span class="sep"></span><span>Koshu · Aged</span></div>
+      <div class="window"><div class="window-fill aging"></div></div>
+    </div>
+  </a>
+</div>
+
+<!-- TAIL -->
+<div class="tail">
+  <div class="tail-line">Forgot to log a bottle?</div>
+  <a class="tail-cta" href="sakeyo_Scan_BackLabel.html">Scan the back label →</a>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+  <div class="foot-tag">One rung at a time.</div>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+</body></html>

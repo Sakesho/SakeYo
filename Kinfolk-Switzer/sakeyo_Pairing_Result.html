@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Pairing result</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F; --sage-lit:#86c69f;
+  --sage-med:#6B8A7A; --sage-med-lit:#A5BCB0;
+  --gold:#B8843C; --gold-lit:#E0B26A;
+  --gold-med:#9A8159; --gold-med-lit:#C9B596;
+  --navy:#1A2E3D;
+  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,0.85);display:flex;align-items:center}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hdr-icon .badge{position:absolute;top:-1px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+
+/* MEAL STRIP */
+.meal-strip{padding:18px 22px 8px;display:flex;align-items:center;gap:12px;position:relative;z-index:2}
+.meal-strip-body{flex:1;min-width:0}
+.meal-over{font-family:var(--sans);font-size:10px;color:var(--sage);font-weight:600;letter-spacing:0.20em;text-transform:uppercase;margin-bottom:4px;display:inline-flex;align-items:center;gap:6px}
+.meal-over .dot{width:5px;height:5px;border-radius:50%;background:var(--sage)}
+.meal-ttl{font-family:var(--sans);font-size:21px;font-weight:400;color:var(--ink);letter-spacing:-0.012em;line-height:1.15;margin-bottom:2px}
+.meal-sub{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-faint);letter-spacing:0}
+.edit-btn{flex-shrink:0;padding:7px 12px;border-radius:100px;border:1px solid var(--hair-strong);font-family:var(--sans);font-size:11px;color:var(--ink-mute);font-weight:600;letter-spacing:0.14em;text-transform:uppercase}
+
+/* BOTTLE HERO */
+.b-hero{margin:14px 22px 0;background:radial-gradient(ellipse 60% 45% at 62% 42%, rgba(255,240,210,0.08) 0%, transparent 60%),linear-gradient(180deg, var(--black) 0%, var(--black-deep) 100%);padding:30px 22px 26px;color:#fff;border-radius:var(--r-sm);display:flex;gap:18px;align-items:flex-end;position:relative;z-index:2}
+.b-bottle{width:106px;height:160px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center}
+.b-bottle img{max-height:160px;width:auto;display:block;filter:drop-shadow(-2px 12px 18px rgba(0,0,0,0.5)) drop-shadow(0 24px 40px rgba(0,0,0,0.35))}
+.b-info{flex:1;min-width:0;padding-bottom:4px}
+.b-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:8px}
+.b-name{font-family:var(--sans);font-weight:400;font-size:23px;line-height:1.08;letter-spacing:-0.012em;margin-bottom:4px;color:#fff}
+.b-brewery{font-family:var(--sans);font-style:italic;font-size:12.5px;color:rgba(255,255,255,0.65);letter-spacing:0;margin-bottom:14px}
+
+/* Match tags — sage for taste, gold for food. Three bands: good / med / weak. */
+.match-row{display:flex;gap:8px;flex-wrap:wrap}
+.match-tag{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:100px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;border:1px solid;white-space:nowrap}
+.match-tag .dot{width:5px;height:5px;border-radius:50%}
+
+/* Taste — sage family */
+.match-tag.taste.good {background:rgba(45,107,79,0.22); color:var(--sage-lit);     border-color:rgba(45,107,79,0.4)}
+.match-tag.taste.good .dot{background:var(--sage-lit)}
+.match-tag.taste.med  {background:rgba(107,138,122,0.18);color:var(--sage-med-lit);border-color:rgba(107,138,122,0.38)}
+.match-tag.taste.med  .dot{background:var(--sage-med-lit)}
+.match-tag.taste.weak {background:rgba(138,136,128,0.18);color:var(--ink-faint);   border-color:rgba(138,136,128,0.35)}
+.match-tag.taste.weak .dot{background:var(--ink-faint)}
+
+/* Food — gold family */
+.match-tag.food.good  {background:rgba(184,132,60,0.22); color:var(--gold-lit);     border-color:rgba(184,132,60,0.45)}
+.match-tag.food.good  .dot{background:var(--gold-lit)}
+.match-tag.food.med   {background:rgba(154,129,89,0.20); color:var(--gold-med-lit); border-color:rgba(154,129,89,0.40)}
+.match-tag.food.med   .dot{background:var(--gold-med-lit)}
+.match-tag.food.weak  {background:rgba(138,136,128,0.18);color:var(--ink-faint);   border-color:rgba(138,136,128,0.35)}
+.match-tag.food.weak  .dot{background:var(--ink-faint)}
+
+/* ACTIONS */
+.actions{padding:16px 22px 0;display:grid;grid-template-columns:1fr;gap:10px;position:relative;z-index:2}
+.act{padding:14px 12px;background:transparent;border:1px solid var(--ink);border-radius:100px;text-align:center;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:7px}
+.act svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.act.primary{background:var(--crimson);color:#fff;border-color:var(--crimson);box-shadow:0 2px 6px rgba(155,27,27,0.18), 0 8px 18px -4px rgba(155,27,27,0.20)}
+
+/* WHY — cream editorial card */
+.why-card{margin:32px 22px 0;background:var(--cream-warm);border:1px solid var(--hair);border-radius:var(--r-sm);padding:22px 22px 22px;position:relative;z-index:2}
+.why-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);margin-bottom:10px;display:inline-flex;align-items:center;gap:8px}
+.why-over::after{content:"";width:22px;height:1px;background:rgba(155,27,27,0.4)}
+.why-profile{font-family:var(--sans);font-size:26px;font-weight:400;line-height:1.1;letter-spacing:-0.012em;color:var(--ink);margin-bottom:4px}
+.why-profile-dek{font-family:var(--sans);font-style:italic;font-size:13px;color:var(--ink-faint);letter-spacing:0;margin-bottom:16px}
+.why-rule{height:1px;background:var(--hair);margin:0 0 14px}
+.why-body{font-family:var(--sans);font-size:15px;font-weight:400;line-height:1.6;color:var(--ink-mute);letter-spacing:-0.003em;max-width:40ch}
+.why-body em{font-style:italic;color:var(--ink)}
+
+/* ALTERNATES */
+.sec-label{padding:32px 22px 4px;position:relative;z-index:2}
+.sec-lbl{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:12px;margin:0}
+.sec-lbl::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sec-sub{padding:8px 22px 14px;font-family:var(--sans);font-style:italic;font-size:13.5px;color:var(--ink-mute);letter-spacing:0;line-height:1.5;max-width:42ch;position:relative;z-index:2}
+
+.alts{padding:0 22px;position:relative;z-index:2}
+.alt{display:flex;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--hair);text-decoration:none;color:inherit}
+.alt:first-child{border-top:1px solid rgba(16,24,32,0.16)}
+.alt:last-child{border-bottom:1px solid var(--hair)}
+.alt-bottle{width:40px;height:68px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center}
+.alt-bottle svg{width:28px;height:66px;display:block;filter:drop-shadow(-1px 2px 4px rgba(0,0,0,0.18))}
+.alt-bottle img{max-height:68px;width:auto;display:block;filter:drop-shadow(-1px 4px 6px rgba(0,0,0,0.22))}
+.alt-body{flex:1;min-width:0}
+.alt-name{font-family:var(--sans);font-size:17px;font-weight:400;color:var(--ink);letter-spacing:-0.012em;line-height:1.2;margin-bottom:3px}
+.alt-brewery{font-family:var(--sans);font-style:italic;font-size:12px;color:var(--ink-mute);letter-spacing:0;margin-bottom:6px}
+
+/* Mini match chips on alternate rows — three bands, darker hues for cream background. */
+.alt-match{display:flex;gap:8px;align-items:center}
+.alt-mini-tag{display:inline-flex;align-items:center;gap:5px;padding:2px 7px;border-radius:100px;font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase}
+.alt-mini-tag .dot{width:4px;height:4px;border-radius:50%}
+
+/* Taste */
+.alt-mini-tag.taste.good {background:rgba(45,107,79,0.12); color:var(--sage)}
+.alt-mini-tag.taste.good .dot{background:var(--sage)}
+.alt-mini-tag.taste.med  {background:rgba(107,138,122,0.14);color:var(--sage-med)}
+.alt-mini-tag.taste.med  .dot{background:var(--sage-med)}
+.alt-mini-tag.taste.weak {background:rgba(138,136,128,0.14);color:var(--ink-faint)}
+.alt-mini-tag.taste.weak .dot{background:var(--ink-faint)}
+
+/* Food */
+.alt-mini-tag.food.good  {background:rgba(184,132,60,0.14); color:var(--gold)}
+.alt-mini-tag.food.good  .dot{background:var(--gold)}
+.alt-mini-tag.food.med   {background:rgba(154,129,89,0.16); color:var(--gold-med)}
+.alt-mini-tag.food.med   .dot{background:var(--gold-med)}
+.alt-mini-tag.food.weak  {background:rgba(138,136,128,0.14);color:var(--ink-faint)}
+.alt-mini-tag.food.weak  .dot{background:var(--ink-faint)}
+
+.alt-chevron{flex-shrink:0;color:var(--ink-faint);opacity:0.6;align-self:center}
+.alt-chevron svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* NEXT ACTION */
+.next-action{margin:32px 22px 0;text-align:center;position:relative;z-index:2}
+.next-q{font-family:var(--sans);font-style:italic;font-size:14px;color:var(--ink-mute);margin-bottom:14px;line-height:1.5}
+.next-link{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border:1px solid var(--crimson);color:var(--crimson);border-radius:100px;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase}
+.next-link svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.foot{padding:36px 22px 14px;text-align:center;position:relative;z-index:2}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none;margin-bottom:4px}
+.foot-tag{font-family:var(--sans);font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:0}
+
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}
+</style>
+</head>
+<body data-screen-label="Pairing · Result v3">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="sakeyo_Pairing.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Alerts.html" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a>
+    <a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<!-- MEAL STRIP -->
+<div class="meal-strip">
+  <div class="meal-strip-body">
+    <div class="meal-over"><span class="dot"></span>Paired</div>
+    <div class="meal-ttl">Yakitori · tare</div>
+    <div class="meal-sub">grilled chicken, sweet soy glaze</div>
+  </div>
+  <a class="edit-btn" href="sakeyo_Pairing.html">Change</a>
+</div>
+
+<!-- BOTTLE HERO — sage taste + gold food -->
+<div class="b-hero">
+  <div class="b-bottle"><img src="Images/sakeyo_bottle_detail_Hakkaisan Tokubetsu Junmai.png" alt="Hakkaisan Tokubetsu Junmai"></div>
+  <div class="b-info">
+    <div class="b-over">Pour this</div>
+    <div class="b-name">Hakkaisan Tokubetsu Junmai</div>
+    <div class="b-brewery">Hakkaisan Shuzo · Niigata</div>
+    <div class="match-row">
+      <span class="match-tag taste good"><span class="dot"></span>97% taste</span>
+      <span class="match-tag food good"><span class="dot"></span>92% food</span>
+    </div>
+  </div>
+</div>
+
+<div class="actions">
+  <a class="act primary" href="SakeYo_Bottle_Detail.html">
+    <svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
+    See bottle details
+  </a>
+</div>
+
+<!-- WHY — the profile & its pairing logic -->
+<div class="why-card">
+  <div class="why-over">Why this works</div>
+  <div class="why-profile">Aged Type</div>
+  <div class="why-profile-dek">Complex and nutty, made for grilled meats and caramelized flavors.</div>
+  <div class="why-rule"></div>
+  <p class="why-body">Tare glaze is <em>caramelized, smoky, faintly sweet</em> — the same register the grill leaves on the chicken. An Aged-type sake meets it there, carrying enough weight to stand up to char without flattening the bird, and enough oxidative warmth to echo the glaze rather than fight it.</p>
+</div>
+
+<!-- ALTERNATES — other strong food matches -->
+<div class="sec-label">
+  <h2 class="sec-lbl">Also pairs well</h2>
+</div>
+<div class="sec-sub">Other sakes from your catalog that work with this dish — ordered by food match.</div>
+
+<div class="alts">
+  <a class="alt" href="SakeYo_Bottle_Detail.html">
+    <div class="alt-bottle">
+      <img src="Images/sakeyo_home_v2_taka junmai daiginjo.png" alt="Taka Junmai Daiginjo">
+    </div>
+    <div class="alt-body">
+      <div class="alt-name">Taka Junmai Daiginjo</div>
+      <div class="alt-brewery">Nagayama · Yamaguchi</div>
+      <div class="alt-match">
+        <span class="alt-mini-tag food good"><span class="dot"></span>90% food</span>
+        <span class="alt-mini-tag taste good"><span class="dot"></span>88% taste</span>
+      </div>
+    </div>
+    <div class="alt-chevron"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </a>
+  <a class="alt" href="SakeYo_Bottle_Detail.html">
+    <div class="alt-bottle">
+      <img src="Images/sakeyo_home_senkin modern.png" alt="Senkin Modern Muku">
+    </div>
+    <div class="alt-body">
+      <div class="alt-name">Senkin Modern Muku</div>
+      <div class="alt-brewery">Senkin · Tochigi</div>
+      <div class="alt-match">
+        <span class="alt-mini-tag food good"><span class="dot"></span>87% food</span>
+        <span class="alt-mini-tag taste med"><span class="dot"></span>82% taste</span>
+      </div>
+    </div>
+    <div class="alt-chevron"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </a>
+  <a class="alt" href="SakeYo_Bottle_Detail.html">
+    <div class="alt-bottle">
+      <img src="Images/sakeyo_home_Terada-Honke.png" alt="Terada Honke Katori">
+    </div>
+    <div class="alt-body">
+      <div class="alt-name">Terada Honke Katori</div>
+      <div class="alt-brewery">Terada Honke · Chiba</div>
+      <div class="alt-match">
+        <span class="alt-mini-tag food med"><span class="dot"></span>78% food</span>
+        <span class="alt-mini-tag taste med"><span class="dot"></span>74% taste</span>
+      </div>
+    </div>
+    <div class="alt-chevron"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </a>
+</div>
+
+<!-- NEXT ACTION -->
+<div class="next-action">
+  <div class="next-q">Still eating?</div>
+  <a class="next-link" href="sakeyo_Pairing.html">
+    Pair another dish
+    <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+  <div class="foot-tag">One rung at a time.</div>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+</body></html>

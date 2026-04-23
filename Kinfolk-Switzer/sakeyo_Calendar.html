@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Calendar Month (Kinfolk)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F; --gold:#B8843C; --navy:#1A2E3D;
+  --ev-tasting:#9B1B1B;
+  --ev-education:#1A2E3D;
+  --ev-pairing:#B8843C;
+  --ev-brewer:#2D6B4F;
+  --ev-festival:#2C2C2C;
+  --ev-takeover:#B8532E;
+  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,0.85);display:flex;align-items:center}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hdr-icon .badge{position:absolute;top:-1px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+
+/* MASTHEAD */
+.greet{background:var(--black);padding:14px 22px 28px;position:relative;overflow:hidden}
+.greet-ovr{font-size:12px;font-weight:500;letter-spacing:-0.005em;color:rgba(255,255,255,0.55);display:flex;justify-content:space-between;align-items:baseline}
+.greet-ovr .range{font-family:var(--sans);font-style:italic;font-size:12.5px;color:rgba(255,255,255,0.55);font-weight:400;letter-spacing:0}
+.greet-name{font-family:var(--sans);font-size:28px;font-weight:400;color:var(--cream);margin-top:4px;line-height:1.18;letter-spacing:-0.012em;max-width:22ch}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;padding:22px 22px 0;gap:0;background:var(--cream);position:relative;z-index:2}
+.vt{flex:1;padding:11px 0;font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:-0.005em;color:var(--ink-mute);background:transparent;border:none;border-bottom:1px solid var(--hair);cursor:pointer;text-align:center;text-decoration:none;display:block}
+.vt.on{color:var(--ink);border-bottom-color:var(--crimson);border-bottom-width:1.5px;font-weight:600}
+
+/* MONTH NAV */
+.month-nav{padding:24px 22px 14px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
+.month-nav-title{font-family:var(--sans);font-weight:600;font-size:22px;letter-spacing:-0.022em;color:var(--ink)}
+.month-nav-title .yr{font-family:var(--sans);font-style:italic;color:var(--ink-mute);font-weight:400;margin-left:10px;font-size:18px;letter-spacing:0}
+.month-nav-arrows{display:flex;gap:6px}
+.month-nav-arrows button{width:32px;height:32px;border:1px solid var(--hair-strong);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);border-radius:100px}
+.month-nav-arrows svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* DOW ROW */
+.dow-row{display:grid;grid-template-columns:repeat(7,1fr);padding:0 18px 6px;position:relative;z-index:2}
+.dow-row div{text-align:center;font-family:var(--sans);font-size:10px;letter-spacing:0.18em;color:var(--ink-mute);font-weight:600;text-transform:uppercase;padding:6px 0}
+
+/* CAL GRID */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);padding:0 18px;gap:4px;position:relative;z-index:2}
+.cell{aspect-ratio:1/1.12;background:var(--cream-deep);padding:6px 6px 6px;display:flex;flex-direction:column;position:relative;cursor:pointer;border-radius:var(--r-sm);border:1px solid var(--hair-soft)}
+.cell.empty{background:transparent;border:none;cursor:default}
+.cell.today{border:1px solid var(--ink);background:var(--cream-warm)}
+.cell.selected{background:var(--ink);border-color:var(--ink)}
+.cell.selected .d{color:#fff}
+.cell.selected .dot{box-shadow:0 0 0 1px rgba(255,255,255,0.85)}
+.cell .d{font-family:var(--sans);font-weight:500;font-size:13px;letter-spacing:-0.011em;color:var(--ink);margin-bottom:auto;line-height:1}
+.cell.empty .d{color:var(--ink-faint);font-weight:400}
+.cell .dots{display:flex;gap:3px;flex-wrap:wrap;margin-top:auto;padding-top:2px}
+.cell .dot{width:5px;height:5px;border-radius:50%;background:var(--ev-tasting)}
+.cell .dot.education{background:var(--ev-education)}
+.cell .dot.pairing{background:var(--ev-pairing)}
+.cell .dot.brewer{background:var(--ev-brewer)}
+.cell .dot.festival{background:var(--ev-festival)}
+.cell .dot.takeover{background:var(--ev-takeover)}
+.cell.has-ev .d{color:var(--ink);font-weight:600}
+.cell.weekend .d{color:var(--ink-mute)}
+.cell.has-ev.weekend .d{color:var(--ink)}
+
+/* LEGEND */
+.legend{padding:22px 22px 8px;display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;position:relative;z-index:2}
+.legend-item{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:12px;letter-spacing:-0.005em;color:var(--ink-mute);font-weight:500}
+.legend-item .ld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.legend-item .ld.tasting{background:var(--ev-tasting)}
+.legend-item .ld.education{background:var(--ev-education)}
+.legend-item .ld.pairing{background:var(--ev-pairing)}
+.legend-item .ld.brewer{background:var(--ev-brewer)}
+.legend-item .ld.festival{background:var(--ev-festival)}
+.legend-item .ld.takeover{background:var(--ev-takeover)}
+
+/* DAY PREVIEW */
+.day-preview{margin:28px 22px 0;position:relative;z-index:2}
+.dp-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px}
+.dp-date{font-family:var(--sans);font-weight:400;font-size:22px;letter-spacing:-0.012em;margin-bottom:16px;color:var(--ink);display:flex;align-items:baseline;gap:14px;line-height:1}
+.dp-date::after{content:"";flex:1;height:1px;background:var(--hair)}
+.dp-ev{display:flex;gap:16px;align-items:flex-start;padding:12px 0 12px 14px;border-left:2px solid var(--ev-tasting)}
+.dp-ev.education{border-left-color:var(--ev-education)}
+.dp-ev.pairing{border-left-color:var(--ev-pairing)}
+.dp-ev.brewer{border-left-color:var(--ev-brewer)}
+.dp-ev.festival{border-left-color:var(--ev-festival)}
+.dp-ev.takeover{border-left-color:var(--ev-takeover)}
+.dp-ev + .dp-ev{border-top:1px solid var(--hair);margin-top:4px;padding-top:14px}
+.dp-ev .tm{font-family:var(--sans);font-size:16px;font-weight:400;color:var(--ink);letter-spacing:-0.005em;width:58px;flex-shrink:0;padding-top:1px;font-variant-numeric:tabular-nums}
+.dp-ev .bd{flex:1;min-width:0}
+.dp-ev .ty{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:4px}
+.dp-ev .nm{font-family:var(--sans);font-weight:600;font-size:14.5px;line-height:1.25;letter-spacing:-0.018em;margin-bottom:3px;color:var(--ink)}
+.dp-ev .pl{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-mute);letter-spacing:0}
+
+/* TAIL */
+.tail{padding:44px 22px 12px;text-align:center;position:relative;z-index:2}
+.tail-line{font-family:var(--sans);font-style:italic;font-size:15px;color:var(--ink-mute);margin-bottom:12px;letter-spacing:0}
+.tail-cta{display:inline-flex;align-items:center;gap:4px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;border-bottom:1px solid rgba(155,27,27,0.3);padding-bottom:2px}
+
+/* FOOTER */
+.foot{padding:32px 22px 16px;text-align:center;position:relative;z-index:2}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none;letter-spacing:0;margin-bottom:4px}
+.foot-tag{font-family:var(--sans);font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:0}
+
+/* BOTTOM NAV */
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}</style>
+</head>
+<body data-screen-label="Calendar Month · Kinfolk">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Alerts.html" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a>
+    <a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<!-- MASTHEAD -->
+<div class="greet">
+  <div class="greet-ovr"><span>Calendar</span><span class="range">Apr – Jun 2026</span></div>
+  <div class="greet-name">Where to be, and when.</div>
+</div>
+
+<!-- VIEW TOGGLE -->
+<div class="view-toggle">
+  <a class="vt on" href="sakeyo_Calendar.html">Month</a>
+  <a class="vt" href="sakeyo_Calendar_Agenda.html">Agenda</a>
+</div>
+
+<!-- MONTH NAV -->
+<div class="month-nav">
+  <div class="month-nav-title">April<span class="yr">2026</span></div>
+  <div class="month-nav-arrows">
+    <button aria-label="Previous month"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button aria-label="Next month"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+</div>
+
+<!-- DOW ROW -->
+<div class="dow-row">
+  <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+</div>
+
+<!-- CAL GRID -->
+<div class="cal-grid">
+  <!-- Row 1 -->
+  <div class="cell empty"><div class="d">30</div></div>
+  <div class="cell empty"><div class="d">31</div></div>
+  <div class="cell"><div class="d">1</div></div>
+  <div class="cell"><div class="d">2</div></div>
+  <div class="cell has-ev"><div class="d">3</div><div class="dots"><div class="dot education"></div></div></div>
+  <div class="cell weekend"><div class="d">4</div></div>
+  <div class="cell weekend"><div class="d">5</div></div>
+  <!-- Row 2 -->
+  <div class="cell"><div class="d">6</div></div>
+  <div class="cell"><div class="d">7</div></div>
+  <div class="cell has-ev"><div class="d">8</div><div class="dots"><div class="dot pairing"></div></div></div>
+  <div class="cell"><div class="d">9</div></div>
+  <div class="cell has-ev selected"><div class="d">10</div><div class="dots"><div class="dot"></div><div class="dot brewer"></div></div></div>
+  <div class="cell weekend has-ev"><div class="d">11</div><div class="dots"><div class="dot festival"></div></div></div>
+  <div class="cell weekend has-ev"><div class="d">12</div><div class="dots"><div class="dot festival"></div></div></div>
+  <!-- Row 3 -->
+  <div class="cell"><div class="d">13</div></div>
+  <div class="cell today has-ev"><div class="d">14</div><div class="dots"><div class="dot education"></div></div></div>
+  <div class="cell"><div class="d">15</div></div>
+  <div class="cell has-ev"><div class="d">16</div><div class="dots"><div class="dot"></div></div></div>
+  <div class="cell has-ev"><div class="d">17</div><div class="dots"><div class="dot takeover"></div></div></div>
+  <div class="cell weekend has-ev"><div class="d">18</div><div class="dots"><div class="dot"></div></div></div>
+  <div class="cell weekend"><div class="d">19</div></div>
+  <!-- Row 4 -->
+  <div class="cell"><div class="d">20</div></div>
+  <div class="cell"><div class="d">21</div></div>
+  <div class="cell has-ev"><div class="d">22</div><div class="dots"><div class="dot pairing"></div></div></div>
+  <div class="cell"><div class="d">23</div></div>
+  <div class="cell has-ev"><div class="d">24</div><div class="dots"><div class="dot education"></div></div></div>
+  <div class="cell weekend"><div class="d">25</div></div>
+  <div class="cell weekend"><div class="d">26</div></div>
+  <!-- Row 5 -->
+  <div class="cell has-ev"><div class="d">27</div><div class="dots"><div class="dot takeover"></div></div></div>
+  <div class="cell"><div class="d">28</div></div>
+  <div class="cell"><div class="d">29</div></div>
+  <div class="cell has-ev"><div class="d">30</div><div class="dots"><div class="dot brewer"></div><div class="dot"></div></div></div>
+  <div class="cell empty"><div class="d">1</div></div>
+  <div class="cell empty weekend"><div class="d">2</div></div>
+  <div class="cell empty weekend"><div class="d">3</div></div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><span class="ld tasting"></span>Sake tasting</div>
+  <div class="legend-item"><span class="ld education"></span>Sake education</div>
+  <div class="legend-item"><span class="ld pairing"></span>Pairing dinner</div>
+  <div class="legend-item"><span class="ld brewer"></span>Brewer visit</div>
+  <div class="legend-item"><span class="ld festival"></span>Festival</div>
+  <div class="legend-item"><span class="ld takeover"></span>Bar takeover</div>
+</div>
+
+<!-- DAY PREVIEW -->
+<div class="day-preview">
+  <div class="dp-over">Selected · April 10</div>
+  <div class="dp-date">Friday, April 10</div>
+  <div class="dp-ev">
+    <div class="tm">6:30 pm</div>
+    <div class="bd">
+      <div class="ty">Sake tasting</div>
+      <div class="nm">Ishikawa local producers</div>
+      <div class="pl">Orihara Shoten · Robertson Quay</div>
+    </div>
+  </div>
+  <div class="dp-ev brewer">
+    <div class="tm">8:00 pm</div>
+    <div class="bd">
+      <div class="ty">Brewer visit</div>
+      <div class="nm">Q&amp;A with Noguchi Naohiko</div>
+      <div class="pl">SakeYō Studio · Online</div>
+    </div>
+  </div>
+</div>
+
+<!-- TAIL -->
+<div class="tail">
+  <div class="tail-line">Nothing on your calendar?</div>
+  <a class="tail-cta" href="sakeyo_Calendar.html">Explore all events →</a>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+  <div class="foot-tag">One rung at a time.</div>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+</body></html>

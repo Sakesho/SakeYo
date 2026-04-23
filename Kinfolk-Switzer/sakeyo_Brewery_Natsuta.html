@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Natsuta Fuyuzo (Kinfolk)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F;
+  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,0.85);display:flex;align-items:center}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hdr-icon .badge{position:absolute;top:-1px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+
+.hero{position:relative;aspect-ratio:16/10;overflow:hidden;background:#222}
+.hero img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(1.04) contrast(0.88) saturate(0.82) sepia(0.06)}
+
+.hero-bar{background:var(--black);padding:14px 22px;display:flex;justify-content:space-between;align-items:baseline;color:rgba(255,255,255,0.6);font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:-0.005em}
+.hero-bar .loc{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson)}
+.hero-bar .founded{font-family:var(--sans);font-style:italic;font-size:12.5px;color:rgba(255,255,255,0.55);font-weight:400;letter-spacing:0}
+
+.art-head{padding:28px 22px 0}
+.art-overline{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);margin-bottom:10px}
+.art-title{font-family:var(--sans);font-weight:400;font-size:40px;line-height:1.02;letter-spacing:-0.016em;margin-bottom:6px;color:var(--ink)}
+.art-sub{font-family:var(--sans);font-style:italic;font-size:14.5px;color:var(--ink-mute);letter-spacing:0}
+
+.style-row{display:flex;gap:8px;padding:24px 22px 0}
+.style-pill{flex:1;padding:9px 0;text-align:center;border:1px solid var(--hair-strong);font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:-0.005em;color:var(--ink-mute);border-radius:100px;background:transparent}
+.style-pill.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+.art-body{padding:28px 22px 0}
+.art-body p{font-family:var(--sans);font-size:15.5px;font-weight:400;line-height:1.68;color:var(--ink);letter-spacing:-0.008em;max-width:44ch}
+.art-body p + p{margin-top:18px}
+
+.dna-head{padding:34px 22px 0;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);display:flex;align-items:center;gap:12px}
+.dna-head::after{content:"";flex:1;height:1px;background:var(--hair)}
+.dna-card{margin:14px 22px 0;background:var(--cream-deep);padding:22px 22px 24px;border:1px solid var(--hair-soft);border-radius:var(--r-sm);position:relative;overflow:hidden}
+.dna-card::before{content:attr(data-kanji);position:absolute;right:-10px;bottom:-36px;font-family:var(--sans);font-weight:400;font-size:180px;line-height:1;color:rgba(155,27,27,0.09);pointer-events:none;user-select:none;letter-spacing:0}
+.dna-card h3{font-family:var(--sans);font-weight:400;font-size:22px;line-height:1.15;letter-spacing:-0.012em;margin-bottom:10px;color:var(--ink);position:relative;z-index:1;max-width:24ch}
+.dna-card p{font-family:var(--sans);font-size:14px;font-weight:400;line-height:1.6;color:var(--ink);letter-spacing:-0.008em;position:relative;z-index:1;max-width:42ch}
+
+.foot{padding:44px 22px 16px;text-align:center}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none;margin-bottom:4px}
+.foot-tag{font-family:var(--sans);font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:0}
+
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}</style>
+</head>
+<body data-screen-label="Brewery · Natsuta Fuyuzo · Kinfolk">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="sakeyo_Breweries.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Alerts.html" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a>
+    <a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<div class="hero"><img src="Images/sakeyo_brewery_Natsuta.jpg" alt="Natsuta Fuyuzo brewery"></div>
+
+<div class="hero-bar">
+  <span class="loc">Akita Prefecture</span>
+  <span class="founded">Founded 1917</span>
+</div>
+
+<div class="art-head">
+  <div class="art-overline">Brewery profile</div>
+  <h1 class="art-title">Natsuta Fuyuzo</h1>
+  <div class="art-sub">Asamai Sake Brewery</div>
+</div>
+
+<div class="style-row">
+  <div class="style-pill">Rich</div>
+  <div class="style-pill">Mellow</div>
+  <div class="style-pill on">Fruity</div>
+</div>
+
+<div class="art-body">
+  <p>This brand pays homage to the dedicated brewers of Asamai Shuzo. The name 'Natsuta Fuyuzo' — summer fields, winter brewery — serves as a tribute to brewery workers who labor during the winter months and transition to rice farming in the spring and summer.</p>
+  <p>Located in the pristine Yokote Basin of Akita Prefecture amidst the Ou Mountains, the region boasts abundant snowmelt nurturing natural water springs. Natsuta Fuyuzo sake offers a delightful interplay of fruity notes, full-bodied texture, and impeccable balance. They exclusively offer ginjo grade sake.</p>
+</div>
+
+<div class="dna-head">Yokote Basin</div>
+<div class="dna-card" data-kanji="山">
+  <h3>One of Japan's finest rice and water regions</h3>
+  <p>Asamai Shuzo is located in the Yokote Basin, celebrated as one of Japan's foremost areas for rice cultivation and pristine water sources. Nestled within this untouched environment are crystal-clear rivers and the revered underground water source, Biwa-numa Kansen. They focus solely on crafting junmai sake, letting the natural excellence of the region's ingredients take center stage.</p>
+</div>
+
+<div class="dna-head">Rice</div>
+<div class="dna-card" data-kanji="米">
+  <h3>Grown within 5km, by brewery staff</h3>
+  <p>Every step of production is attended to by brewery staff who cultivate the rice with utmost care. The rice strains are exclusively indigenous to Akita Prefecture, grown within a close 5km radius of the brewery, fostering a profound connection between the sake and its local origins.</p>
+</div>
+
+<div class="dna-head">Fune press</div>
+<div class="dna-card" data-kanji="槽">
+  <h3>Two days of gravity and patience</h3>
+  <p>The Fune ('ship') is a traditional pressing method where filter bags of sake are stacked in a hollowed-out tub. A weight is placed atop, and through gravity and pressure over two days, the sake separates from solids. This yields a wonderfully fine texture and nuanced flavors — greater precision than modern industrial methods.</p>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+  <div class="foot-tag">One rung at a time.</div>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+</body></html>

@@ -71,6 +71,22 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .v-opt-jp{font-family:var(--serif);font-style:italic;font-size:10.5px;color:var(--ink-faint);margin-top:1px;line-height:1}
 .v-opt.on .v-opt-jp{color:var(--crimson);opacity:0.75}
 
+/* PAIRED WITH — multi-row builder */
+.pair-builder{display:flex;flex-direction:column;gap:0;margin-top:4px}
+.pair-edit-row{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--hair);position:relative}
+.pair-edit-row:first-child{border-top:1px solid rgba(16,24,32,0.16)}
+.pair-edit-row:last-of-type{border-bottom:1px solid var(--hair)}
+.pair-fields{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pair-dish{font-family:var(--sans);font-size:15px;font-weight:500;color:var(--ink);letter-spacing:-0.01em;background:transparent;border:none;outline:none;width:100%;padding:0}
+.pair-dish::placeholder{color:var(--ink-faint);font-weight:400}
+.pair-note{font-family:var(--sans);font-style:italic;font-size:13px;color:var(--ink-mute);letter-spacing:0;background:transparent;border:none;outline:none;width:100%;padding:0}
+.pair-note::placeholder{color:var(--ink-faint);font-style:italic}
+.pair-remove{flex-shrink:0;width:22px;height:22px;border:none;background:transparent;color:var(--ink-faint);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .12s ease}
+.pair-edit-row:hover .pair-remove{opacity:1}
+.pair-remove svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.pair-add{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;background:transparent;border:none;cursor:pointer;padding:4px 0}
+.pair-add svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+
 /* RATING */
 .rating-row{display:flex;gap:8px;align-items:center}
 .rating-star{width:26px;height:26px;cursor:pointer;color:rgba(16,24,32,0.22)}
@@ -184,8 +200,20 @@ h1, h2, .art-title, .type-hero, .type-greeting, .kit-title, .greet-name, .hero-h
     </div>
   </div>
   <div class="form-row">
-    <label class="form-label">With</label>
-    <input type="text" class="form-input" placeholder="The dish, or just the bottle">
+    <label class="form-label">Paired with</label>
+    <div class="pair-builder" id="pair-builder">
+      <div class="pair-edit-row">
+        <div class="pair-fields">
+          <input type="text" class="pair-dish" placeholder="The dish">
+          <input type="text" class="pair-note" placeholder="one short reaction — 'lifted the dashi'">
+        </div>
+        <button type="button" class="pair-remove" aria-label="Remove"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+    </div>
+    <button type="button" class="pair-add" id="pair-add">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      Add another
+    </button>
   </div>
   <div class="form-row">
     <label class="form-label">Rating</label>
@@ -235,6 +263,25 @@ document.querySelectorAll('.v-opt').forEach(v => v.addEventListener('click', () 
   document.querySelectorAll('.v-opt[data-group="vessel"]').forEach(x => x.classList.remove('on'));
   v.classList.add('on');
 }));
+// Paired with — multi-row builder
+(function(){
+  const builder = document.getElementById('pair-builder');
+  const addBtn = document.getElementById('pair-add');
+  function wireRow(row){
+    row.querySelector('.pair-remove').addEventListener('click', () => {
+      if (builder.querySelectorAll('.pair-edit-row').length > 1) row.remove();
+      else { row.querySelectorAll('input').forEach(i => i.value = ''); }
+    });
+  }
+  builder.querySelectorAll('.pair-edit-row').forEach(wireRow);
+  addBtn.addEventListener('click', () => {
+    const tmpl = builder.querySelector('.pair-edit-row').cloneNode(true);
+    tmpl.querySelectorAll('input').forEach(i => i.value = '');
+    builder.appendChild(tmpl);
+    wireRow(tmpl);
+    tmpl.querySelector('.pair-dish').focus();
+  });
+})();
 // Rating stars
 document.querySelectorAll('.rating-star').forEach(s => s.addEventListener('click', () => {
   const val = parseInt(s.dataset.val, 10);

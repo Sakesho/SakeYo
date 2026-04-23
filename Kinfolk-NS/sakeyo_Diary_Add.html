@@ -61,6 +61,16 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .f-chip{padding:9px 15px;border-radius:100px;border:1px solid rgba(16,24,32,0.22);background:transparent;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-mute);letter-spacing:-0.005em;cursor:pointer;user-select:none}
 .f-chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 
+/* VESSEL SELECTOR — shape picker carried from legacy */
+.vessel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:4px}
+.v-opt{aspect-ratio:1/1.15;border:1px solid var(--hair-strong);background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;padding:10px 6px;border-radius:var(--r-sm);color:var(--ink-mute);transition:background .15s ease,border-color .15s ease}
+.v-opt.on{border-color:var(--crimson);background:rgba(155,27,27,0.04);color:var(--crimson)}
+.v-opt svg{width:36px;height:40px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round}
+.v-opt-name{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:-0.003em;line-height:1.2;text-align:center}
+.v-opt.on .v-opt-name{font-weight:600}
+.v-opt-jp{font-family:var(--serif);font-style:italic;font-size:10.5px;color:var(--ink-faint);margin-top:1px;line-height:1}
+.v-opt.on .v-opt-jp{color:var(--crimson);opacity:0.75}
+
 /* RATING */
 .rating-row{display:flex;gap:8px;align-items:center}
 .rating-star{width:26px;height:26px;cursor:pointer;color:rgba(16,24,32,0.22)}
@@ -138,6 +148,42 @@ h1, h2, .art-title, .type-hero, .type-greeting, .kit-title, .greet-name, .hero-h
     </div>
   </div>
   <div class="form-row">
+    <label class="form-label">Style</label>
+    <div class="chip-row">
+      <span class="f-chip on" data-group="style">Mellow</span>
+      <span class="f-chip" data-group="style">Heavy</span>
+      <span class="f-chip" data-group="style">Aged</span>
+      <span class="f-chip" data-group="style">Fruity</span>
+      <span class="f-chip" data-group="style">Dry</span>
+      <span class="f-chip" data-group="style">Light</span>
+    </div>
+  </div>
+  <div class="form-row">
+    <label class="form-label">Vessel</label>
+    <div class="vessel-grid">
+      <button type="button" class="v-opt" data-group="vessel">
+        <svg viewBox="0 0 40 44"><path d="M6 16 Q20 10 34 16 Q32 26 28 30 L12 30 Q8 26 6 16 Z"/><path d="M16 30 L16 34 L24 34 L24 30"/></svg>
+        <div class="v-opt-name">Hiragata</div>
+        <div class="v-opt-jp">平形</div>
+      </button>
+      <button type="button" class="v-opt on" data-group="vessel">
+        <svg viewBox="0 0 40 44"><path d="M8 12 Q20 8 32 12 Q30 24 26 32 L14 32 Q10 24 8 12 Z"/><path d="M16 32 L16 36 L24 36 L24 32"/></svg>
+        <div class="v-opt-name">Sugi-nari</div>
+        <div class="v-opt-jp">杉形</div>
+      </button>
+      <button type="button" class="v-opt" data-group="vessel">
+        <svg viewBox="0 0 40 44"><path d="M11 10 Q11 8 14 8 L26 8 Q29 8 29 10 L29 34 Q29 36 26 36 L14 36 Q11 36 11 34 Z"/><path d="M15 36 L15 39 L25 39 L25 36"/></svg>
+        <div class="v-opt-name">Tsutsu-gata</div>
+        <div class="v-opt-jp">筒型</div>
+      </button>
+      <button type="button" class="v-opt" data-group="vessel">
+        <svg viewBox="0 0 40 44"><path d="M10 6 Q10 18 20 22 Q30 18 30 6 Z"/><path d="M20 22 L20 36"/><path d="M13 38 L27 38"/></svg>
+        <div class="v-opt-name">Wine glass</div>
+        <div class="v-opt-jp">&nbsp;</div>
+      </button>
+    </div>
+  </div>
+  <div class="form-row">
     <label class="form-label">With</label>
     <input type="text" class="form-input" placeholder="The dish, or just the bottle">
   </div>
@@ -178,11 +224,16 @@ h1, h2, .art-title, .type-hero, .type-greeting, .kit-title, .greet-name, .hero-h
 
 </div></div>
 <script>
-// Chip groups — single select
+// Chip groups — single select (chips)
 document.querySelectorAll('.f-chip').forEach(c => c.addEventListener('click', () => {
   const group = c.dataset.group;
   document.querySelectorAll(`.f-chip[data-group="${group}"]`).forEach(x => x.classList.remove('on'));
   c.classList.add('on');
+}));
+// Vessel selector — single select (shape buttons)
+document.querySelectorAll('.v-opt').forEach(v => v.addEventListener('click', () => {
+  document.querySelectorAll('.v-opt[data-group="vessel"]').forEach(x => x.classList.remove('on'));
+  v.classList.add('on');
 }));
 // Rating stars
 document.querySelectorAll('.rating-star').forEach(s => s.addEventListener('click', () => {

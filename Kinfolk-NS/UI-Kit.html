@@ -6,8 +6,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=switzer@italic,400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=supreme@italic,400,500,600,700&display=swap" rel="stylesheet">
 <style>
 :root{
   --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
@@ -16,9 +16,9 @@
   --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
   --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
   --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
-  --sage:#2D6B4F;
-  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
-  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --sage:#2D6B4F; --gold:#B8843C; --navy:#1A2E3D;
+  --sans:'Supreme','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Newsreader', Georgia, 'Iowan Old Style', serif;
   --r-sm:6px; --r-md:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -168,7 +168,10 @@ a{color:inherit;text-decoration:none}
 .rule-n{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--crimson);width:30px;flex-shrink:0;font-variant-numeric:tabular-nums;line-height:1.2}
 .rule-body h4{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:-0.018em;color:var(--ink);margin-bottom:4px}
 .rule-body p{font-family:var(--sans);font-size:13.5px;color:var(--ink-mute);line-height:1.55;letter-spacing:-0.008em;max-width:60ch}
-@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}</style>
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}
+h1, h2, .art-title, .type-hero, .type-greeting, .kit-title, .greet-name, .hero-h1, .name-primary, .name-secondary { font-variation-settings: "opsz" 44; }
+.prose, .prose p, body { font-variation-settings: "opsz" 16; }
+</style>
 </head>
 <body>
 
@@ -177,12 +180,12 @@ a{color:inherit;text-decoration:none}
 <!-- MASTHEAD -->
 <div class="kit-masthead">
   <div class="kit-ovr">UI Kit · Kinfolk direction</div>
-  <h1 class="kit-title">The brand, made readable on one page.</h1>
-  <p class="kit-dek">Every token, pattern, and rule used across the 37 Apple screens. The principle: move from "tech product in Inter" to "editorial Japanese brand" — Kinfolk-adjacent, quietly confident, no marketing gloss. Use this page as the spec when rebuilding any screen.</p>
+  <h1 class="kit-title">Tokens, patterns, and rules.</h1>
+  <p class="kit-dek">The reference for every screen in the prototype. Editorial-first, quiet on the marketing side. Use this page when building or rebuilding anything.</p>
   <div class="kit-meta">
-    <span>v1 · Kinfolk direction</span>
-    <span>Typography: Switzer + Instrument Serif</span>
-    <span>Reference screen: SakeYo_Home_v3_Kinfolk_TypeC</span>
+    <span>v2 · Newsreader + Supreme</span>
+    <span>Typography: Supreme (sans) + Newsreader (serif)</span>
+    <span>Reference screen: SakeYo_Home</span>
   </div>
 </div>
 
@@ -191,7 +194,7 @@ a{color:inherit;text-decoration:none}
   <div class="sec-label">
     <div class="sec-num">01</div>
     <div class="sec-h">Color</div>
-    <div class="sec-sub">Editorial cream, quiet crimson, sage for positive signals.</div>
+    <div class="sec-sub">Cream backgrounds, crimson for editorial accents, sage for taste, gold for food.</div>
   </div>
 
   <div class="swatch-grid">
@@ -200,6 +203,8 @@ a{color:inherit;text-decoration:none}
     <div class="swatch"><div class="ch" style="background:#9B1B1B"></div><div class="lb">--crimson <div class="hex">#9B1B1B</div></div></div>
     <div class="swatch"><div class="ch" style="background:#7A1515"></div><div class="lb">--crimson-deep <div class="hex">#7A1515</div></div></div>
     <div class="swatch"><div class="ch" style="background:#2D6B4F"></div><div class="lb">--sage <div class="hex">#2D6B4F</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#B8843C"></div><div class="lb">--gold <div class="hex">#B8843C</div></div></div>
+    <div class="swatch"><div class="ch" style="background:#1A2E3D"></div><div class="lb">--navy <div class="hex">#1A2E3D</div></div></div>
     <div class="swatch"><div class="ch" style="background:#101820"></div><div class="lb">--ink <div class="hex">#101820</div></div></div>
     <div class="swatch"><div class="ch" style="background:#5F5E5A"></div><div class="lb">--ink-mute <div class="hex">#5F5E5A</div></div></div>
     <div class="swatch"><div class="ch" style="background:#8A8880"></div><div class="lb">--ink-faint <div class="hex">#8A8880</div></div></div>
@@ -210,7 +215,7 @@ a{color:inherit;text-decoration:none}
     <div class="swatch"><div class="ch" style="background:#D4C5AA"></div><div class="lb">--cream-shadow <div class="hex">#D4C5AA</div></div></div>
   </div>
 
-  <div class="ann"><code>--cream-lit</code> and <code>--cream-shadow</code> are new. They only appear inside the bottle lit-stage gradient (<code>radial-gradient(ellipse 70% 55% at 35% 70%, var(--cream-lit) 0%, var(--cream-warm) 40%, var(--cream-shadow) 100%)</code>). Nowhere else.</div>
+  <div class="ann"><code>--sage</code> = taste / sake match. <code>--gold</code> = food / pairing axis. The two never collide on the same element. <code>--crimson</code> stays reserved for editorial and primary actions — do not use it for match or pairing signals. Match strength is tiered by saturation within the sage family (good ≥85% → <code>--sage</code>; medium 70–84% → desaturated sage ~<code>#7A9987</code>; weak &lt;70% → <code>--ink-faint</code>); the same scoring logic drives the food-pairing axis with <code>--gold</code>. <code>--cream-lit</code> and <code>--cream-shadow</code> only appear inside the bottle lit-stage gradient.</div>
 </section>
 
 <!-- 02 TYPOGRAPHY -->
@@ -218,45 +223,45 @@ a{color:inherit;text-decoration:none}
   <div class="sec-label">
     <div class="sec-num">02</div>
     <div class="sec-h">Typography</div>
-    <div class="sec-sub">Instrument Serif for four editorial moments · Switzer for everything else.</div>
+    <div class="sec-sub">Newsreader (serif) for headlines and editorial · Supreme (sans) for everything else.</div>
   </div>
 
-  <p class="sec-note">Serif is used sparingly — only where the reader pauses to read. Section titles, bottle names, chips, and meta rows are all Switzer. If you find yourself applying serif to a scanning label, stop.</p>
+  <p class="sec-note">Newsreader has a variable optical-sizing axis — display cuts at large sizes (greetings, hero H1, article titles), text cuts in body prose. Supreme handles labels, chips, meta rows, body UI. Don't apply Newsreader to a scanning label; don't apply Supreme to long-form prose. Italic Newsreader carries the four crimson editorial numerals (<code>.sec-num</code>, <code>.jour-num</code>, <code>.rule-n</code>, <code>.event-date-stamp .d</code>); italic Supreme is used in pullquotes, captions, and the footer.</p>
 
   <div class="type-row">
-    <div class="type-meta"><b>Greeting</b>serif · 36px / 400<br>1.08 · -0.018em</div>
-    <div class="type-spec"><div class="type-greeting">Welcome back, Marcus</div></div>
+    <div class="type-meta"><b>Greeting</b>Newsreader · 36px / 400<br>1.08 · -0.018em</div>
+    <div class="type-spec"><div class="type-greeting">Good evening, Marcus.</div></div>
   </div>
   <div class="type-row">
-    <div class="type-meta"><b>Hero H1</b>serif · 44px / 400<br>1.02 · -0.018em</div>
+    <div class="type-meta"><b>Hero H1</b>Newsreader · 44px / 400<br>1.02 · -0.018em</div>
     <div class="type-spec"><div class="type-hero">Inside Aoki Brewery, Niigata</div></div>
   </div>
   <div class="type-row">
-    <div class="type-meta"><b>Feature article title</b>serif · 26px / 400<br>1.12 · -0.012em</div>
+    <div class="type-meta"><b>Feature article title</b>Newsreader · 26px / 400<br>1.12 · -0.012em</div>
     <div class="type-spec"><div class="type-feat">Why a cold junmai is the only thing an oyster actually wants</div></div>
   </div>
   <div class="type-row">
-    <div class="type-meta"><b>Pullquote</b>serif italic · 18px / 500<br>crimson left-rule</div>
+    <div class="type-meta"><b>Pullquote</b>Supreme italic · 18px / 500<br>crimson left-rule</div>
     <div class="type-spec"><div class="type-pullquote">"Oyster season. I've been chasing anything made with black or white koji — it's a killer combination."</div></div>
   </div>
   <div class="type-row">
-    <div class="type-meta"><b>Section title</b>sans · 24px / 600<br>1.1 · -0.022em</div>
-    <div class="type-spec"><div class="type-section">Match for you</div></div>
+    <div class="type-meta"><b>Section title</b>Supreme · 24px / 600<br>1.1 · -0.022em</div>
+    <div class="type-spec"><div class="type-section">For you</div></div>
   </div>
   <div class="type-row">
-    <div class="type-meta"><b>Overline</b>sans · 10px / 600<br>0.20em · uppercase</div>
-    <div class="type-spec"><div class="type-overline">For you</div></div>
+    <div class="type-meta"><b>Overline</b>Supreme · 10px / 600<br>0.20em · uppercase</div>
+    <div class="type-spec"><div class="type-overline">Recommended</div></div>
   </div>
   <div class="type-row">
-    <div class="type-meta"><b>Body / dek</b>sans · 14.5px / 400<br>1.55 · -0.008em</div>
+    <div class="type-meta"><b>Body / dek</b>Supreme · 14.5px / 400<br>1.55 · -0.008em</div>
     <div class="type-spec"><div class="type-body">The reflex is muscadet, or champagne if someone else is buying. Both are fine. Neither is doing what a cold junmai does to a Hiroshima oyster.</div></div>
   </div>
   <div class="type-row">
-    <div class="type-meta"><b>Bottle name</b>sans · 14.5px / 600<br>-0.018em</div>
+    <div class="type-meta"><b>Bottle name</b>Supreme · 14.5px / 600<br>-0.018em</div>
     <div class="type-spec"><div class="type-bot-name">Hakkaisan Tokubetsu Junmai</div></div>
   </div>
   <div class="type-row">
-    <div class="type-meta"><b>Italic cat / meta</b>serif italic · 12px<br>for bottle category, event meta, byline date</div>
+    <div class="type-meta"><b>Italic cat / meta</b>Supreme italic · 12px<br>for bottle category, event meta, byline date</div>
     <div class="type-spec"><div class="type-bot-cat">Junmai Daiginjo</div></div>
   </div>
   <div class="type-row">
@@ -308,8 +313,8 @@ a{color:inherit;text-decoration:none}
   <p class="sec-note">Every content section on every screen uses this pattern. The trailing hairline is what makes the page feel like a magazine contents spread instead of a product screen.</p>
 
   <div class="sec-head">
-    <div class="sec-ovr">For you</div>
-    <h2 class="sec-title">Match for you</h2>
+    <div class="sec-ovr">Recommended</div>
+    <h2 class="sec-title">For you</h2>
     <a href="#" class="sec-link">All →</a>
   </div>
 </section>
@@ -322,7 +327,7 @@ a{color:inherit;text-decoration:none}
     <div class="sec-sub">Flat cream-deep discs, hairline border, ink glyphs.</div>
   </div>
 
-  <p class="sec-note">Used on Home + Sake 101 Hub. 44px circles, <code>var(--cream-deep)</code> fill, <code>var(--hair-soft)</code> border, 20px stroked icons. No shadows, no gradients, no glow — the previous glossy version is gone.</p>
+  <p class="sec-note">Used on Home + Sake 101 Hub. 44px circles, <code>var(--cream-deep)</code> fill, <code>var(--hair-soft)</code> border, 20px stroked icons. No shadows, no gradients, no glow.</p>
 
   <div class="tile-demo">
     <div class="tile"><div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M4 4h12a2 2 0 012 2v14H6a2 2 0 01-2-2V4z"/><line x1="8" y1="9" x2="14" y2="9"/></svg></div><span>Diary</span></div>
@@ -342,7 +347,7 @@ a{color:inherit;text-decoration:none}
     <div class="sec-sub">Warm radial under every bottle that sits on cream.</div>
   </div>
 
-  <p class="sec-note">Used in Home "Match for you", Cellar rows, Diary entries, Bottle Detail related-tiles, Counter Note bottle thumbs, and the expert card on Home. Not used where the bottle already sits on a dark chiaroscuro hero (Bottle Detail main, Cellar Detail, Scan Result — those keep their dark stages).</p>
+  <p class="sec-note">Used in Home "For you", Cellar rows, Diary entries, Bottle Detail related tiles, Counter Note thumbs, and the expert card on Home. Not used where the bottle already sits on a dark chiaroscuro hero (Bottle Detail main, Cellar Detail, Scan Result — those keep their dark stages).</p>
 
   <div class="card-row">
     <a class="bot-card">
@@ -385,10 +390,10 @@ a{color:inherit;text-decoration:none}
   <div class="sec-label">
     <div class="sec-num">07</div>
     <div class="sec-h">Match ring</div>
-    <div class="sec-sub">Sage arc, serif digit, no white disc behind it.</div>
+    <div class="sec-sub">Sage arc, Newsreader digit, no white disc behind it.</div>
   </div>
 
-  <p class="sec-note">Two variants. On warm bottle stages, the track is <code>rgba(255,255,255,0.5)</code> so it reads against the cream. On pure cream, use <code>var(--hair)</code>.</p>
+  <p class="sec-note">Two variants. On warm bottle stages, the track is <code>rgba(255,255,255,0.5)</code> so it reads against the cream. On pure cream, use <code>var(--hair)</code>. The arc color carries match strength: full sage at good, desaturated sage at medium, ink-faint at weak. Same logic on the gold-side ring for food pairings.</p>
 
   <div class="row">
     <div class="match-ring" style="--pct:99;background:radial-gradient(ellipse 70% 55% at 35% 70%, var(--cream-lit) 0%, var(--cream-warm) 40%, var(--cream-shadow) 100%);padding:6px;width:48px;height:48px"><svg viewBox="0 0 36 36"><circle class="track" cx="18" cy="18" r="16"/><circle class="val" cx="18" cy="18" r="16"/></svg><div class="txt" style="font-size:13px">99<span class="pct">%</span></div></div>
@@ -402,7 +407,7 @@ a{color:inherit;text-decoration:none}
   <div class="sec-label">
     <div class="sec-num">08</div>
     <div class="sec-h">Numbered contents list</div>
-    <div class="sec-sub">Kinfolk magazine table of contents. Used on Home "Stories & reading" and Sake 101 pieces.</div>
+    <div class="sec-sub">Editorial table of contents. Used on Home "Stories &amp; reading" and Sake 101 pieces.</div>
   </div>
 
   <div class="jour-demo">
@@ -460,7 +465,7 @@ a{color:inherit;text-decoration:none}
   <div class="sec-label">
     <div class="sec-num">10</div>
     <div class="sec-h">Hero (chiaroscuro)</div>
-    <div class="sec-sub">Warm lantern pool + deep upper-right shadow + serif H1.</div>
+    <div class="sec-sub">Warm lantern pool + deep upper-right shadow + Newsreader H1.</div>
   </div>
 
   <div class="hero-demo">
@@ -504,7 +509,7 @@ a{color:inherit;text-decoration:none}
     </div>
     <div class="rule-item">
       <div class="rule-n">vi</div>
-      <div class="rule-body"><h4>代 footer on every screen</h4><p>72px kanji in <code>rgba(16,24,32,0.10)</code> + "One rung at a time." in <code>var(--ink-mute)</code>, centered.</p></div>
+      <div class="rule-body"><h4>代 footer on every screen</h4><p>72px kanji in <code>rgba(16,24,32,0.10)</code>, centered. No English line under it. The kanji carries its own weight.</p></div>
     </div>
   </div>
 </section>
@@ -512,7 +517,6 @@ a{color:inherit;text-decoration:none}
 <!-- FOOTER -->
 <div style="padding:56px 0 20px;text-align:center">
   <div style="font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);user-select:none">代</div>
-  <div style="font-family:var(--sans);font-style:italic;font-size:14px;color:var(--ink-mute);margin-top:4px">One rung at a time.</div>
 </div>
 
 </div>

@@ -48,9 +48,17 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .greet-ovr{font-size:12px;font-weight:500;letter-spacing:-0.005em;color:rgba(255,255,255,0.55)}
 .greet-name{font-family:var(--sans);font-size:28px;font-weight:400;color:var(--cream);margin-top:4px;line-height:1.18;letter-spacing:-0.012em;max-width:22ch}
 
+/* MINI MENU */
+.tiles{background:transparent;padding:28px 14px 8px;position:relative;z-index:2}
+.tile-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.tile{background:transparent;border:none;display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 2px;text-decoration:none;color:inherit}
+.tile-ic{width:44px;height:44px;border-radius:50%;background:var(--cream-deep);border:1px solid var(--hair-soft);display:flex;align-items:center;justify-content:center}
+.tile-ic svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tile span{font-size:11px;font-weight:500;color:var(--ink);text-align:center;line-height:1.15;letter-spacing:-0.005em;font-family:var(--sans)}
+
 /* SECTION */
 .sec{padding:40px 0 0;position:relative;z-index:2}
-.sec:first-of-type{padding-top:32px}
+.sec:first-of-type{padding-top:24px}
 .sec-head{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:baseline;padding:0 22px;gap:6px 12px}
 .sec-head .sec-ovr{grid-column:1;grid-row:1;display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
 .sec-head .sec-ovr::after{content:"";flex:1;height:1px;background:var(--hair)}
@@ -105,6 +113,36 @@ h1, h2, .art-title, .type-hero, .type-greeting, .kit-title, .greet-name, .hero-h
 <div class="greet">
   <div class="greet-ovr">Explore</div>
   <div class="greet-name">Sake, its makers, and the people keeping it interesting.</div>
+</div>
+
+<!-- MINI MENU -->
+<div class="tiles">
+  <div class="tile-grid">
+    <a class="tile" href="sakeyo_101_Hub.html">
+      <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 012 2v14H7a2 2 0 01-2-2V4z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div>
+      <span>Sake 101</span>
+    </a>
+    <a class="tile" href="sakeyo_Breweries.html">
+      <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M3 21V9l5-3 5 3v3h8v9M3 21h18M8 12v9M13 12v9M17 15v6M21 15v6"/></svg></div>
+      <span>Breweries</span>
+    </a>
+    <a class="tile" href="sakeyo_Craft.html">
+      <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M6 3h12M8 3v4a4 4 0 008 0V3M10 21h4M12 21v-6"/></svg></div>
+      <span>Culture</span>
+    </a>
+    <a class="tile" href="sakeyo_Japan.html">
+      <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <span>Japan</span>
+    </a>
+    <a class="tile" href="sakeyo_Local.html">
+      <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></div>
+      <span>Local</span>
+    </a>
+    <a class="tile" href="sakeyo_Pairings.html">
+      <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M7 3v5M9 3v5M11 3v5M9 8v13"/><path d="M15 3l2 5l-2 2v11"/></svg></div>
+      <span>Pairings</span>
+    </a>
+  </div>
 </div>
 
 <!-- SAKE 101 -->

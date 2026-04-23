@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Sake 101 (Kinfolk)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F;
+  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,0.85);display:flex;align-items:center}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hdr-icon .badge{position:absolute;top:-1px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+
+/* MASTHEAD */
+.greet{background:var(--black);padding:14px 22px 22px;position:relative;overflow:hidden}
+.greet-ovr{font-size:12px;font-weight:500;letter-spacing:-0.005em;color:rgba(255,255,255,0.55)}
+.greet-name{font-family:var(--sans);font-size:28px;font-weight:400;color:var(--cream);margin-top:4px;line-height:1.18;letter-spacing:-0.012em;max-width:24ch;margin-bottom:20px}
+.greet-utils{display:flex;gap:10px}
+.util{flex:1;padding:12px 14px;display:flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(255,255,255,0.18);border-radius:6px;color:#fff;text-decoration:none}
+.util svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.util-lbl{font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:-0.005em;flex:1}
+.util-cnt{font-family:var(--sans);font-style:italic;font-size:13px;color:rgba(255,255,255,0.55);letter-spacing:0}
+
+/* SECTION HEADER — Kinfolk pattern */
+.sec{padding:38px 0 0;position:relative;z-index:2}
+.sec-head{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:baseline;padding:0 22px;gap:6px 12px}
+.sec-head .sec-ovr{grid-column:1;grid-row:1;display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
+.sec-head .sec-ovr::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sec-head .sec-title{grid-column:1;grid-row:2;font-family:var(--sans);font-size:22px;font-weight:600;line-height:1.1;letter-spacing:-0.022em;color:var(--ink)}
+.sec-head .sec-link{grid-column:2;grid-row:2;align-self:end;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;white-space:nowrap}
+.sec-sub{padding:8px 22px 0;font-family:var(--sans);font-style:italic;font-size:14.5px;color:var(--ink-mute);line-height:1.5;letter-spacing:-0.005em;max-width:38ch}
+
+/* TOPIC TILES */
+.tiles{padding:20px 14px 0;position:relative;z-index:2}
+.tile-grid{display:flex;flex-wrap:wrap;justify-content:center;row-gap:14px}
+.tile{flex:0 0 25%;max-width:25%;display:flex;flex-direction:column;align-items:center;gap:8px;padding:6px 2px;text-decoration:none;color:inherit}
+.tile-ic{width:44px;height:44px;border-radius:50%;background:var(--cream-deep);border:1px solid var(--hair-soft);display:flex;align-items:center;justify-content:center}
+.tile-ic svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tile-ttl{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--ink);text-align:center;line-height:1.15;letter-spacing:-0.005em}
+
+/* FEATURED */
+.featured{padding:26px 22px 0;position:relative;z-index:2}
+.feat-img{width:100%;aspect-ratio:4/5;border-radius:2px;overflow:hidden;position:relative;margin-bottom:18px}
+.feat-img img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(1.04) contrast(0.88) saturate(0.82) sepia(0.06)}
+.feat-tag{position:absolute;top:14px;left:14px;padding:6px 13px;background:var(--crimson);color:#fff;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;z-index:2;box-shadow:0 2px 4px rgba(122,21,21,0.4), 0 6px 16px -4px rgba(155,27,27,0.5)}
+.feat-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px}
+.feat-ttl{font-family:var(--sans);font-weight:400;font-size:26px;line-height:1.12;letter-spacing:-0.012em;color:var(--ink);margin-bottom:12px}
+.feat-dek{font-family:var(--sans);font-size:14.5px;font-weight:400;line-height:1.6;color:var(--ink-mute);letter-spacing:-0.008em;margin-bottom:14px;max-width:42ch}
+.feat-meta{display:flex;gap:10px;align-items:center;font-family:var(--sans);font-size:12px;color:var(--ink-faint);letter-spacing:-0.005em}
+.feat-meta .dt{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-mute)}
+.feat-meta .sep{width:3px;height:3px;border-radius:50%;background:var(--ink-faint);opacity:0.6}
+
+/* START RAIL */
+.rail-h{display:flex;gap:12px;padding:20px 22px 8px;overflow-x:auto;scrollbar-width:none;position:relative;z-index:2;margin-right:-22px;padding-right:22px}
+.rail-h::-webkit-scrollbar{display:none}
+.start-card{flex-shrink:0;width:200px;padding:18px 18px 22px;display:flex;flex-direction:column;gap:10px;background:var(--cream-deep);border:1px solid var(--hair-soft);border-radius:var(--r-sm);text-decoration:none;color:inherit}
+.start-num{font-family:var(--sans);font-style:italic;font-size:18px;color:var(--crimson);font-weight:400;font-variant-numeric:tabular-nums;line-height:1}
+.start-ttl{font-family:var(--sans);font-weight:600;font-size:15px;line-height:1.25;letter-spacing:-0.018em;color:var(--ink);flex:1}
+.start-meta{font-family:var(--sans);font-style:italic;font-size:12px;color:var(--ink-mute);letter-spacing:0}
+
+/* READING LIST — Kinfolk contents */
+.reading-list{padding:20px 22px 0;display:flex;flex-direction:column;position:relative;z-index:2}
+.read-row{display:flex;gap:18px;padding:18px 0;border-top:1px solid var(--hair);text-decoration:none;color:inherit;align-items:flex-start}
+.read-row:first-child{border-top:1px solid rgba(16,24,32,0.16)}
+.read-row:last-child{border-bottom:1px solid var(--hair)}
+.read-num{font-family:var(--sans);font-style:italic;font-size:18px;color:var(--crimson);font-weight:400;flex-shrink:0;width:26px;padding-top:2px;letter-spacing:-0.005em;font-variant-numeric:tabular-nums}
+.read-body{flex:1;min-width:0}
+.read-cat{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:5px}
+.read-ttl{font-family:var(--sans);font-size:19px;font-weight:400;line-height:1.2;letter-spacing:-0.01em;color:var(--ink);margin-bottom:5px}
+.read-dek{font-family:var(--sans);font-size:13.5px;font-weight:400;line-height:1.5;color:var(--ink-mute);letter-spacing:-0.008em;max-width:42ch}
+
+/* EDITOR'S NOTE — Kinfolk pullquote */
+.ednote{margin:40px 22px 0;padding:22px 22px 22px 22px;background:var(--cream-deep);border-left:2px solid var(--crimson);border-radius:0;position:relative;z-index:2}
+.ed-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);margin-bottom:12px}
+.ed-body{font-family:var(--sans);font-style:italic;font-size:16.5px;font-weight:500;line-height:1.5;color:var(--ink);letter-spacing:-0.005em;margin-bottom:12px}
+.ed-sig{font-family:var(--sans);font-size:12px;color:var(--ink-mute);letter-spacing:-0.005em;font-weight:500}
+
+/* FOOTER */
+.foot{padding:48px 22px 16px;text-align:center;position:relative;z-index:2}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none;letter-spacing:0;margin-bottom:4px}
+.foot-tag{font-family:var(--sans);font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:0}
+
+/* BOTTOM NAV */
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}</style>
+</head>
+<body data-screen-label="Sake 101 · Kinfolk">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Alerts.html" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a>
+    <a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<!-- MASTHEAD -->
+<div class="greet">
+  <div class="greet-ovr">Sake 101</div>
+  <div class="greet-name">Start here. Rice, water, prefectures, and the techniques that make sake, sake.</div>
+  <div class="greet-utils">
+    <a class="util" href="#">
+      <svg viewBox="0 0 16 20"><path d="M3 2 h10 v16 l-5 -5 l-5 5 z"/></svg>
+      <span class="util-lbl">Saved</span><span class="util-cnt">8</span>
+    </a>
+    <a class="util" href="sakeyo_101_Glossary.html">
+      <svg viewBox="0 0 24 24"><path d="M4 4h12a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2V4z"/><path d="M4 4v14a2 2 0 0 0 2 2"/></svg>
+      <span class="util-lbl">Glossary</span><span class="util-cnt">142</span>
+    </a>
+  </div>
+</div>
+
+<!-- TOPICS -->
+<section class="sec">
+  <div class="sec-head">
+    <div class="sec-ovr">The map</div>
+    <h2 class="sec-title">The seven topics</h2>
+  </div>
+  <p class="sec-sub">Everything in the bottle — and how to taste, serve, and pair it.</p>
+  <div class="tiles">
+    <div class="tile-grid">
+      <a class="tile" href="sakeyo_Article.html">
+        <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M12 2v4M5 10c0-3 3-4 7-4s7 1 7 4M5 10v4c0 3 3 5 7 5s7-2 7-5v-4M5 14h14"/></svg></div>
+        <div class="tile-ttl">Ingredients</div>
+      </a>
+      <a class="tile" href="sakeyo_Article.html">
+        <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></div>
+        <div class="tile-ttl">Brewing</div>
+      </a>
+      <a class="tile" href="sakeyo_Article.html">
+        <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="tile-ttl">Regions</div>
+      </a>
+      <a class="tile" href="sakeyo_101_Styles.html">
+        <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M9 3v5l-2 3v10h10V11l-2-3V3"/><path d="M9 3h6"/></svg></div>
+        <div class="tile-ttl">Styles</div>
+      </a>
+      <a class="tile" href="sakeyo_Pairings.html">
+        <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M7 3v5M9 3v5M11 3v5M9 8v13"/><path d="M15 3l2 5l-2 2v11"/></svg></div>
+        <div class="tile-ttl">Pairing</div>
+      </a>
+      <a class="tile" href="sakeyo_Article.html">
+        <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M7 3h10v6a5 5 0 01-10 0z"/><path d="M12 14v7M8 21h8"/></svg></div>
+        <div class="tile-ttl">Tasting</div>
+      </a>
+      <a class="tile" href="sakeyo_Article.html">
+        <div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M9 3h6v4l2 2v11H7V9l2-2z"/><path d="M9 13h6"/></svg></div>
+        <div class="tile-ttl">Serving</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="sec">
+  <div class="sec-head">
+    <div class="sec-ovr">This week</div>
+    <h2 class="sec-title">Featured</h2>
+  </div>
+  <div class="featured">
+    <a href="sakeyo_Article.html" style="text-decoration:none;color:inherit;display:block">
+      <div class="feat-img">
+        <span class="feat-tag">This week</span>
+        <img src="Images/IMG_0380 copy.jpg" alt="Niigata snow">
+      </div>
+      <div class="feat-over">Regions</div>
+      <h2 class="feat-ttl">Niigata, and why snow makes better sake.</h2>
+      <p class="feat-dek">Soft water, long winters, and a rice called Gohyakumangoku. The conditions that made Niigata the largest sake-producing prefecture aren't an accident — they're geography.</p>
+      <div class="feat-meta"><span>Brad Brown</span><span class="sep"></span><span class="dt">April 9, 2026</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- STARTING OUT -->
+<section class="sec">
+  <div class="sec-head">
+    <div class="sec-ovr">Where to start</div>
+    <h2 class="sec-title">If you're starting out</h2>
+    <a href="#" class="sec-link">See all →</a>
+  </div>
+  <div class="rail-h">
+    <a class="start-card" href="sakeyo_Article.html">
+      <div class="start-num">01</div>
+      <div class="start-ttl">What "sake" actually means in Japan</div>
+      <div class="start-meta">Foundations</div>
+    </a>
+    <a class="start-card" href="sakeyo_Article.html">
+      <div class="start-num">02</div>
+      <div class="start-ttl">How to read a sake label without guessing</div>
+      <div class="start-meta">Foundations</div>
+    </a>
+    <a class="start-card" href="sakeyo_101_Styles.html">
+      <div class="start-num">03</div>
+      <div class="start-ttl">Junmai, ginjo, daiginjo — the difference in one page</div>
+      <div class="start-meta">Foundations</div>
+    </a>
+  </div>
+</section>
+
+<!-- ON THE READING LIST -->
+<section class="sec">
+  <div class="sec-head">
+    <div class="sec-ovr">Go deeper</div>
+    <h2 class="sec-title">On the reading list</h2>
+    <a href="#" class="sec-link">All →</a>
+  </div>
+  <div class="reading-list">
+    <a class="read-row" href="sakeyo_Article.html">
+      <div class="read-num">01</div>
+      <div class="read-body">
+        <div class="read-cat">Brewing</div>
+        <div class="read-ttl">Inside the kura: the three steps that decide the sake</div>
+        <div class="read-dek">Kōji, moto, moromi. The stages that build every bottle, without the diagrams or the jargon.</div>
+      </div>
+    </a>
+    <a class="read-row" href="sakeyo_Article.html">
+      <div class="read-num">02</div>
+      <div class="read-body">
+        <div class="read-cat">Ingredients</div>
+        <div class="read-ttl">Yamada Nishiki, and the rice that changed modern sake</div>
+        <div class="read-dek">One strain, grown mostly in Hyōgo. The polishing ratios, the water, and why the old brewers keep coming back to it.</div>
+      </div>
+    </a>
+    <a class="read-row" href="sakeyo_101_Glossary.html">
+      <div class="read-num">03</div>
+      <div class="read-body">
+        <div class="read-cat">Tasting</div>
+        <div class="read-ttl">Five flavours the label never mentions</div>
+        <div class="read-dek">Umami, rice-sugar, acid, alcohol, finish. The axes sommeliers use quietly, listed once in plain English.</div>
+      </div>
+    </a>
+    <a class="read-row" href="sakeyo_Article.html">
+      <div class="read-num">04</div>
+      <div class="read-body">
+        <div class="read-cat">Serving</div>
+        <div class="read-ttl">What temperature is actually doing</div>
+        <div class="read-dek">Why cold, room temperature, and warmed pull different things from the same bottle.</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- EDITOR'S NOTE -->
+<div class="ednote">
+  <div class="ed-over">A note from the editor</div>
+  <p class="ed-body">"Read these in any order. The first piece in each topic assumes you know nothing — so does the second. We'll tell you when something genuinely needs to come first."</p>
+  <div class="ed-sig">— Brad Brown, Editor</div>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+  <div class="foot-tag">One rung at a time.</div>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+</body></html>

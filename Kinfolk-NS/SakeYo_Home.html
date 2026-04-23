@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Home (Kinfolk mock)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=supreme@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2; --cream-shadow:#D4C5AA; --cream-lit:#F5EBD8;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F;
+  --sans:'Supreme','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Newsreader', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-left,.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-spacer{width:54px}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-icon{position:relative;color:rgba(255,255,255,0.85);display:flex}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hdr-icon .badge{position:absolute;top:-1px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+
+/* GREETING */
+.greet{background:var(--black);padding:14px 22px 30px;position:relative;overflow:hidden}
+.greet-ovr{font-size:12px;font-weight:500;letter-spacing:-0.005em;color:rgba(255,255,255,0.55)}
+.greet-name{font-family:var(--sans);font-size:36px;font-weight:400;color:var(--cream);margin-top:4px;line-height:1.08;letter-spacing:-0.018em}
+
+/* HERO — toned for Kinfolk */
+.hero{position:relative;height:460px;overflow:hidden;isolation:isolate;
+  background-color:#0a0e12;
+  background-image:
+    linear-gradient(180deg, transparent 52%, rgba(0,0,0,0.62) 100%),
+    radial-gradient(ellipse 78% 55% at 22% 76%, rgba(255,180,90,0.28) 0%, rgba(200,140,60,0.10) 38%, transparent 72%),
+    var(--hero-img, linear-gradient(180deg, #0a0e12 0%, #12110c 40%, #1a1508 70%, #0f0c06 100%));
+  background-size: auto, auto, cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal, multiply, normal;
+}
+.hero-content{position:absolute;left:0;right:0;bottom:0;padding:26px 26px 28px;color:#fff;z-index:5}
+.hero-pill{display:inline-block;padding:6px 13px;background:var(--crimson);color:#fff;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:16px;box-shadow:0 2px 4px rgba(122,21,21,0.4), 0 6px 16px -4px rgba(155,27,27,0.5)}
+.hero-h1{font-family:var(--sans);font-size:44px;font-weight:400;line-height:1.02;color:var(--cream);margin-bottom:12px;letter-spacing:-0.018em;text-shadow:0 2px 30px rgba(235,155,60,0.15), 0 1px 2px rgba(0,0,0,0.8)}
+.hero-dek{font-family:var(--sans);font-size:14.5px;font-weight:400;line-height:1.5;color:rgba(245,240,235,0.78);margin-bottom:16px;max-width:320px;letter-spacing:-0.008em;text-shadow:0 1px 8px rgba(0,0,0,0.6)}
+.hero-cta{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:13px;font-weight:500;color:rgba(255,255,255,0.92);letter-spacing:-0.005em;border-bottom:1px solid rgba(255,255,255,0.4);padding-bottom:2px;text-shadow:0 1px 4px rgba(0,0,0,0.6)}
+
+/* TILES — Daniel style: flat cream discs on cream strip */
+.tiles{background:transparent;padding:36px 14px 20px;position:relative;z-index:2}
+.tiles + .sec-fluid{padding-top:16px}
+.tile-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.tile{background:transparent;border:none;display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 2px;text-decoration:none;color:inherit}
+.tile-ic{width:44px;height:44px;border-radius:50%;background:var(--cream-deep);border:1px solid var(--hair-soft);display:flex;align-items:center;justify-content:center}
+.tile-ic svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tile span{font-size:11px;font-weight:500;color:var(--ink);text-align:center;line-height:1.15;letter-spacing:-0.005em}
+
+/* SECTION HEAD — overline + trailing hairline + title */
+.sec{padding:40px 0 0;position:relative;z-index:2}
+.sec-fluid{padding:40px 0 0;position:relative;z-index:2}
+.sec-head{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:baseline;padding:0 22px;gap:6px 12px}
+.sec-head .sec-ovr{grid-column:1;grid-row:1;display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
+.sec-head .sec-ovr::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sec-head .sec-title{grid-column:1;grid-row:2;font-family:var(--sans);font-size:24px;font-weight:600;line-height:1.1;letter-spacing:-0.022em;color:var(--ink)}
+.sec-head .sec-link{grid-column:2;grid-row:2;align-self:end;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;white-space:nowrap}
+.sec-sub{padding:8px 22px 0;font-family:var(--sans);font-style:italic;font-size:14.5px;color:var(--ink-mute);line-height:1.5;max-width:38ch}
+
+/* H-SCROLL */
+.h-scroll{display:flex;gap:14px;padding:20px 22px 8px;overflow-x:auto;scrollbar-width:none}
+.h-scroll::-webkit-scrollbar{display:none}
+
+/* BOTTLE CARD — unified warm-paper tile */
+.bot-card{flex-shrink:0;width:180px;background:var(--cream-warm);border:1px solid var(--hair-soft);border-radius:var(--r-sm);overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit}
+.bot-img{position:relative;height:200px;padding:14px;display:flex;align-items:flex-end;justify-content:center;
+  background:var(--cream-warm);overflow:hidden}
+.bot-img::before{content:'';position:absolute;left:50%;bottom:14px;width:62px;height:8px;transform:translateX(-46%);background:radial-gradient(ellipse at center, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.09) 50%, transparent 80%);filter:blur(2.5px);z-index:1}
+.bot-img .bot-photo{max-height:100%;width:auto;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(-1px 3px 5px rgba(0,0,0,0.26))}
+.bot-img .bot-match{position:absolute;top:10px;right:10px;z-index:3}
+.match-ring{width:34px;height:34px;position:relative;display:flex;align-items:center;justify-content:center}
+.match-ring svg{width:100%;height:100%;transform:rotate(-90deg);position:absolute;inset:0}
+.match-ring svg .track{fill:none;stroke:rgba(255,255,255,0.5);stroke-width:3}
+.match-ring svg .val{fill:none;stroke:var(--sage);stroke-width:3.5;stroke-linecap:round;stroke-dasharray:calc(var(--pct)*1.005) 999}
+.match-ring .txt{position:relative;z-index:1;font-family:var(--sans);font-size:12px;font-weight:700;color:var(--sage);letter-spacing:-0.02em;line-height:1;display:flex;align-items:baseline}
+.match-ring .txt .pct{font-size:0.72em;font-weight:600;margin-left:0.5px}
+.bot-body{padding:14px 14px 16px;text-align:center}
+.bot-name{font-family:var(--sans);font-size:14px;font-weight:600;line-height:1.2;color:var(--ink);letter-spacing:-0.018em;margin-bottom:4px}
+.bot-brew{font-family:var(--sans);font-size:11.5px;color:var(--ink-faint);letter-spacing:-0.005em}
+
+/* EVENT CARD */
+.event-card{flex-shrink:0;width:220px;background:#fff;border:1px solid var(--hair-soft);border-radius:var(--r-sm);overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;box-shadow:0 1px 2px rgba(16,24,32,0.04)}
+.event-img{position:relative;aspect-ratio:4/3;overflow:hidden}
+.event-img .ph{position:absolute;inset:0;background:var(--ph-img) center/cover no-repeat;filter:brightness(1.04) contrast(0.88) saturate(0.82) sepia(0.06)}
+.event-pill{position:absolute;top:12px;left:12px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--crimson);background:rgba(255,255,255,0.94);padding:4px 9px;border-radius:3px;z-index:2}
+.event-pill.dark{color:#fff;background:rgba(16,24,32,0.85)}
+.event-date{position:absolute;top:10px;right:10px;background:rgba(16,24,32,0.78);color:#fff;padding:6px 9px;border-radius:4px;text-align:center;z-index:2;backdrop-filter:blur(4px)}
+.event-date .m{font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;opacity:0.85;line-height:1}
+.event-date .d{font-family:var(--sans);font-size:18px;font-weight:400;line-height:1;margin-top:2px}
+.event-body{padding:12px 14px 14px}
+.event-title{font-family:var(--sans);font-size:14.5px;font-weight:600;line-height:1.2;letter-spacing:-0.018em;color:var(--ink);margin-bottom:3px}
+.event-meta{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-mute);letter-spacing:0;line-height:1.4}
+
+/* JOURNAL — feature + numbered list */
+.jour-feature{display:block;margin:18px 22px 0;text-decoration:none;color:inherit}
+.jour-feature .jour-img{position:relative;aspect-ratio:4/5;background:#222;overflow:hidden;border-radius:var(--r-sm)}
+.jour-feature .jour-img .ph{position:absolute;inset:0;background:var(--ph-img) center/cover no-repeat;filter:brightness(1.04) contrast(0.88) saturate(0.82) sepia(0.06)}
+.jour-feature .jour-cat{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px}
+.jour-feature .jour-title{font-family:var(--sans);font-size:26px;font-weight:400;line-height:1.12;letter-spacing:-0.012em;color:var(--ink);margin-bottom:10px}
+.jour-feature .jour-dek{font-family:var(--sans);font-size:14.5px;font-weight:400;line-height:1.6;color:var(--ink-mute);letter-spacing:-0.008em;margin-bottom:10px;max-width:40ch}
+.jour-feature .jour-byline{font-family:var(--sans);font-size:12px;color:var(--ink-faint);letter-spacing:-0.005em}
+
+/* NUMBERED LIST — Kinfolk contents */
+.jour-list{padding:24px 22px 0;display:flex;flex-direction:column}
+.jour-row{display:flex;gap:18px;padding:18px 0;border-top:1px solid var(--hair);text-decoration:none;color:inherit;align-items:flex-start}
+.jour-row:first-child{border-top:1px solid rgba(16,24,32,0.16)}
+.jour-row:last-child{border-bottom:1px solid var(--hair)}
+.jour-num{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--crimson);font-weight:400;flex-shrink:0;width:26px;padding-top:2px;letter-spacing:-0.005em;font-variant-numeric:tabular-nums}
+.jour-body{flex:1;min-width:0}
+.jour-cat{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:5px}
+.jour-title{font-family:var(--sans);font-size:19px;font-weight:400;line-height:1.2;letter-spacing:-0.01em;color:var(--ink);margin-bottom:5px}
+.jour-dek{font-family:var(--sans);font-size:13.5px;font-weight:400;line-height:1.5;color:var(--ink-mute);letter-spacing:-0.008em;margin-bottom:7px;max-width:42ch}
+.jour-meta{font-family:var(--sans);font-size:11.5px;color:var(--ink-faint);letter-spacing:-0.005em}
+
+/* TOPIC CHIPS */
+.topic-label{padding:28px 22px 12px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute)}
+.topic-chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 22px 4px;margin-right:-22px}
+.topic-chips::-webkit-scrollbar{display:none}
+.topic-chip{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:100px;font-size:13px;font-weight:500;letter-spacing:-0.005em;background:transparent;border:1px solid rgba(16,24,32,0.22);color:var(--ink-mute);white-space:nowrap;text-decoration:none}
+.topic-chip::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--crimson);flex-shrink:0}
+.topic-chip:last-child{margin-right:22px}
+
+/* EXPERT */
+.expert-card{margin:18px 22px 0;padding:22px 22px 20px;background:#fff;border:1px solid var(--hair-soft);border-radius:var(--r-sm);box-shadow:0 1px 2px rgba(16,24,32,0.04)}
+.expert-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px}
+.expert-portrait{width:72px;height:90px;border-radius:var(--r-sm);background:var(--cream-warm);border:1px solid var(--hair-soft);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:30px;font-weight:400;color:var(--ink);letter-spacing:-0.012em;flex-shrink:0;overflow:hidden;position:relative}
+.expert-portrait img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(1.04) contrast(0.88) saturate(0.82) sepia(0.06)}
+.expert-ident{padding-top:6px}
+.expert-ident{flex:1}
+.expert-name{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-0.018em}
+.expert-meta{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-mute);margin-top:2px}
+.expert-quote{font-family:var(--sans);font-style:italic;font-size:16.5px;line-height:1.45;letter-spacing:-0.005em;color:var(--ink);padding:4px 0 4px 14px;border-left:2px solid var(--crimson);margin-bottom:18px}
+.expert-bottles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--hair)}
+.expert-bot{text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px}
+.expert-bot-img{position:relative;height:120px;display:flex;align-items:flex-end;justify-content:center;padding:8px;
+  background:var(--cream-warm);
+  border-radius:var(--r-sm);box-shadow:inset 0 1px 0 rgba(255,255,255,0.3)}
+.expert-bot-img::before{content:'';position:absolute;left:50%;bottom:8px;width:42px;height:6px;transform:translateX(-46%);background:radial-gradient(ellipse at center, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.07) 50%, transparent 80%);filter:blur(2px);z-index:1}
+.expert-bot-img .bot-photo{max-height:100%;width:auto;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(-1px 2px 4px rgba(0,0,0,0.26))}
+.expert-bot-stars{display:flex;gap:1px;color:var(--crimson)}
+.expert-bot-stars .s{width:10px;height:10px}
+.expert-bot-stars .s.f{fill:var(--crimson);stroke:none}
+.expert-bot-stars .s.e{fill:var(--hair);stroke:none}
+.expert-bot-name{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--ink);line-height:1.25;letter-spacing:-0.018em}
+.expert-bot-meta{font-family:var(--sans);font-style:italic;font-size:11px;color:var(--ink-faint)}
+.expert-follow{margin-top:14px;display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;border-bottom:1px solid rgba(155,27,27,0.3);padding-bottom:2px}
+.expert-follow svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* FOOTER */
+.foot{padding:56px 22px 16px;text-align:center;position:relative;z-index:2}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none;letter-spacing:0;margin-bottom:4px}
+.foot-tag{font-family:var(--sans);font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:0}
+
+/* BOTTOM NAV */
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}
+h1, h2, .art-title, .type-hero, .type-greeting, .kit-title { font-variation-settings: "opsz" 44; }
+.prose, .prose p, body { font-variation-settings: "opsz" 16; }
+</style>
+</head>
+<body data-screen-label="Home v3 · Kinfolk mock">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <div class="hdr-left"><div class="hdr-spacer"></div></div>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Alerts.html" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a>
+    <a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<!-- GREETING — serif display -->
+<div class="greet">
+  <div class="greet-ovr">Good evening</div>
+  <div class="greet-name">Welcome back, Marcus</div>
+</div>
+
+<!-- HERO -->
+<section class="hero" style="--hero-img: url('Images/sakeyo_home_Aoki Brewery Hero.jpg');">
+  <div class="hero-content">
+    <span class="hero-pill">Featured brewery</span>
+    <h1 class="hero-h1">Inside Aoki Brewery, Niigata</h1>
+    <p class="hero-dek">A fifth-generation tōji on rice, water, and the sake that made his valley.</p>
+    <a class="hero-cta" href="sakeyo_Article.html">Read the story →</a>
+  </div>
+</section>
+
+<!-- TILES -->
+<div class="tiles">
+  <div class="tile-grid">
+    <a class="tile" href="sakeyo_Diary.html"><div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 012 2v14H7a2 2 0 01-2-2V4z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div><span>Diary</span></a>
+    <a class="tile" href="sakeyo_Cellar.html"><div class="tile-ic"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="0.5"/><line x1="6" y1="9" x2="18" y2="9"/><line x1="9" y1="3" x2="9" y2="9"/><line x1="15" y1="3" x2="15" y2="9"/></svg></div><span>Cellar</span></a>
+    <a class="tile" href="sakeyo_Calendar.html"><div class="tile-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="0.5"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></div><span>Events</span></a>
+    <a class="tile" href="sakeyo_Pairing.html"><div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M7 3v5M9 3v5M11 3v5M9 8v13"/><path d="M15 3l2 5l-2 2v11"/></svg></div><span>Pairing</span></a>
+    <a class="tile" href="sakeyo_Counter.html"><div class="tile-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-9 8.5 8.5 8.5 0 01-7.6-4.7L3 21l1.9-5.7A8.4 8.4 0 0112 3a8.5 8.5 0 019 8.5z"/></svg></div><span>Community</span></a>
+    <a class="tile" href="sakeyo_Explore.html"><div class="tile-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg></div><span>Explore</span></a>
+  </div>
+</div>
+
+<!-- MATCH FOR YOU -->
+<section class="sec-fluid">
+  <div class="sec-head">
+    <div class="sec-ovr">For you</div>
+    <h2 class="sec-title">Match for you</h2>
+    <a href="sakeyo_Explore.html" class="sec-link">All →</a>
+  </div>
+  <div class="h-scroll">
+    <a class="bot-card" href="SakeYo_Bottle_Detail.html">
+      <div class="bot-img"><img class="bot-photo" src="Images/sakeyo_home_yuki otoko junmai.png" alt="Yuki Otoko Junmai">
+        <div class="bot-match"><div class="match-ring" style="--pct:99"><svg viewBox="0 0 36 36"><circle class="track" cx="18" cy="18" r="16"/><circle class="val" cx="18" cy="18" r="16"/></svg><div class="txt">99<span class="pct">%</span></div></div></div>
+      </div>
+      <div class="bot-body">
+        <div class="bot-name">Yuki Otoko Junmai</div>
+        <div class="bot-brew">Aoki Brewery · Niigata</div>
+      </div>
+    </a>
+    <a class="bot-card" href="SakeYo_Bottle_Detail.html">
+      <div class="bot-img"><img class="bot-photo" src="Images/sakeyo_home_v2_taka junmai daiginjo.png" alt="Taka Junmai Daiginjo">
+        <div class="bot-match"><div class="match-ring" style="--pct:94"><svg viewBox="0 0 36 36"><circle class="track" cx="18" cy="18" r="16"/><circle class="val" cx="18" cy="18" r="16"/></svg><div class="txt">94<span class="pct">%</span></div></div></div>
+      </div>
+      <div class="bot-body">
+        <div class="bot-name">Taka Junmai Daiginjo</div>
+        <div class="bot-brew">Nagayama · Yamaguchi</div>
+      </div>
+    </a>
+    <a class="bot-card" href="SakeYo_Bottle_Detail.html">
+      <div class="bot-img"><img class="bot-photo" src="Images/sakeyo_home_tokubetsu.png" alt="Hakkaisan Tokubetsu">
+        <div class="bot-match"><div class="match-ring" style="--pct:91"><svg viewBox="0 0 36 36"><circle class="track" cx="18" cy="18" r="16"/><circle class="val" cx="18" cy="18" r="16"/></svg><div class="txt">91<span class="pct">%</span></div></div></div>
+      </div>
+      <div class="bot-body">
+        <div class="bot-name">Hakkaisan Tokubetsu Junmai</div>
+        <div class="bot-brew">Hakkaisan Shuzo · Niigata</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT TOWN -->
+<section class="sec-fluid">
+  <div class="sec-head">
+    <div class="sec-ovr">April · Singapore</div>
+    <h2 class="sec-title">About town</h2>
+    <a href="sakeyo_Calendar.html" class="sec-link">All →</a>
+  </div>
+  <p class="sec-sub">Events happening in Singapore and Japan this month.</p>
+  <div class="h-scroll">
+    <a class="event-card" href="sakeyo_Calendar.html">
+      <div class="event-img"><div class="ph" style="--ph-img: url('Images/sakeyo_home_Niigata spring flight.jpg');"></div>
+        <div class="event-pill">Tasting</div>
+        <div class="event-date"><div class="m">Apr</div><div class="d">26</div></div>
+      </div>
+      <div class="event-body">
+        <div class="event-title">Niigata Spring Flight</div>
+        <div class="event-meta">Orihara Shoten · 7pm</div>
+      </div>
+    </a>
+    <a class="event-card" href="sakeyo_Calendar.html">
+      <div class="event-img"><div class="ph" style="--ph-img: url('Images/sakeyo_home_sake sake 2026.jpg');"></div>
+        <div class="event-pill">Tasting</div>
+        <div class="event-date"><div class="m">Apr</div><div class="d">12</div></div>
+      </div>
+      <div class="event-body">
+        <div class="event-title">Sake Sake 2026 · April</div>
+        <div class="event-meta">SHUKUU Izakaya · 6:30pm</div>
+      </div>
+    </a>
+    <a class="event-card" href="sakeyo_Calendar.html">
+      <div class="event-img"><div class="ph" style="--ph-img: url('Images/sakeyo_home_doburoku week.jpg');"></div>
+        <div class="event-pill dark">Festival</div>
+        <div class="event-date"><div class="m">Apr</div><div class="d">19</div></div>
+      </div>
+      <div class="event-body">
+        <div class="event-title">Doburoku Week</div>
+        <div class="event-meta">Seven bars · all week</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- STORIES & READING -->
+<section class="sec">
+  <div class="sec-head">
+    <div class="sec-ovr">From the journal</div>
+    <h2 class="sec-title">Stories &amp; reading</h2>
+    <a href="sakeyo_Explore.html" class="sec-link">All →</a>
+  </div>
+
+  <!-- Feature article -->
+  <a class="jour-feature" href="sakeyo_Article.html">
+    <div class="jour-img"><div class="ph" style="--ph-img: url('Images/IMG_2217.jpeg');"></div></div>
+    <div class="jour-cat">Pairings</div>
+    <div class="jour-title">Why a cold junmai is the only thing an oyster actually wants</div>
+    <div class="jour-dek">The reflex is muscadet, or champagne if someone else is buying. Both are fine. Neither is doing what a cold junmai does to a Hiroshima oyster.</div>
+    <div class="jour-byline">Brad Brown</div>
+  </a>
+
+  <!-- Numbered Kinfolk contents list -->
+  <div class="jour-list">
+    <a class="jour-row" href="sakeyo_Article.html">
+      <div class="jour-num">01</div>
+      <div class="jour-body">
+        <div class="jour-cat">Food</div>
+        <div class="jour-title">Katsuo crosses Japan twice a year</div>
+        <div class="jour-dek">The spring fish wants a sharp junmai served cool. The autumn fish wants a hiyaoroshi with weight.</div>
+      </div>
+    </a>
+    <a class="jour-row" href="sakeyo_Article.html">
+      <div class="jour-num">02</div>
+      <div class="jour-body">
+        <div class="jour-cat">Japan</div>
+        <div class="jour-title">Twenty-four hours in Kanazawa, ordered around the sake</div>
+        <div class="jour-dek">Coffee at Sunny Bell. Ōmichō market before the crowds. End at Shu Shu, counter only.</div>
+      </div>
+    </a>
+    <a class="jour-row" href="sakeyo_Article.html">
+      <div class="jour-num">03</div>
+      <div class="jour-body">
+        <div class="jour-cat">Food</div>
+        <div class="jour-title">What sake does at the sushi counter</div>
+        <div class="jour-dek">The Edo sushi meal has a rhythm. A cup of junmai, room temperature or just warmed, sits inside the rhythm rather than next to it.</div>
+      </div>
+    </a>
+    <a class="jour-row" href="sakeyo_Article.html">
+      <div class="jour-num">04</div>
+      <div class="jour-body">
+        <div class="jour-cat">Culture</div>
+        <div class="jour-title">Kuroemon Kumano fires kilns in Fukui and does not explain himself</div>
+        <div class="jour-dek">The vessels come out of the kiln rough, glazed in dragged whites and iron browns, the rims unfinished where the fire decided.</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="topic-label">Browse by topic</div>
+  <div class="topic-chips">
+    <a href="sakeyo_101_Hub.html" class="topic-chip">Sake 101</a>
+    <a href="sakeyo_Japan.html" class="topic-chip">Japan</a>
+    <a href="sakeyo_Craft.html" class="topic-chip">Culture</a>
+    <a href="sakeyo_Breweries.html" class="topic-chip">Breweries</a>
+    <a href="sakeyo_Local.html" class="topic-chip">Local</a>
+    <a href="sakeyo_Pairings.html" class="topic-chip">Pairings</a>
+  </div>
+</section>
+
+<!-- WHAT THEY'RE DRINKING -->
+<section class="sec">
+  <div class="sec-head">
+    <div class="sec-ovr">What they're drinking</div>
+    <h2 class="sec-title">The people we follow</h2>
+  </div>
+
+  <div class="expert-card">
+    <div class="expert-head">
+      <div class="expert-portrait"><img src="Images/9dd3a565-1094-4de5-9fb1-593bf45db3d6.jpeg" alt="Gerard Alexis"></div>
+      <div class="expert-ident">
+        <div class="expert-name">Gerard Alexis</div>
+        <div class="expert-meta">Ōmu Nomu · Singapore</div>
+      </div>
+    </div>
+    <div class="expert-quote">"Oyster season. I've been chasing anything made with black or white koji — it's a killer combination."</div>
+    <div class="expert-bottles">
+      <a href="SakeYo_Bottle_Detail.html" class="expert-bot">
+        <div class="expert-bot-img"><img class="bot-photo" src="Images/sakeyo_home_senkin modern.png" alt="Senkin Modern Muku"></div>
+        <div class="expert-bot-stars">
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+        </div>
+        <div class="expert-bot-name">Senkin Modern Muku</div>
+        <div class="expert-bot-meta">Mar 12</div>
+      </a>
+      <a href="SakeYo_Bottle_Detail.html" class="expert-bot">
+        <div class="expert-bot-img"><img class="bot-photo" src="Images/sakeyo_home_Terada-Honke.png" alt="Terada Honke Katori"></div>
+        <div class="expert-bot-stars">
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s e"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+        </div>
+        <div class="expert-bot-name">Terada Honke Katori</div>
+        <div class="expert-bot-meta">Feb 28</div>
+      </a>
+      <a href="SakeYo_Bottle_Detail.html" class="expert-bot">
+        <div class="expert-bot-img"><img class="bot-photo" src="Images/sakeyo_home_fukucho_moon-on-the-water.png" alt="Fukucho Moon on the Water"></div>
+        <div class="expert-bot-stars">
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+          <svg viewBox="0 0 24 24" class="s f"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+        </div>
+        <div class="expert-bot-name">Fukucho Moon on the Water</div>
+        <div class="expert-bot-meta">Feb 20</div>
+      </a>
+    </div>
+    <button class="expert-follow">Follow Alex <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+  </div>
+</section>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+  <div class="foot-tag">One rung at a time.</div>
+</div>
+
+<nav class="bnav">
+  <a class="b on" href="#"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+</body></html>

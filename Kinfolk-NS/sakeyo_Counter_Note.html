@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Community note (Kinfolk)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F;
+  --sans:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Instrument Serif', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-icon{position:relative;color:rgba(255,255,255,0.85);display:flex;align-items:center}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hdr-icon .badge{position:absolute;top:-1px;right:-2px;width:7px;height:7px;background:var(--crimson);border-radius:50%;border:1.5px solid var(--black)}
+
+/* BOTTLE HERO — chiaroscuro */
+.b-hero{background:
+    radial-gradient(ellipse 60% 45% at 62% 42%, rgba(255,240,210,0.08) 0%, transparent 60%),
+    linear-gradient(180deg, var(--black) 0%, var(--black-deep) 100%);
+  padding:30px 22px 30px;color:#fff;display:flex;gap:20px;align-items:flex-end}
+.b-bottle{width:96px;height:150px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center}
+.b-bottle img{max-height:150px;width:auto;display:block;filter:drop-shadow(-2px 10px 16px rgba(0,0,0,0.5)) drop-shadow(0 20px 32px rgba(0,0,0,0.35))}
+.b-info{flex:1;min-width:0;padding-bottom:2px}
+.b-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:8px}
+.b-name{font-family:var(--sans);font-weight:400;font-size:24px;line-height:1.1;letter-spacing:-0.012em;margin-bottom:4px}
+.b-brewery{font-family:var(--sans);font-style:italic;font-size:12.5px;color:rgba(255,255,255,0.65);letter-spacing:0;margin-bottom:14px}
+.b-chips{display:flex;flex-wrap:wrap;gap:6px}
+.b-chips .match{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:100px;background:rgba(45,107,79,0.22);color:#86c69f;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;border:1px solid rgba(45,107,79,0.4)}
+.b-chips .match .dot{width:5px;height:5px;border-radius:50%;background:#86c69f}
+.b-chips .style{padding:4px 10px;border-radius:100px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);font-family:var(--sans);font-style:italic;font-size:11.5px;letter-spacing:0;border:1px solid rgba(255,255,255,0.12)}
+
+/* NOTE BLOCK */
+.note-sec{padding:24px 22px 20px;position:relative;z-index:2;border-bottom:1px solid var(--hair)}
+.author-row{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--crimson);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:-0.005em;flex-shrink:0}
+.avatar.plain{background:var(--cream-deep);color:var(--ink-mute);border:1px solid var(--hair-strong)}
+.author-name{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-0.018em;line-height:1.2}
+.author-meta{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-faint);letter-spacing:0;margin-top:2px}
+.note-headline{font-family:var(--sans);font-size:24px;font-weight:400;line-height:1.15;letter-spacing:-0.012em;color:var(--ink);margin-bottom:14px;max-width:38ch}
+.note-body{font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink);letter-spacing:-0.008em}
+.note-body p{max-width:42ch}
+.note-body p + p{margin-top:14px}
+
+/* ACTIONS */
+.note-actions{display:flex;align-items:center;gap:18px;padding:18px 22px;font-family:var(--sans);font-size:11px;color:var(--ink-mute);letter-spacing:0.14em;text-transform:uppercase;font-weight:600;position:relative;z-index:2;border-bottom:1px solid var(--hair)}
+.note-actions a{display:inline-flex;align-items:center;gap:6px}
+.note-actions svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.note-actions .buy{margin-left:auto;color:var(--crimson)}
+.note-actions .buy svg{stroke:var(--crimson)}
+
+/* SEC LABEL */
+.sec-label{padding:30px 22px 14px;position:relative;z-index:2}
+.sec-lbl{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:12px;margin:0}
+.sec-lbl::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sec-lbl .count{font-family:var(--sans);font-style:italic;font-size:13px;font-weight:400;color:var(--ink-mute);letter-spacing:0;text-transform:none}
+
+/* REPLIES */
+.replies{padding:0 22px 120px;position:relative;z-index:2}
+.reply{padding:16px 0;border-top:1px solid var(--hair);display:flex;gap:12px;align-items:flex-start}
+.reply:first-child{border-top:1px solid rgba(16,24,32,0.16)}
+.reply:last-child{border-bottom:1px solid var(--hair)}
+.reply .avatar{width:30px;height:30px;font-size:10px}
+.reply-body{flex:1;min-width:0}
+.reply-head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.reply-author{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-0.008em}
+.reply-time{font-family:var(--sans);font-style:italic;font-size:11.5px;color:var(--ink-faint);letter-spacing:0;margin-left:auto}
+.endorsed{display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;background:rgba(155,27,27,0.06);color:var(--crimson);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;border:1px solid rgba(155,27,27,0.22)}
+.reply-text{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--ink);letter-spacing:-0.008em;max-width:42ch}
+
+/* COMPOSER */
+.composer-bar{position:sticky;bottom:62px;z-index:22;padding:10px 22px;background:rgba(245,240,235,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid var(--hair);display:flex;gap:10px;align-items:center}
+.composer-input{flex:1;padding:11px 14px;border:1px solid var(--hair-strong);border-radius:100px;font-family:var(--sans);font-style:italic;font-size:13.5px;color:var(--ink-faint);background:rgba(255,255,255,0.5);letter-spacing:0;line-height:1}
+.composer-send{padding:11px 16px;border-radius:100px;background:transparent;border:1px solid var(--crimson);color:var(--crimson);font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase}
+
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .b.on{color:var(--crimson)}
+.bnav .b.on .lbl{font-weight:600}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}</style>
+</head>
+<body data-screen-label="Community note · Kinfolk">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="sakeyo_Counter.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Alerts.html" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge"></span></a>
+    <a class="hdr-icon" href="#" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<div class="b-hero">
+  <div class="b-bottle"><img src="Images/sakeyo_cellar_Tedorigawa Yshidagura.png" alt="Tedorigawa Yamahai Junmai"></div>
+  <div class="b-info">
+    <div class="b-over">The bottle</div>
+    <div class="b-name">Tedorigawa Yamahai Junmai</div>
+    <div class="b-brewery">Yoshida Shuzo · Ishikawa</div>
+    <div class="b-chips">
+      <span class="match"><span class="dot"></span>92% for you</span>
+      <span class="style">Heavy</span>
+      <span class="style">Aged</span>
+    </div>
+  </div>
+</div>
+
+<section class="note-sec">
+  <div class="author-row">
+    <div class="avatar">MT</div>
+    <div>
+      <div class="author-name">Marcus T.</div>
+      <div class="author-meta">Singapore · 1h ago</div>
+    </div>
+  </div>
+  <div class="note-headline">Tried this warmed at Orihara last night.</div>
+  <div class="note-body">
+    <p>The yamahai funk lands different at 45°C — almost like a dry sherry. The acidity that feels sharp cold turns into something rounder, almost savoury. Not for a first date, but exactly right for a cold evening.</p>
+    <p>Paired it with grilled mackerel and pickled daikon. Yamagami-san's old advice from Shu Shu finally clicks: heavy sake, oily fish, warmed.</p>
+  </div>
+</section>
+
+<div class="note-actions">
+  <a href="#"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></svg>9 replies</a>
+  <a href="sakeyo_Cellar.html"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>Save</a>
+  <a class="buy" href="#"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><path d="M9 11h8M9 15h6"/></svg>Buy</a>
+</div>
+
+<div class="sec-label">
+  <h2 class="sec-lbl">Replies <span class="count">9 in total</span></h2>
+</div>
+
+<div class="replies">
+  <div class="reply">
+    <div class="avatar">BB</div>
+    <div class="reply-body">
+      <div class="reply-head">
+        <span class="reply-author">Brad B.</span>
+        <span class="endorsed">Guide</span>
+        <span class="reply-time">42m</span>
+      </div>
+      <div class="reply-text">Try the same bottle next to a Kuheiji EXP — same yamahai school, completely different end of the spectrum. Tells you a lot about what the tōji is choosing.</div>
+    </div>
+  </div>
+  <div class="reply">
+    <div class="avatar plain">AY</div>
+    <div class="reply-body">
+      <div class="reply-head">
+        <span class="reply-author">Aiko Y.</span>
+        <span class="reply-time">28m</span>
+      </div>
+      <div class="reply-text">Have you tried it at room temp? I find the middle ground gets lost between cold and hot, but room reveals the rice character.</div>
+    </div>
+  </div>
+  <div class="reply">
+    <div class="avatar plain">JL</div>
+    <div class="reply-body">
+      <div class="reply-head">
+        <span class="reply-author">James L.</span>
+        <span class="reply-time">15m</span>
+      </div>
+      <div class="reply-text">Adding to cellar. Orihara still has stock?</div>
+    </div>
+  </div>
+</div>
+
+<div class="composer-bar">
+  <div class="composer-input">Add to the conversation…</div>
+  <button class="composer-send">Reply</button>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+</body></html>

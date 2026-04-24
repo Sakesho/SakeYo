@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Menu Scan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=supreme@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-strong:rgba(16,24,32,0.18);
+  --sage:#2D6B4F; --sage-lit:#86c69f;
+  --gold:#B8843C; --gold-lit:#E0B26A;
+  --sans:'Supreme','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Newsreader', Georgia, 'Iowan Old Style', serif;
+  --jp:'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:#000;overflow:hidden;border-radius:42px;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a;display:flex;flex-direction:column}
+
+/* TOP BAR — camera UI style */
+.cam-top{position:relative;z-index:30;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);padding:14px 18px 12px;display:flex;align-items:center;justify-content:space-between;min-height:52px;color:#fff}
+.cam-close{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center}
+.cam-close svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round}
+.cam-title{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.9)}
+.cam-flash{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center}
+.cam-flash svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* PAIRING CONTEXT STRIP — always visible so user remembers what they're matching to */
+.ctx-strip{background:rgba(0,0,0,0.78);backdrop-filter:blur(12px);padding:10px 18px 12px;display:flex;align-items:center;gap:10px;border-top:1px solid rgba(255,255,255,0.06);position:relative;z-index:29}
+.ctx-dot{width:6px;height:6px;border-radius:50%;background:var(--sage-lit);flex-shrink:0;box-shadow:0 0 0 3px rgba(134,198,159,0.18)}
+.ctx-label{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,235,0.5)}
+.ctx-profile{font-family:var(--sans);font-size:13.5px;color:var(--cream);letter-spacing:-0.005em}
+.ctx-profile strong{font-weight:500;color:#fff}
+.ctx-dish{font-family:var(--sans);font-style:italic;font-size:12px;color:rgba(245,240,235,0.55);letter-spacing:0;margin-left:auto}
+
+/* VIEWFINDER */
+.viewfinder{flex:1;position:relative;background:#0a0a0a;overflow:hidden}
+
+/* Simulated menu page — styled to look like a Singapore izakaya sake list shot through the camera.
+   Singapore menus are English-dominant with optional kanji accent + SGD prices. */
+.menu-page{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-1.2deg);width:92%;background:#f1e8d4;padding:26px 26px 22px;box-shadow:0 20px 50px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.04);border-radius:2px;color:#2a1f12;user-select:none}
+.menu-page::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(0,0,0,0.14) 0%, transparent 40%, rgba(0,0,0,0.08) 100%);pointer-events:none}
+.menu-head{text-align:center;margin-bottom:16px;display:flex;align-items:baseline;justify-content:center;gap:10px}
+.menu-kanji{font-family:var(--jp);font-size:16px;font-weight:600;color:#2a1f12;letter-spacing:0.08em;opacity:0.55}
+.menu-ttl{font-family:var(--serif);font-size:18px;font-weight:500;color:#2a1f12;letter-spacing:0.08em;text-transform:uppercase}
+.menu-rule{height:1px;background:#2a1f12;opacity:0.22;margin:8px 0 12px}
+.menu-list{display:flex;flex-direction:column;gap:10px;position:relative}
+.menu-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;position:relative}
+.menu-name{font-family:var(--serif);font-size:13px;font-weight:500;color:#2a1f12;letter-spacing:0.01em;line-height:1.3}
+.menu-note{font-family:var(--serif);font-style:italic;font-size:10.5px;color:#7a6a4e;letter-spacing:0.02em;margin-top:1px}
+.menu-price{font-family:var(--sans);font-size:11px;color:#5a4c30;letter-spacing:0.04em;font-weight:500;white-space:nowrap}
+
+/* OCR detection boxes — neutral outlines indicating DETECTED text only. Classification happens on Results, not here. */
+.ocr-box{position:absolute;left:-6px;right:-6px;top:-4px;bottom:-4px;border:1.5px solid rgba(255,255,255,0.55);border-radius:3px;background:rgba(255,255,255,0.04);cursor:pointer;pointer-events:auto;transition:background .15s ease, border-color .15s ease;z-index:3}
+.ocr-box:hover{background:rgba(255,255,255,0.10);border-color:rgba(255,255,255,0.85)}
+.ocr-box:active{transform:scale(0.99)}
+
+/* Corner brackets — viewfinder affordance */
+.vf-corners{position:absolute;inset:78px 22px 130px;pointer-events:none;z-index:5}
+.vf-corners::before,.vf-corners::after,.vf-corners > span::before, .vf-corners > span::after{content:"";position:absolute;width:26px;height:26px;border:2px solid rgba(255,255,255,0.75);border-radius:2px}
+.vf-corners::before{top:0;left:0;border-right:none;border-bottom:none}
+.vf-corners::after{top:0;right:0;border-left:none;border-bottom:none}
+.vf-corners > span::before{bottom:0;left:0;border-right:none;border-top:none}
+.vf-corners > span::after{bottom:0;right:0;border-left:none;border-top:none}
+
+/* Scan-line animation */
+.scan-line{position:absolute;left:10%;right:10%;height:1.5px;background:linear-gradient(90deg, transparent 0%, rgba(134,198,159,0.8) 50%, transparent 100%);top:30%;animation:scan 3.2s ease-in-out infinite;pointer-events:none;z-index:6;box-shadow:0 0 8px rgba(134,198,159,0.5)}
+@keyframes scan{0%{top:30%;opacity:0}15%{opacity:1}50%{top:70%;opacity:1}85%{opacity:1}100%{top:30%;opacity:0}}
+
+/* STATUS PILL — floats above the viewfinder */
+.status-pill{position:absolute;top:calc(52px + 42px + 14px);left:50%;transform:translateX(-50%);z-index:25;padding:7px 14px;border-radius:100px;background:rgba(0,0,0,0.72);backdrop-filter:blur(12px);color:#fff;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:-0.005em;display:inline-flex;align-items:center;gap:8px}
+.status-dot{width:5px;height:5px;border-radius:50%;background:var(--sage-lit);box-shadow:0 0 0 3px rgba(134,198,159,0.2);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* HINT ROW — capture vs. single-tap affordances */
+.hint{position:absolute;left:22px;right:22px;bottom:100px;z-index:25;padding:10px 14px;border-radius:var(--r-sm);background:rgba(0,0,0,0.62);backdrop-filter:blur(10px);color:#fff;text-align:center;font-family:var(--sans);font-style:italic;font-size:12px;letter-spacing:0;color:rgba(255,255,255,0.78)}
+.hint strong{font-style:normal;font-weight:500;color:#fff}
+
+/* BOTTOM BAR */
+.cam-bottom{position:relative;z-index:30;background:rgba(0,0,0,0.88);padding:14px 22px calc(14px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid rgba(255,255,255,0.04)}
+.cam-action{flex:1;padding:12px 10px;border-radius:100px;background:rgba(255,255,255,0.08);color:#fff;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid rgba(255,255,255,0.12)}
+.cam-action svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cam-shutter{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.85);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative}
+.cam-shutter::before{content:"";width:46px;height:46px;border-radius:50%;background:#fff}
+
+/* Manual-entry escape link */
+.escape{position:absolute;bottom:16px;left:0;right:0;text-align:center;z-index:26;pointer-events:none}
+.escape a{pointer-events:auto;font-family:var(--sans);font-style:italic;font-size:12px;color:rgba(245,240,235,0.55);letter-spacing:0;border-bottom:1px solid rgba(245,240,235,0.22);padding-bottom:1px}
+
+@media (max-width:500px){
+  body{padding:0!important;min-height:100vh;min-height:100dvh}
+  .device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}
+  .phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}
+  .cam-top{padding-top:calc(14px + env(safe-area-inset-top))!important}
+}
+</style>
+</head>
+<body data-screen-label="Menu Scan · Pairing handoff">
+<div class="device"><div class="phone">
+
+<!-- TOP CAMERA BAR -->
+<header class="cam-top">
+  <a class="cam-close" href="sakeyo_Pairing_Result.html?profile=aged&amp;dish=yakitori&amp;branch=tare" aria-label="Close">
+    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </a>
+  <div class="cam-title">Menu Scan</div>
+  <button class="cam-flash" aria-label="Flash">
+    <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+  </button>
+</header>
+
+<!-- PAIRING CONTEXT — the whole reason the user is here -->
+<div class="ctx-strip">
+  <span class="ctx-dot"></span>
+  <div class="ctx-profile">Matching to <strong>Aged</strong></div>
+  <div class="ctx-dish">yakitori · tare</div>
+</div>
+
+<!-- VIEWFINDER -->
+<div class="viewfinder">
+
+  <!-- Faux Singapore izakaya sake menu — English-dominant, SGD prices -->
+  <div class="menu-page">
+    <div class="menu-head">
+      <span class="menu-kanji">日本酒</span>
+      <span class="menu-ttl">Sake List</span>
+    </div>
+    <div class="menu-rule"></div>
+
+    <div class="menu-list">
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">Dassai 45 Junmai Daiginjo</div>
+          <div class="menu-note">Asahi Shuzo · Yamaguchi</div>
+        </div>
+        <div class="menu-price">S$28</div>
+        <a class="ocr-box" href="sakeyo_Menu_Match.html?line=dassai-45&amp;profile=aged&amp;dish=yakitori&amp;branch=tare" aria-label="Tap Dassai 45"></a>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">Daishichi Kimoto Junmai</div>
+          <div class="menu-note">Daishichi Shuzo · Fukushima</div>
+        </div>
+        <div class="menu-price">S$22</div>
+        <a class="ocr-box" href="sakeyo_Menu_Match.html?line=daishichi-kimoto&amp;profile=aged&amp;dish=yakitori&amp;branch=tare" aria-label="Tap Daishichi Kimoto"></a>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">Kenbishi Kuromatsu</div>
+          <div class="menu-note">Kenbishi Shuzo · Hyogo</div>
+        </div>
+        <div class="menu-price">S$18</div>
+        <a class="ocr-box" href="sakeyo_Menu_Match.html?line=kenbishi&amp;profile=aged&amp;dish=yakitori&amp;branch=tare" aria-label="Tap Kenbishi Kuromatsu"></a>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">Dewazakura Oka Ginjo</div>
+          <div class="menu-note">Dewazakura Shuzo · Yamagata</div>
+        </div>
+        <div class="menu-price">S$20</div>
+        <a class="ocr-box" href="sakeyo_Menu_Match.html?line=dewazakura&amp;profile=aged&amp;dish=yakitori&amp;branch=tare" aria-label="Tap Dewazakura Oka"></a>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">Suiryu Kimoto Aged Junmai</div>
+          <div class="menu-note">Kuboh Honten · Nara</div>
+        </div>
+        <div class="menu-price">S$25</div>
+        <a class="ocr-box" href="sakeyo_Menu_Match.html?line=suiryu-aged&amp;profile=aged&amp;dish=yakitori&amp;branch=tare" aria-label="Tap Suiryu Kimoto Aged"></a>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">Juyondai Honmaru</div>
+          <div class="menu-note">Takagi Shuzo · Yamagata</div>
+        </div>
+        <div class="menu-price">S$38</div>
+        <a class="ocr-box" href="sakeyo_Menu_Match.html?line=juyondai&amp;profile=aged&amp;dish=yakitori&amp;branch=tare" aria-label="Tap Juyondai Honmaru"></a>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">Kikuhime Yamahai Junmai</div>
+          <div class="menu-note">Kikuhime Shuzo · Ishikawa</div>
+        </div>
+        <div class="menu-price">S$23</div>
+        <a class="ocr-box" href="sakeyo_Menu_Match.html?line=kikuhime-yamahai&amp;profile=aged&amp;dish=yakitori&amp;branch=tare" aria-label="Tap Kikuhime Yamahai"></a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Viewfinder corner brackets + scan line -->
+  <div class="vf-corners"><span></span></div>
+  <div class="scan-line"></div>
+
+  <!-- Status indicator -->
+  <div class="status-pill">
+    <span class="status-dot"></span>
+    7 sakes detected
+  </div>
+
+  <!-- How to use the capture — tap a single line, or shutter for a ranked list -->
+  <div class="hint">
+    <strong>Tap</strong> a line to check one · <strong>Shutter</strong> to rank the whole list
+  </div>
+
+  <!-- Manual entry / back-label fallback -->
+  <div class="escape">
+    <a href="sakeyo_Search.html">Can't read it? Type or photograph the label</a>
+  </div>
+</div>
+
+<!-- BOTTOM: actions. Shutter = capture whole menu → Results. Freeze = lock detection so user can tap-one-line without jitter. -->
+<div class="cam-bottom">
+  <button class="cam-action" aria-label="Freeze detection">
+    <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+    Freeze
+  </button>
+  <a class="cam-shutter" href="sakeyo_Menu_Results.html?profile=aged&amp;dish=yakitori&amp;branch=tare" aria-label="Capture & rank whole menu"></a>
+  <a class="cam-action" href="sakeyo_Search.html">
+    Type name
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg>
+  </a>
+</div>
+
+</div></div>
+</body></html>

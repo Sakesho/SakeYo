@@ -88,6 +88,14 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .fallback-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;border-bottom:1px solid rgba(155,27,27,0.3);padding-bottom:2px}
 .fallback-link svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
+/* OR card — alternate entry point: user has a specific bottle / menu in front of them */
+.or-card{margin:26px 22px 0;padding:20px 20px 18px;background:#fff;border:1px solid var(--hair);border-radius:var(--r-md);display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 1px 2px rgba(16,24,32,0.03)}
+.or-body{flex:1;min-width:0}
+.or-over{font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px}
+.or-q{font-family:var(--sans);font-size:15.5px;font-weight:400;color:var(--ink);letter-spacing:-0.01em;line-height:1.25}
+.or-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:7px;padding:10px 14px;border-radius:100px;background:var(--ink);color:var(--cream);font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;white-space:nowrap}
+.or-btn svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
 .foot{padding:36px 22px 14px;text-align:center;position:relative;z-index:2}
 .foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none;margin-bottom:4px}
 .foot-tag{font-family:var(--sans);font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:0}
@@ -145,17 +153,26 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 <!-- JAPANESE GRID -->
 <div class="dishes" id="jpGrid">
 
-  <button type="button" class="dish" data-root="sushi" data-kind="root" data-name="Sushi &amp; sashimi" data-en="raw fish, rice optional" data-prompt="What kind?" data-branches='[
+  <button type="button" class="dish" data-root="sushi" data-kind="root" data-name="Sushi" data-en="rice-based, nigiri &amp; rolls" data-prompt="What kind?" data-branches='[
     {"id":"fatty","name":"Fatty","en":"toro, chutoro, salmon belly"},
     {"id":"nigiri","name":"Nigiri","en":"saba, kohada, tai, ebi"},
-    {"id":"sashimi","name":"Sashimi","en":"white fish, tai, hirame"},
     {"id":"oysters","name":"Oysters","en":"raw, briny, koji-friendly"},
-    {"id":"shellfish","name":"Shellfish &amp; roe","en":"uni, ikura, clams, amaebi"},
     {"id":"spicy","name":"Spicy","en":"spicy tuna, spicy salmon rolls"},
-    {"id":"omakase","name":"Omakase","en":"chef&apos;s mix of types"}
+    {"id":"omakase","name":"Omakase","en":"chef&apos;s mix"}
   ]'>
-    <div class="dish-name">Sushi &amp; sashimi</div>
-    <div class="dish-en">toro, nigiri, oysters, omakase</div>
+    <div class="dish-name">Sushi</div>
+    <div class="dish-en">nigiri, fatty, spicy, omakase</div>
+    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="sashimi" data-kind="root" data-name="Sashimi" data-en="raw fish, no rice" data-prompt="What kind?" data-branches='[
+    {"id":"white","name":"White fish","en":"tai, hirame, cod"},
+    {"id":"fatty","name":"Fatty","en":"toro, salmon belly"},
+    {"id":"oysters","name":"Oysters","en":"raw, briny"},
+    {"id":"shellfish","name":"Shellfish &amp; roe","en":"uni, ikura, amaebi"}
+  ]'>
+    <div class="dish-name">Sashimi</div>
+    <div class="dish-en">white fish, fatty, oysters, roe</div>
     <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
   </button>
 
@@ -169,12 +186,13 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
   </button>
 
-  <button type="button" class="dish" data-root="grilled-fish" data-kind="root" data-name="Grilled fish" data-en="yakizakana" data-prompt="White or oily?" data-branches='[
-    {"id":"white","name":"White fish","en":"tai, hirame, cod, gindara"},
-    {"id":"oily","name":"Oily fish","en":"saba, sanma, sawara"}
+  <button type="button" class="dish" data-root="grilled-seafood" data-kind="root" data-name="Grilled seafood" data-en="yakizakana &amp; shellfish" data-prompt="Which kind?" data-tri="true" data-branches='[
+    {"id":"lean","name":"Lean","en":"tai, hirame, cod, gindara"},
+    {"id":"oily","name":"Oily","en":"saba, sanma, sawara"},
+    {"id":"shellfish","name":"Shellfish","en":"scallop, squid, shrimp, clams"}
   ]'>
-    <div class="dish-name">Grilled fish</div>
-    <div class="dish-en">saba, sanma, gindara, tai</div>
+    <div class="dish-name">Grilled seafood</div>
+    <div class="dish-en">lean, oily, shellfish</div>
     <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
   </button>
 
@@ -202,33 +220,23 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
   </button>
 
-  <button type="button" class="dish" data-root="ramen" data-kind="root" data-name="Ramen" data-en="broth noodles" data-prompt="Which broth?" data-branches='[
-    {"id":"tonkotsu","name":"Tonkotsu","en":"rich, cloudy pork bone"},
-    {"id":"shio","name":"Shio","en":"clear, salt-forward"},
-    {"id":"shoyu","name":"Shoyu","en":"clear, soy-based"},
-    {"id":"miso","name":"Miso","en":"fermented, rich"},
-    {"id":"spicy","name":"Spicy miso","en":"with chili, numbing heat"}
+  <button type="button" class="dish" data-root="noodles" data-kind="root" data-name="Noodles" data-en="ramen, udon, soba, yakisoba" data-prompt="Which kind?" data-branches='[
+    {"id":"ramen","name":"Ramen","en":"broth — tonkotsu, shoyu, miso"},
+    {"id":"hot","name":"Hot","en":"kake udon, kitsune, tempura"},
+    {"id":"cold","name":"Cold","en":"zaru, mori — tsuyu dipping"},
+    {"id":"stirfry","name":"Stir-fry","en":"yakisoba, yaki udon"}
   ]'>
-    <div class="dish-name">Ramen</div>
-    <div class="dish-en">tonkotsu, shoyu, miso, spicy</div>
+    <div class="dish-name">Noodles</div>
+    <div class="dish-en">ramen, hot, cold, stir-fry</div>
     <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
   </button>
 
-  <button type="button" class="dish" data-root="udon-soba" data-kind="root" data-name="Udon &amp; soba" data-en="wheat and buckwheat noodles" data-prompt="Hot or cold?" data-branches='[
-    {"id":"hot","name":"Hot","en":"kake, kitsune, tempura udon"},
-    {"id":"cold","name":"Cold with tsuyu","en":"zaru, mori soba"}
+  <button type="button" class="dish" data-root="hotpot" data-kind="root" data-name="Hot pot" data-en="nabe, sukiyaki, shabu, chanko" data-prompt="Rich or light?" data-branches='[
+    {"id":"rich","name":"Rich","en":"sukiyaki, miso nabe, kimchi"},
+    {"id":"light","name":"Light","en":"shabu-shabu, mizutaki, chanko"}
   ]'>
-    <div class="dish-name">Udon &amp; soba</div>
-    <div class="dish-en">hot broth or cold with tsuyu</div>
-    <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
-  </button>
-
-  <button type="button" class="dish" data-root="nabe" data-kind="root" data-name="Nabe &amp; sukiyaki" data-en="hot pot" data-prompt="Which kind?" data-branches='[
-    {"id":"sukiyaki","name":"Sukiyaki","en":"sweet-soy beef pot"},
-    {"id":"shabu","name":"Shabu &amp; chanko","en":"clear broth, mixed"}
-  ]'>
-    <div class="dish-name">Nabe &amp; sukiyaki</div>
-    <div class="dish-en">sukiyaki, shabu, chanko</div>
+    <div class="dish-name">Hot pot</div>
+    <div class="dish-en">rich or light broth</div>
     <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
   </button>
 
@@ -305,15 +313,21 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
   </button>
 
-  <button type="button" class="dish" data-root="cheese" data-kind="root" data-name="Cheese &amp; charcuterie" data-en="boards, plates, cheese courses" data-prompt="Which kind?" data-branches='[
-    {"id":"fresh","name":"Fresh &amp; creamy","en":"burrata, mozzarella, brie"},
-    {"id":"aged","name":"Aged &amp; hard","en":"parmesan, gouda, manchego"},
-    {"id":"blue","name":"Blue &amp; funky","en":"gorgonzola, roquefort, stilton"},
-    {"id":"charcuterie","name":"Charcuterie board","en":"salami, prosciutto, olives"}
+  <button type="button" class="dish" data-root="cheese" data-kind="root" data-name="Cheese" data-en="by firmness &amp; rind" data-prompt="Which kind?" data-branches='[
+    {"id":"fresh","name":"Fresh","en":"burrata, mozzarella, ricotta"},
+    {"id":"hard","name":"Hard (aged)","en":"parmesan, aged gouda, manchego"},
+    {"id":"blue","name":"Blue","en":"stilton, gorgonzola, roquefort"},
+    {"id":"semihard","name":"Semi-hard (young)","en":"young gouda, fontina, raclette"},
+    {"id":"soft","name":"Soft (washed rind)","en":"brie, camembert, taleggio"}
   ]'>
-    <div class="dish-name">Cheese &amp; charcuterie</div>
-    <div class="dish-en">burrata, aged gouda, prosciutto</div>
+    <div class="dish-name">Cheese</div>
+    <div class="dish-en">fresh, hard, blue, semi-hard, soft</div>
     <div class="dish-arr"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </button>
+
+  <button type="button" class="dish" data-root="charcuterie" data-kind="direct" data-name="Charcuterie" data-en="cured meats &amp; boards">
+    <div class="dish-name">Charcuterie</div>
+    <div class="dish-en">prosciutto, salami, pâté</div>
   </button>
 
   <button type="button" class="dish" data-root="spicy" data-kind="direct" data-name="Spicy wings &amp; bites" data-en="chili-forward small plates">
@@ -321,6 +335,18 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     <div class="dish-en">buffalo, dakgalbi, Sichuan</div>
   </button>
 
+</div>
+
+<!-- OR — user has a bottle/menu in front of them -->
+<div class="or-card">
+  <div class="or-body">
+    <div class="or-over">Or</div>
+    <div class="or-q">Looking at a specific sake?</div>
+  </div>
+  <a class="or-btn" href="sakeyo_Search.html">
+    Find it
+    <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+  </a>
 </div>
 
 <div class="fallback">

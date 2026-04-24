@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Cellar match</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=supreme@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F; --sage-lit:#86c69f; --sage-deep:#1e4a36;
+  --gold:#B8843C; --gold-lit:#E0B26A; --gold-deep:#8a5e20;
+  --sans:'Supreme','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Newsreader', Georgia, 'Iowan Old Style', serif;
+  --jp:'Noto Serif JP', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:90px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{width:90px;display:flex;justify-content:flex-end;gap:14px}
+.hdr-icon{color:rgba(255,255,255,0.85);display:flex}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* Greeting */
+.greet{background:var(--black);padding:10px 22px 26px;position:relative;overflow:hidden;color:#fff}
+.greet-over{font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,235,0.55)}
+.greet-name{font-family:var(--sans);font-size:32px;font-weight:400;color:var(--cream);margin-top:6px;line-height:1.08;letter-spacing:-0.018em}
+.greet-name em{font-style:italic}
+.greet-dek{font-family:var(--sans);font-style:italic;font-size:13.5px;color:rgba(245,240,235,0.62);line-height:1.5;margin-top:8px;max-width:38ch;letter-spacing:0}
+.greet-meta{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:5px 11px;border-radius:100px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,240,235,0.85)}
+.greet-meta .dot{width:5px;height:5px;border-radius:50%;background:var(--sage-lit)}
+
+/* Toolbar */
+.toolbar{position:sticky;top:52px;z-index:45;padding:14px 22px 10px;background:var(--cream);display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--hair-soft)}
+.tb-count{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-mute)}
+.tb-sort{display:inline-flex;align-items:center;gap:5px;font-family:var(--sans);font-size:11.5px;font-weight:500;color:var(--ink);letter-spacing:-0.005em;padding:6px 11px;border-radius:100px;border:1px solid var(--hair-strong);background:#fff}
+.tb-sort svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* Bucket heads */
+.bucket-head{padding:22px 22px 10px;display:flex;align-items:center;gap:10px;position:relative;z-index:2}
+.bucket-tag{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;padding:4px 10px;border-radius:100px;display:inline-flex;align-items:center;gap:6px}
+.bucket-tag .dot{width:5px;height:5px;border-radius:50%}
+.bucket-tag.good{background:rgba(45,107,79,0.14);color:var(--sage)}
+.bucket-tag.good .dot{background:var(--sage)}
+.bucket-tag.close{background:rgba(184,132,60,0.16);color:var(--gold-deep)}
+.bucket-tag.close .dot{background:var(--gold)}
+.bucket-tag.miss{background:rgba(138,136,128,0.16);color:var(--ink-faint)}
+.bucket-tag.miss .dot{background:var(--ink-faint)}
+.bucket-count{font-family:var(--sans);font-style:italic;font-size:12px;color:var(--ink-faint);margin-left:auto}
+
+/* Cellar items: thumb + body + chev */
+.items{padding:0 22px}
+.item{display:flex;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--hair);color:inherit;text-decoration:none;position:relative}
+.item:first-child{border-top:1px solid rgba(16,24,32,0.16)}
+.item:last-child{border-bottom:1px solid var(--hair)}
+
+.item-thumb{width:48px;height:78px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center;position:relative}
+.item-thumb img{max-height:78px;width:auto;display:block;filter:drop-shadow(-1px 4px 6px rgba(0,0,0,0.22))}
+.item.miss .item-thumb img{opacity:0.6}
+
+.item-rank{position:absolute;top:-4px;left:-6px;width:20px;height:20px;border-radius:50%;background:var(--cream-warm);color:var(--ink-mute);font-family:var(--sans);font-size:10.5px;font-weight:600;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--cream);z-index:2}
+.item.good .item-rank{background:var(--sage);color:#fff;border-color:var(--cream)}
+.item.close .item-rank{background:var(--gold);color:#fff;border-color:var(--cream)}
+
+.item-body{flex:1;min-width:0}
+.item-name{font-family:var(--sans);font-size:16px;font-weight:400;color:var(--ink);line-height:1.2;margin-bottom:2px;letter-spacing:-0.012em}
+.item-brew{font-family:var(--sans);font-style:italic;font-size:11.5px;color:var(--ink-mute);letter-spacing:0;margin-bottom:6px}
+.item-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.item-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);background:var(--cream-warm)}
+.item-chip.profile{background:rgba(16,24,32,0.06);color:var(--ink)}
+
+/* Dual score pills — food archetype fit + user taste fit */
+.score{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:100px;font-family:var(--sans);font-size:10.5px;font-weight:600}
+.score .dot{width:4px;height:4px;border-radius:50%}
+.score .n{font-variant-numeric:tabular-nums;font-weight:700}
+.score .lbl{font-size:9.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;opacity:0.9}
+.score.food{background:rgba(184,132,60,0.14);color:var(--gold-deep)}
+.score.food .dot{background:var(--gold)}
+.score.taste{background:rgba(45,107,79,0.14);color:var(--sage)}
+.score.taste .dot{background:var(--sage)}
+.score.low{background:rgba(138,136,128,0.14);color:var(--ink-faint)}
+.score.low .dot{background:var(--ink-faint)}
+
+.item-chev{flex-shrink:0;color:var(--ink-faint);opacity:0.55}
+.item-chev svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.item.miss .item-name,.item.miss .item-brew{opacity:0.7}
+
+/* EMPTY / low-cellar state — gentle nudge when the cellar can't cover the profile */
+.gap-card{margin:22px 22px 0;padding:18px 20px;background:var(--cream-warm);border:1px solid var(--hair);border-radius:var(--r-sm);position:relative;z-index:2}
+.gap-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px}
+.gap-q{font-family:var(--sans);font-size:15.5px;color:var(--ink);letter-spacing:-0.01em;line-height:1.3;margin-bottom:4px}
+.gap-dek{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-mute);letter-spacing:0;line-height:1.5;margin-bottom:12px}
+.gap-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:11px;font-weight:600;color:var(--crimson);letter-spacing:0.14em;text-transform:uppercase;border-bottom:1px solid rgba(155,27,27,0.35);padding-bottom:1px}
+.gap-link svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Actions */
+.act-row{margin:28px 22px 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2}
+.act-link{display:inline-flex;align-items:center;gap:7px;padding:11px 18px;border-radius:100px;font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase}
+.act-link.primary{background:var(--ink);color:var(--cream);border:1px solid var(--ink)}
+.act-link.ghost{border:1px solid var(--hair-strong);color:var(--ink-mute);background:transparent}
+.act-link svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.foot{padding:36px 22px 14px;text-align:center;position:relative;z-index:2}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none}
+
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}}
+</style>
+</head>
+<body data-screen-label="Cellar Match · Home cooking flow">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="sakeyo_Pairing_Result.html?profile=aged&amp;dish=yakitori&amp;branch=tare">
+    <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back
+  </a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Cellar.html" aria-label="Cellar"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3v18M16 3v18M4 10h16"/></svg></a>
+  </div>
+</header>
+
+<div class="greet">
+  <div class="greet-over">From your cellar</div>
+  <div class="greet-name">7 bottles.<br>Ranked for <em>Aged</em>.</div>
+  <div class="greet-dek">Cooking tare yakitori tonight? Each bottle scored on <strong style="color:var(--cream);font-weight:500">food fit</strong> and <strong style="color:var(--cream);font-weight:500">your taste</strong>.</div>
+  <div class="greet-meta">
+    <span class="dot"></span>Pairing · Aged · yakitori · tare
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="tb-count">7 in cellar</div>
+  <button class="tb-sort">
+    Sort: Fit
+    <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</div>
+
+<!-- STRONG MATCH -->
+<div class="bucket-head">
+  <span class="bucket-tag good"><span class="dot"></span>Pour tonight</span>
+  <span class="bucket-count">3 bottles</span>
+</div>
+
+<div class="items">
+  <a class="item good" href="sakeyo_Cellar_Detail.html">
+    <div class="item-thumb">
+      <div class="item-rank">1</div>
+      <img src="Images/sakeyo_cellar_Daruma Masamune.png" alt="Daruma Masamune Koshu">
+    </div>
+    <div class="item-body">
+      <div class="item-name">Daruma Masamune Koshu</div>
+      <div class="item-brew">Shiraki Tsunesuke · Gifu</div>
+      <div class="item-meta">
+        <span class="score food"><span class="dot"></span><span class="n">96</span><span class="lbl">food</span></span>
+        <span class="score taste"><span class="dot"></span><span class="n">91</span><span class="lbl">taste</span></span>
+        <span class="item-chip profile">Rich & Aged</span>
+      </div>
+    </div>
+    <div class="item-chev"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </a>
+
+  <a class="item good" href="sakeyo_Cellar_Detail.html">
+    <div class="item-thumb">
+      <div class="item-rank">2</div>
+      <img src="Images/sakeyo_cellar_Noguchi.png" alt="Noguchi Naohiko Junmai Ginjo">
+    </div>
+    <div class="item-body">
+      <div class="item-name">Noguchi Naohiko Junmai Ginjo</div>
+      <div class="item-brew">Noguchi Naohiko · Ishikawa</div>
+      <div class="item-meta">
+        <span class="score food"><span class="dot"></span><span class="n">92</span><span class="lbl">food</span></span>
+        <span class="score taste"><span class="dot"></span><span class="n">89</span><span class="lbl">taste</span></span>
+        <span class="item-chip profile">Rich & Aged</span>
+      </div>
+    </div>
+    <div class="item-chev"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </a>
+
+  <a class="item good" href="sakeyo_Cellar_Detail.html">
+    <div class="item-thumb">
+      <div class="item-rank">3</div>
+      <img src="Images/sakeyo_cellar_Tedorigawa Yshidagura.png" alt="Tedorigawa Yoshidagura">
+    </div>
+    <div class="item-body">
+      <div class="item-name">Tedorigawa Yoshidagura</div>
+      <div class="item-brew">Yoshida Shuzo · Ishikawa</div>
+      <div class="item-meta">
+        <span class="score food"><span class="dot"></span><span class="n">87</span><span class="lbl">food</span></span>
+        <span class="score taste"><span class="dot"></span><span class="n">84</span><span class="lbl">taste</span></span>
+        <span class="item-chip profile">Rich & Complex</span>
+      </div>
+    </div>
+    <div class="item-chev"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </a>
+</div>
+
+<!-- CLOSE -->
+<div class="bucket-head">
+  <span class="bucket-tag close"><span class="dot"></span>Close — adjacent profile</span>
+  <span class="bucket-count">2 bottles</span>
+</div>
+
+<div class="items">
+  <a class="item close" href="sakeyo_Cellar_Detail.html">
+    <div class="item-thumb">
+      <div class="item-rank">4</div>
+      <img src="Images/sakeyo_cellar_sogen junmai.png" alt="Sogen Junmai">
+    </div>
+    <div class="item-body">
+      <div class="item-name">Sogen Junmai</div>
+      <div class="item-brew">Sogen Shuzo · Ishikawa</div>
+      <div class="item-meta">
+        <span class="score food"><span class="dot"></span><span class="n">74</span><span class="lbl">food</span></span>
+        <span class="score taste"><span class="dot"></span><span class="n">78</span><span class="lbl">taste</span></span>
+        <span class="item-chip profile">Mellow & Flavorful</span>
+      </div>
+    </div>
+    <div class="item-chev"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </a>
+
+  <a class="item close" href="sakeyo_Cellar_Detail.html">
+    <div class="item-thumb">
+      <div class="item-rank">5</div>
+      <img src="Images/sakeyo_cellar_detail_Kubota.png" alt="Kubota Manju">
+    </div>
+    <div class="item-body">
+      <div class="item-name">Kubota Manju</div>
+      <div class="item-brew">Asahi Shuzo · Niigata</div>
+      <div class="item-meta">
+        <span class="score food"><span class="dot"></span><span class="n">68</span><span class="lbl">food</span></span>
+        <span class="score taste"><span class="dot"></span><span class="n">73</span><span class="lbl">taste</span></span>
+        <span class="item-chip profile">Mellow & Flavorful</span>
+      </div>
+    </div>
+    <div class="item-chev"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </a>
+</div>
+
+<!-- DIFFERENT -->
+<div class="bucket-head">
+  <span class="bucket-tag miss"><span class="dot"></span>Different profile</span>
+  <span class="bucket-count">2 bottles · save for another night</span>
+</div>
+
+<div class="items">
+  <a class="item miss" href="sakeyo_Cellar_Detail.html">
+    <div class="item-thumb">
+      <div class="item-rank">6</div>
+      <img src="Images/sakeyo_cellar_Dassai 23.png" alt="Dassai 23">
+    </div>
+    <div class="item-body">
+      <div class="item-name">Dassai 23</div>
+      <div class="item-brew">Asahi Shuzo · Yamaguchi</div>
+      <div class="item-meta">
+        <span class="score low"><span class="dot"></span><span class="n">46</span><span class="lbl">food</span></span>
+        <span class="score taste"><span class="dot"></span><span class="n">64</span><span class="lbl">taste</span></span>
+        <span class="item-chip profile">Fruity & Aromatic</span>
+      </div>
+    </div>
+    <div class="item-chev"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </a>
+
+  <a class="item miss" href="sakeyo_Cellar_Detail.html">
+    <div class="item-thumb">
+      <div class="item-rank">7</div>
+      <img src="Images/sakeyo_cellar_Kakurei Junmai Ginjo.png" alt="Kakurei Junmai Ginjo">
+    </div>
+    <div class="item-body">
+      <div class="item-name">Kakurei Junmai Ginjo</div>
+      <div class="item-brew">Kakurei Shuzo · Niigata</div>
+      <div class="item-meta">
+        <span class="score low"><span class="dot"></span><span class="n">38</span><span class="lbl">food</span></span>
+        <span class="score taste"><span class="dot"></span><span class="n">58</span><span class="lbl">taste</span></span>
+        <span class="item-chip profile">Clean & Crisp</span>
+      </div>
+    </div>
+    <div class="item-chev"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+  </a>
+</div>
+
+<!-- Soft shop-the-gap nudge only if cellar is thin on this profile — included here as design guide -->
+<div class="gap-card">
+  <div class="gap-over">Worth adding</div>
+  <div class="gap-q">Your cellar is light on true Aged.</div>
+  <div class="gap-dek">Only Daruma Masamune is a clean koshu. A kimoto or taruzake would give you real range for grilled and roasted dishes.</div>
+  <a class="gap-link" href="sakeyo_Explore.html">
+    Explore Aged bottles
+    <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
+<div class="act-row">
+  <a class="act-link primary" href="sakeyo_Pairing_Result.html?profile=aged&amp;dish=yakitori&amp;branch=tare">
+    Change pairing
+    <svg viewBox="0 0 24 24"><path d="M20 11h-12l3.5-3.5M4 13h12l-3.5 3.5"/></svg>
+  </a>
+  <a class="act-link ghost" href="sakeyo_Cellar.html">
+    See full cellar
+  </a>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+</body></html>

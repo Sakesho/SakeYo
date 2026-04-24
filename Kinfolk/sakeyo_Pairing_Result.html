@@ -53,14 +53,13 @@ a{color:inherit;text-decoration:none}
 .meal-sub{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-faint);letter-spacing:0}
 .edit-btn{flex-shrink:0;padding:7px 12px;border-radius:100px;border:1px solid var(--hair-strong);font-family:var(--sans);font-size:11px;color:var(--ink-mute);font-weight:600;letter-spacing:0.14em;text-transform:uppercase}
 
-/* BOTTLE HERO */
-.b-hero{margin:14px 22px 0;background:radial-gradient(ellipse 60% 45% at 62% 42%, rgba(255,240,210,0.08) 0%, transparent 60%),linear-gradient(180deg, var(--black) 0%, var(--black-deep) 100%);padding:30px 22px 26px;color:#fff;border-radius:var(--r-sm);display:flex;gap:18px;align-items:flex-end;position:relative;z-index:2}
-.b-bottle{width:106px;height:160px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center}
-.b-bottle img{max-height:160px;width:auto;display:block;filter:drop-shadow(-2px 12px 18px rgba(0,0,0,0.5)) drop-shadow(0 24px 40px rgba(0,0,0,0.35))}
-.b-info{flex:1;min-width:0;padding-bottom:4px}
-.b-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:8px}
-.b-name{font-family:var(--serif);font-weight:400;font-size:23px;line-height:1.08;letter-spacing:-0.012em;margin-bottom:4px;color:#fff}
-.b-brewery{font-family:var(--serif);font-style:italic;font-size:12.5px;color:rgba(255,255,255,0.65);letter-spacing:0;margin-bottom:14px}
+/* PROFILE HERO — dark editorial card, sake style as the pick */
+.p-hero{margin:14px 22px 0;background:radial-gradient(ellipse 60% 45% at 62% 42%, rgba(255,240,210,0.08) 0%, transparent 60%),linear-gradient(180deg, var(--black) 0%, var(--black-deep) 100%);padding:28px 24px 26px;color:#fff;border-radius:var(--r-sm);position:relative;z-index:2}
+.p-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:10px}
+.p-name{font-family:var(--serif);font-weight:400;font-size:34px;line-height:1.05;letter-spacing:-0.018em;margin-bottom:8px;color:#fff}
+.p-dek{font-family:var(--serif);font-style:italic;font-size:14px;color:rgba(245,240,235,0.72);letter-spacing:0;line-height:1.45;margin-bottom:18px;max-width:34ch}
+.p-chips{display:flex;gap:8px;flex-wrap:wrap}
+.p-chip{display:inline-flex;align-items:center;padding:5px 11px;border-radius:100px;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;background:rgba(255,255,255,0.08);color:rgba(245,240,235,0.85);border:1px solid rgba(255,255,255,0.14)}
 
 /* Match tags — sage for taste, gold for food. Three bands: good / med / weak. */
 .match-row{display:flex;gap:8px;flex-wrap:wrap}
@@ -184,85 +183,24 @@ a{color:inherit;text-decoration:none}
   <a class="edit-btn" href="sakeyo_Pairing.html">Change</a>
 </div>
 
-<!-- BOTTLE HERO — sage taste + gold food -->
-<div class="b-hero">
-  <div class="b-bottle"><img src="Images/sakeyo_bottle_detail_Hakkaisan Tokubetsu Junmai.png" alt="Hakkaisan Tokubetsu Junmai"></div>
-  <div class="b-info">
-    <div class="b-over">Pour this</div>
-    <div class="b-name">Hakkaisan Tokubetsu Junmai</div>
-    <div class="b-brewery">Hakkaisan Shuzo · Niigata</div>
-    <div class="match-row">
-      <span class="match-tag taste good"><span class="dot"></span>97% taste</span>
-      <span class="match-tag food good"><span class="dot"></span>92% food</span>
-    </div>
+<!-- PROFILE HERO — the sake style, not a specific bottle -->
+<div class="p-hero">
+  <div class="p-over">Our pick · Style</div>
+  <div class="p-name">Aged</div>
+  <div class="p-dek">Transformed by time. Amber color, caramel and dried-fruit aromas, concentrated flavor — closer to a fine aged spirit than to the sake it started as.</div>
+  <div class="p-chips">
+    <span class="p-chip">Koshu · jukuseishu</span>
+    <span class="p-chip">Room temp / warm</span>
   </div>
 </div>
 
-<div class="actions">
-  <a class="act primary" href="SakeYo_Bottle_Detail.html">
-    <svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
-    See bottle details
-  </a>
-</div>
-
-<!-- WHY — the profile & its pairing logic -->
+<!-- WHY — archetype-level pairing logic -->
 <div class="why-card">
-  <div class="why-over">Why this works</div>
-  <div class="why-profile">Aged Type</div>
-  <div class="why-profile-dek">Complex and nutty, made for grilled meats and caramelized flavors.</div>
+  <div class="why-over">Why it works</div>
+  <div class="why-profile">Charred &amp; Roasted Savory</div>
+  <div class="why-profile-dek">Maillard, smoke, caramelization — the archetype tare lives in.</div>
   <div class="why-rule"></div>
-  <p class="why-body">Tare glaze is <em>caramelized, smoky, faintly sweet</em> — the same register the grill leaves on the chicken. An Aged-type sake meets it there, carrying enough weight to stand up to char without flattening the bird, and enough oxidative warmth to echo the glaze rather than fight it.</p>
-</div>
-
-<!-- ALTERNATES — other strong food matches -->
-<div class="sec-label">
-  <h2 class="sec-lbl">Also pairs well</h2>
-</div>
-<div class="sec-sub">Other sakes from your catalog that work with this dish — ordered by food match.</div>
-
-<div class="alts">
-  <a class="alt" href="SakeYo_Bottle_Detail.html">
-    <div class="alt-bottle">
-      <img src="Images/sakeyo_home_v2_taka junmai daiginjo.png" alt="Taka Junmai Daiginjo">
-    </div>
-    <div class="alt-body">
-      <div class="alt-name">Taka Junmai Daiginjo</div>
-      <div class="alt-brewery">Nagayama · Yamaguchi</div>
-      <div class="alt-match">
-        <span class="alt-mini-tag food good"><span class="dot"></span>90% food</span>
-        <span class="alt-mini-tag taste good"><span class="dot"></span>88% taste</span>
-      </div>
-    </div>
-    <div class="alt-chevron"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
-  </a>
-  <a class="alt" href="SakeYo_Bottle_Detail.html">
-    <div class="alt-bottle">
-      <img src="Images/sakeyo_home_senkin modern.png" alt="Senkin Modern Muku">
-    </div>
-    <div class="alt-body">
-      <div class="alt-name">Senkin Modern Muku</div>
-      <div class="alt-brewery">Senkin · Tochigi</div>
-      <div class="alt-match">
-        <span class="alt-mini-tag food good"><span class="dot"></span>87% food</span>
-        <span class="alt-mini-tag taste med"><span class="dot"></span>82% taste</span>
-      </div>
-    </div>
-    <div class="alt-chevron"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
-  </a>
-  <a class="alt" href="SakeYo_Bottle_Detail.html">
-    <div class="alt-bottle">
-      <img src="Images/sakeyo_home_Terada-Honke.png" alt="Terada Honke Katori">
-    </div>
-    <div class="alt-body">
-      <div class="alt-name">Terada Honke Katori</div>
-      <div class="alt-brewery">Terada Honke · Chiba</div>
-      <div class="alt-match">
-        <span class="alt-mini-tag food med"><span class="dot"></span>78% food</span>
-        <span class="alt-mini-tag taste med"><span class="dot"></span>74% taste</span>
-      </div>
-    </div>
-    <div class="alt-chevron"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
-  </a>
+  <p class="why-body">Tare glaze is <em>caramelized, smoky, faintly sweet</em> — the same register the grill leaves on the chicken. An Aged sake meets it there, carrying enough weight to stand up to char without flattening the bird, and enough oxidative warmth to echo the glaze rather than fight it.</p>
 </div>
 
 <!-- NEXT ACTION -->

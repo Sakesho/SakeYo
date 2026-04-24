@@ -1,0 +1,1280 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+//
+// PROPOSED UPDATE — Kinfolk-NS prototype support
+// Authored 2026-04-24 based on existing schema (702 lines) + Kinfolk-NS HTML prototype.
+// Additions are grouped in clearly labeled sections. See SCHEMA_CHANGES.md for the
+// gap analysis and per-page mapping.
+//
+// Convention: userId is a String referencing Supabase auth.users (no local User table),
+// matching the existing pattern. New relation fields on existing models are marked
+// with a `// [KINFOLK]` comment for easy diffing.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================
+// USER-RELATED MODELS
+// ============================================
+
+model UserTasteProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  // Source of the taste profile
+  source String? // "quiz", "ratings", "mixed"
+
+  // Quiz reference
+  quizResultId    String? // FK to QuizResults.id
+  quizVersion     String? // Quiz version that populated this profile
+  experienceLevel String? // User's sake experience level: "Beginner", "Intermediate", "Advanced"
+
+  // Final flavor intensity preferences
+  finalFlavorIntensityMinPref Float?
+  finalFlavorIntensityMaxPref Float?
+
+  // Smoothness preferences
+  smoothnessMinPref Float?
+  smoothnessMaxPref Float?
+
+  // Finish length preferences
+  finishLengthMinPref Float?
+  finishLengthMaxPref Float?
+
+  // Aroma intensity preferences
+  aromaIntensityMinPref Float?
+  aromaIntensityMaxPref Float?
+
+  // Complexity preferences
+  complexityMinPref Float?
+  complexityMaxPref Float?
+
+  // Weight preferences
+  weightMinPref Float?
+  weightMaxPref Float?
+
+  // User's sake exploration preferences
+  prefersSakeSpontaneousDiscovery Float?
+  hasAffinityTowards              Float?
+
+  // Temperature preferences
+  prefersWarm   Float?
+  prefersCold   Float?
+  prefersHotKan Float?
+
+  // Style preferences
+  prefersClassicStyles   Float?
+  prefersModernStyles    Float?
+  prefersMinimalFiltered Float?
+
+  // Additional preferences
+  prefersAged        Float?
+  prefersNigori      Float?
+  prefersSparkling   Float?
+  prefersKoshu       Float?
+  prefersGenshu      Float?
+  prefersNamazake    Float?
+  prefersMuroka      Float?
+  prefersTokubetsu   Float?
+  prefersYamahai     Float?
+  prefersKimoto      Float?
+  prefersSokujo      Float?
+  prefersShizuku     Float?
+  prefersArabashiri  Float?
+  prefersNakadori    Float?
+  prefersResponsible Float?
+
+  // Light/Full body preference scale
+  lightFullBodyPref Float?
+
+  // ============================================
+  // HARPER AXIS RANGES (1-5 scale) - Updated by ratings
+  // ============================================
+  // Dryness axis
+  dryMin Float? // Dryness minimum preference
+  dryMid Float? // Dryness midpoint preference
+  dryMax Float? // Dryness maximum preference
+
+  // Fruity-Savory axis
+  fruitsavoryMin Float? // Fruity-Savory minimum preference
+  fruitsavoryMid Float? // Fruity-Savory midpoint preference
+  fruitsavoryMax Float? // Fruity-Savory maximum preference
+
+  // Acidity axis
+  acidMin Float? // Acidity minimum preference
+  acidMid Float? // Acidity midpoint preference
+  acidMax Float? // Acidity maximum preference
+
+  // Body axis
+  bodyMin Float? // Body minimum preference
+  bodyMid Float? // Body midpoint preference
+  bodyMax Float? // Body maximum preference
+
+  // Legacy mid-only fields (kept for backwards compatibility)
+  dryness       Float? // Harper D axis preference (legacy, use dryMid)
+  fruitySavory  Float? // Harper FS axis preference (legacy, use fruitsavoryMid)
+  harperAcidity Float? // Harper A axis preference (legacy, use acidMid)
+  harperBody    Float? // Harper B axis preference (legacy, use bodyMid)
+
+  // ============================================
+  // HARPER STYLE WEIGHTS (0-1 scale, derived from quiz scores / 10)
+  // ============================================
+  wLightDelicate    Float? // Light & Delicate affinity (0-1)
+  wFreshLively      Float? // Fresh & Lively affinity (0-1)
+  wFruityAromatic   Float? // Fruity & Aromatic affinity (0-1)
+  wDryCrisp         Float? // Dry & Crisp affinity (0-1)
+  wMildSoft         Float? // Mild & Soft affinity (0-1)
+  wMellowFlavorful  Float? // Mellow & Flavorful affinity (0-1)
+  wFullBold         Float? // Full & Bold affinity (0-1)
+  wRichComplex      Float? // Rich & Complex affinity (0-1)
+  wSweetLush        Float? // Sweet & Lush affinity (0-1)
+  wRichAged         Float? // Rich & Aged affinity (0-1)
+
+  // Update tracking timestamps
+  updatedFromQuizAt    DateTime? // Last time updated from quiz data
+  updatedFromRatingsAt DateTime? // Last time updated from rating behavior
+
+  // User metadata
+  userName String? // Display name for debug/QA tools
+
+  // Created and updated timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user_taste_profiles")
+}
+
+model QuizResults {
+  id     String @id @default(cuid())
+  userId String
+
+  // Quiz metadata
+  quizVersion     String? // e.g., "v2.0"
+  experienceLevel String? // "Beginner", "Intermediate", "Advanced"
+
+  // ============================================
+  // HARPER AXIS RANGES (1-5 scale)
+  // ============================================
+  dryMin     Float? // Dryness minimum preference
+  dryMax     Float? // Dryness maximum preference
+  dryMid     Float? // Dryness midpoint preference
+  fsMin      Float? // Fruity-Savory minimum preference
+  fsMax      Float? // Fruity-Savory maximum preference
+  fsMid      Float? // Fruity-Savory midpoint preference
+  acidityMin Float? // Acidity minimum preference
+  acidityMax Float? // Acidity maximum preference
+  acidityMid Float? // Acidity midpoint preference
+  bodyMin    Float? // Body minimum preference
+  bodyMax    Float? // Body maximum preference
+  bodyMid    Float? // Body midpoint preference
+
+  // ============================================
+  // HARPER STYLE SCORES (1-10 scale)
+  // ============================================
+  lightDelicateScore   Float? // Light & Delicate score
+  freshLivelyScore     Float? // Fresh & Lively score
+  fruityAromaticScore  Float? // Fruity & Aromatic score
+  dryCrispScore        Float? // Dry & Crisp score
+  mildSoftScore        Float? // Mild & Soft score
+  mellowFlavorfulScore Float? // Mellow & Flavorful score
+  fullBoldScore        Float? // Full & Flavorful score
+  richComplexScore     Float? // Rich & Complex score
+  sweetLushScore       Float? // Sweet & Lush score
+  richAgedScore        Float? // Rich & Aged score
+
+  createdAt DateTime @default(now())
+
+  @@map("quiz_results")
+}
+
+model UserBottleRating {
+  id           String @id @default(cuid())
+  sakeBottleId String
+  userId       String
+
+  // Rating value (1-5 stars)
+  rating Int? // 1=strongly dislike, 2=dislike, 3=neutral, 4=like, 5=love
+
+  // Legacy field (kept for backwards compatibility)
+  overallRating Int?
+
+  // Optional free-text notes
+  notes String?
+
+  // Favorite flag
+  isFavorite Boolean @default(false)
+
+  // For those who track their tasting experience
+  tastedAt DateTime?
+
+  // System creation timestamp
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  sake SakeBottle @relation(fields: [sakeBottleId], references: [id])
+
+  // Unique constraint: one rating per user per bottle
+  @@unique([userId, sakeBottleId])
+  @@map("user_bottle_ratings")
+}
+
+enum UnrecognizedSakeStatus {
+  PENDING
+  IN_REVIEW
+  ENTERED
+  REJECTED
+}
+
+model UserContributionProfile {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  contributionCount Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("user_contribution_profiles")
+}
+
+model UserSakeDiaryEntry {
+  id     String @id @default(cuid())
+  userId String
+
+  // Reference to known sake (optional — user can type a name manually)
+  sakeId             String?
+  unrecognizedSakeId String?
+
+  // Core entry fields
+  sakeName       String
+  brewery        String?
+  classification String?
+
+  // Rating & favorite
+  rating     Int     @default(0) // 1-5 stars
+  isFavorite Boolean @default(false)
+
+  // Tasting details
+  aroma       String[] @default([]) // e.g. ["Fruity", "Melon", "Floral"]
+  taste       String[] @default([]) // e.g. ["Smooth", "Sweet", "Crisp"]
+  finish      String? // "Short" | "Medium" | "Long" | "Lingering"
+  servingTemp String? // LEGACY free-text; use pouredTemp (enum) going forward
+  occasion    String? // "Dinner" | "Bar" | "Izakaya" | "Home" | etc.
+  location    String? // Free text, e.g. "Sake Bar Ginn, Singapore"
+
+  // [KINFOLK] New fields for Diary_Add prototype
+  pouredTemp   PouredTemp?   // Canonical enum replacement for servingTemp (Cold/Room/Warm/Hot)
+  vesselShape  VesselShape?  // Hiragata / Sugi-nari / Tsutsu-gata / Wine glass
+  styleFlags   String[]      @default([]) // Multi-select from Diary_Add "Style" chips (Mellow/Heavy/Aged/Fruity/Dry/Light)
+
+  // Notes
+  notes String? @db.Text
+
+  // Date of tasting (separate from system timestamps)
+  date DateTime @default(now())
+
+  // User-uploaded image
+  imageUrl String?
+
+  // Legacy fields (keep for backward compatibility)
+  title       String?
+  context     String?
+  purchasedOn DateTime?
+  purchasedAt String?
+  drinkDate   DateTime?
+  finishedOn  DateTime?
+  status      String?
+
+  // System timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  sake             SakeBottle?       @relation(fields: [sakeId], references: [id])
+  unrecognizedSake UnrecognizedSake? @relation(fields: [unrecognizedSakeId], references: [id])
+  pairings         DiaryPairing[]    // [KINFOLK] multi-row "Paired with" builder
+
+  @@map("user_sake_diary_entries")
+}
+
+model UnrecognizedSake {
+  id String @id @default(cuid())
+
+  // User who submitted this (Supabase auth user id)
+  userId String
+
+  // User's input for the sake name
+  userInputName String
+
+  // Workflow status
+  status UnrecognizedSakeStatus @default(PENDING)
+
+  // Label images (Supabase public URLs)
+  frontImageUrl String?
+  backImageUrl  String?
+
+  // Raw AI extraction from front label (JSON)
+  aiExtractedData Json?
+
+  // Optional link to ImageAnalysis row from /api/analyze
+  imageAnalysisId String?
+
+  // IDs of DB matches the user saw but rejected (for matching improvement)
+  rejectedMatchIds String[] @default([])
+
+  // When admin marks ENTERED, user is credited once
+  rewardGranted Boolean @default(false)
+
+  // Timestamp when entry was created
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Admin can review and assign a match
+  matchedSakeId String?
+  adminNotes    String?
+
+  // Relations
+  matchedSake   SakeBottle?      @relation(fields: [matchedSakeId], references: [id])
+  imageAnalysis ImageAnalysis? @relation(fields: [imageAnalysisId], references: [id])
+  diaryEntries  UserSakeDiaryEntry[]
+
+  @@map("unrecognized_sakes")
+}
+
+// ============================================
+// SAKE-RELATED MODELS
+// ============================================
+
+model SakeBottle {
+  id   String  @id @default(cuid())
+  slug String? @unique // URL-friendly identifier
+
+  // ============================================
+  // BASIC INFORMATION
+  // ============================================
+  name             String
+  brand            String? // Brand label shown to users
+  shortDescription String? // Short marketing description for cards
+  description      String? @db.Text // Long-form description
+  status           String? // Publication state: DRAFT, PUBLISHED, ARCHIVED
+
+  // Marketing bullets
+  bullet1 String?
+  bullet2 String?
+  bullet3 String?
+
+  // Classification
+  classification    String? // Junmai, Ginjo, etc. (renamed from sakeGradeClassic)
+  sakeProfileInfoId String?
+
+  // Image
+  imageUrl String? // Main/hero image
+
+  // ============================================
+  // PRODUCTION DETAILS
+  // ============================================
+  breweryId      String?
+  yeastId        String?
+  riceType       String? // Sake rice type (renamed from sakeRice)
+  prefecture     String?
+  giRegionId     String?
+
+  // Brewing timeline
+  brewingYear    String? // BY label, stored as string
+  productionYear Int?    // Calendar production year
+  vintage        String? // Vintage label or "NV" style text
+
+  // Technical specs
+  rprRaw         Float? // Raw rice polishing ratio (renamed from ricePolishingRatio)
+  rprNormalized  Float? // Normalized, comparison-safe RPR
+  smv            Float? // Sake Meter Value (renamed from sakeMeterValue)
+  acidity        Float? // Acidity value (renamed from acidityLevel)
+  aminoAcids     Float? // Amino acid level (renamed from aminoAcidLevel)
+  abv            Float? // Alcohol by volume (renamed from alcoholContent)
+  kasuBuai       Float? // Lees ratio (kasu-buai)
+
+  // Polishing
+  polishMethod        String? // VERTICAL, HORIZONTAL, UNKNOWN
+  rprNormRuleVersion  String? // Identifier of normalization rule curve
+  rprNormalizedAt     DateTime? // Timestamp when rprNormalized was last computed
+
+  // ============================================
+  // HARPER AXES (1-5 scale for match scoring)
+  // ============================================
+  harperD                   Float?  // Dryness (1-5)
+  harperFS                  Float?  // Fruity-Savory (1-5)
+  harperA                   Float?  // Acidity (1-5)
+  harperB                   Float?  // Body (1-5)
+  primaryHarperProfileKey   String? // e.g. "Rich & Aged"
+  secondaryHarperProfileKey String? // e.g. "Rich & Complex"
+
+  // Classification tracking
+  profileManuallyAssigned     Boolean  @default(false) // True if Harper profile was manually set
+  axesManuallyAssigned        Boolean  @default(false) // True if Harper axes were manually set
+  classificationRuleVersion   String?  // Identifier for rule set used (e.g., "harper_v1")
+  classifiedAt                DateTime? // Timestamp when classification was last updated
+  classificationNotes         String?  @db.Text // Internal notes about manual overrides
+
+  // Tasting notes
+  tastingNotes String? @db.Text // Free-text tasting notes used by classifier and UI
+
+  // ============================================
+  // SPECIAL DESIGNATIONS (boolean flags)
+  // ============================================
+  isAged      Boolean @default(false)
+  isUsuNigori Boolean @default(false)
+  isNigori    Boolean @default(false)
+  isSparkling Boolean @default(false)
+  isGenshu    Boolean @default(false)
+  isNama      Boolean @default(false) // Unpasteurized (renamed from isNamazake)
+  isMuroka    Boolean @default(false)
+  isYamahai   Boolean @default(false)
+  isKimoto    Boolean @default(false)
+  isBodaiMoto Boolean @default(false) // Made with bodai-moto method
+  isTaruzake  Boolean @default(false) // Aged or stored in cedar cask
+  isDessert   Boolean @default(false) // Dessert sake
+
+  // ============================================
+  // USER RATINGS (aggregated)
+  // ============================================
+  averageUserRating Float? // Average user rating (1-5 stars)
+  userRatingCount   Int?   // Number of ratings contributing to the average
+
+  // ============================================
+  // PRICING & VOLUME
+  // ============================================
+  volumeMl      Int?
+  price         Float?
+  priceCurrency String?
+
+  // ============================================
+  // EXTERNAL REFERENCES
+  // ============================================
+  awards         Json?
+  janCode        String?
+  externalId     String?
+  externalSource String?
+
+  // ============================================
+  // [KINFOLK] DRINKING WINDOW HINTS
+  // Used by Cellar_Detail to compute drink-by alerts and window visualization.
+  // Nullable — when absent, UI falls back to style-based defaults.
+  // ============================================
+  drinkWindowMonthsAfterBrewing     Int? // Recommended consumption window from brewing
+  drinkWindowMonthsAfterOpening     Int? // Recommended window once opened
+  lightSensitive                    Boolean @default(false) // Surface "sensitive to light" warning
+
+  // System timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  brewery           SakeBrewery?            @relation(fields: [breweryId], references: [id])
+  sakeProfileInfo   SakeProfileInfo?        @relation(fields: [sakeProfileInfoId], references: [id])
+  giRegion          GIRegion?               @relation(fields: [giRegionId], references: [id])
+  yeast             Yeast?                  @relation(fields: [yeastId], references: [id])
+  ratings           UserBottleRating[]
+  diaryEntries      UserSakeDiaryEntry[]
+  unrecognizedSakes UnrecognizedSake[]
+  sakeTerms         SakeBottleTerm[]
+  servingTemps      SakeBottleServingTemp[]
+  cellarEntries     CellarEntry[]           // [KINFOLK]
+  counterPosts      CounterPost[]           // [KINFOLK]
+  passportBottles   PassportEntryBottle[]   // [KINFOLK]
+
+  @@map("sake_bottles")
+}
+
+model SakeBottleServingTemp {
+  id           String @id @default(cuid())
+  sakeBottleId String
+
+  // Serving temperature: Cold, Chilled, Room, Warm, Hot
+  temperature String
+
+  // Rating: Good, Very Good
+  rating String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  sakeBottle SakeBottle @relation(fields: [sakeBottleId], references: [id], onDelete: Cascade)
+
+  // Unique constraint: one entry per bottle per temperature
+  @@unique([sakeBottleId, temperature])
+  @@map("sake_bottle_serving_temps")
+}
+
+model SakeBrewery {
+  id           String  @id @default(cuid())
+  name         String
+  nameJapanese String?
+  title        String? // Headline / tagline
+  description  String? @db.Text
+  prefecture   String?
+  prefectureId String? // Reference to prefecture
+  region       String?
+  city         String?
+  address      String?
+  website      String?
+  email        String?
+  phone        String?
+  imageUrl     String? // Hero image
+  logoUrl      String?
+  badgeImage   String? // Badge / small image
+  foundedYear  Int?
+  history      String? @db.Text
+  craftIdentity    String? @db.Text
+  waterSource      String?
+  specialtyStyle   String?
+  tojiName         String?
+  tojiSchool       String?
+  productionVolume Int?
+  acceptsVisitors  Boolean @default(false)
+  visitInfo        String? @db.Text
+  latitude         Float?
+  longitude        Float?
+  // Marketing bullets
+  bullet1      String?
+  bullet2      String?
+  bullet3      String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  sakes            SakeBottle[]
+
+  @@map("sake_breweries")
+}
+
+model SakeProfileInfo {
+  id                   String  @id @default(cuid())
+  profileName          String
+  displayName          String?
+  japaneseName         String?
+  shortDescription     String?
+  longDescription      String? @db.Text
+  flavorProfile        String? @db.Text
+  usageRecommendations String? @db.Text
+  bestServingTemp      String?
+  originInfo           String? @db.Text
+  imageUrl             String?
+  displayOrder         Int?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  sakes                SakeBottle[]
+
+  @@map("sake_profile_infos")
+}
+
+model SakeTerm {
+  id               String  @id @default(cuid())
+  term             String
+  termJapanese     String?
+  description      String? @db.Text
+  shortDescription String?
+  category         String?
+  termType         String?
+  isMethod         Boolean @default(false)
+  isGrade          Boolean @default(false)
+  isStyle          Boolean @default(false)
+  humanReadable    String? @db.Text
+  synonyms         String?
+  relatedTerms     String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  sakeBottleTerms  SakeBottleTerm[]
+
+  @@map("sake_terms")
+}
+
+model SakeBottleTerm {
+  id           String   @id @default(cuid())
+  sakeBottleId String
+  sakeTermId   String
+  termType     String?
+  confidence   Float?
+  createdAt    DateTime @default(now())
+  sakeBottle   SakeBottle @relation(fields: [sakeBottleId], references: [id], onDelete: Cascade)
+  sakeTerm     SakeTerm   @relation(fields: [sakeTermId], references: [id], onDelete: Cascade)
+
+  @@unique([sakeBottleId, sakeTermId])
+  @@map("sake_bottle_terms")
+}
+
+model GIRegion {
+  id              String    @id @default(cuid())
+  name            String
+  nameJapanese    String?
+  description     String?   @db.Text
+  prefecture      String?
+  characteristics String?   @db.Text
+  recognitionDate DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  sakes           SakeBottle[]
+
+  @@map("gi_regions")
+}
+
+model Yeast {
+  id                   String  @id @default(cuid())
+  code                 String  @unique
+  name                 String
+  nameJapanese         String?
+  description          String? @db.Text
+  characteristics      String? @db.Text
+  flavorProfile        String? @db.Text
+  aromaCharacteristics String? @db.Text
+  fermentationTempLow  Float?
+  fermentationTempHigh Float?
+  origin               String?
+  discoveredBy         String?
+  discoveredYear       Int?
+  foamingBehavior      String?
+  hasLowAlcoholVariant Boolean @default(false)
+  aromaticProfile      String? // "neutral", "aromatic", "very_aromatic" - impacts Harper FS axis calculation
+  harperFsAdjustment   Int?    // Explicit Harper FS adjustment applied during classification
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  sakes                SakeBottle[]
+
+  @@map("yeasts")
+}
+
+model RpnNormalizationPoint {
+  id                 String   @id @default(cuid())
+  rpnValue           Float
+  normalizedValue    Float
+  expandedRprDisplay String?
+  notes              String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("rpn_normalization_points")
+}
+
+model RpnNormalizationRule {
+  id                    String   @id @default(cuid())
+  ruleId                Int      @unique
+  inputRpnFixedValue    Float?
+  methodBeingNormalized String?
+  targetMethodClass     String?
+  useSingleInputRatio   Boolean  @default(false)
+  expandLowerOption     String?
+  isActive              Boolean  @default(true)
+  description           String?  @db.Text
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("rpn_normalization_rules")
+}
+
+model Settings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  valueType   String   @default("string")
+  description String?
+  category    String?
+  isEditable  Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("settings")
+}
+
+/// Learn tab: blog posts (markdown), managed in dashboard → Content → Articles.
+/// [KINFOLK] Also used for editorial Pairing guides (set category = "pairing_guide")
+/// and 101 educational pages. Save/bookmark tracked via UserSavedLearnArticle.
+model LearnArticle {
+  id              String    @id @default(cuid())
+  slug            String    @unique
+  title           String
+  excerpt         String    @db.Text
+  category        String
+  readTimeMinutes Int       @default(5)
+  imageUrl        String?
+  content         String    @db.Text
+  isFeatured      Boolean   @default(false)
+  published       Boolean   @default(false)
+  sortOrder       Int       @default(0)
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // [KINFOLK] relations
+  savedByUsers    UserSavedLearnArticle[]
+  places          Place[]           // Places introduced via this article (e.g., Wishlist source quote)
+  passportEntries PassportEntry[]   // Passport entries whose "source" attributes back to this article
+
+  @@map("learn_articles")
+}
+
+// ============================================
+// IMAGE ANALYSIS MODEL
+// ============================================
+
+model ImageAnalysis {
+  id           String   @id @default(cuid())
+  imageUrl     String?  // URL of uploaded image (optional)
+  rawResponse  Json     // Raw AI response data
+  matchedSakes String[] // Array of matched sake IDs
+  explanations Json     // Match explanations per sake ID
+  userId       String?  // Optional user ID if authenticated
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  unrecognizedSakes UnrecognizedSake[]
+
+  @@map("image_analyses")
+}
+
+// ============================================================================
+// [KINFOLK] NEW MODELS — Kinfolk-NS prototype support
+// All additions below are new. Nothing above this line was structurally
+// changed except the fields/relations tagged "[KINFOLK]".
+// ============================================================================
+
+// ============================================
+// [KINFOLK] SHARED ENUMS
+// ============================================
+
+enum PouredTemp {
+  COLD
+  ROOM
+  WARM
+  HOT
+}
+
+enum VesselShape {
+  HIRAGATA     // 平形 (flat/saucer)
+  SUGI_NARI    // 杉形 (cedar/tapered)
+  TSUTSU_GATA  // 筒型 (straight cylinder)
+  WINE_GLASS
+  OTHER
+}
+
+enum StorageType {
+  FRIDGE
+  COOL_CELLAR
+  ROOM
+  OTHER
+}
+
+enum CellarEntryStatus {
+  UNOPENED
+  OPENED
+  FINISHED
+  AGING_INTENTIONALLY
+}
+
+enum PlaceType {
+  BAR
+  RESTAURANT
+  BREWERY
+  SHOP
+  TASTING_ROOM
+  OTHER
+}
+
+enum EventType {
+  SAKE_TASTING
+  SAKE_EDUCATION
+  PAIRING_DINNER
+  BREWER_VISIT
+  FESTIVAL
+  BAR_TAKEOVER
+  OTHER
+}
+
+enum AlertType {
+  CELLAR_DRINKING_WINDOW
+  CELLAR_EXPIRING
+  EVENT_TOMORROW
+  EVENT_THIS_WEEK
+  COMMUNITY_REPLY
+  RECOMMENDATION_SAKE
+  RECOMMENDATION_ARTICLE
+  OTHER
+}
+
+enum AlertEntityType {
+  CELLAR_ENTRY
+  EVENT
+  COUNTER_POST
+  COUNTER_REPLY
+  LEARN_ARTICLE
+  SAKE_BOTTLE
+  NONE
+}
+
+enum CounterPostType {
+  SAKE_SHARE   // "Share a sake"
+  ASK          // "Ask the group"
+  TRIP         // "Ask about Japan" / trip planning
+}
+
+enum EventReservationStatus {
+  CONFIRMED
+  CANCELED
+  WAITLISTED
+}
+
+// ============================================
+// [KINFOLK] USER PROFILE & ONBOARDING
+// ============================================
+
+/// Display-facing user profile (distinct from UserTasteProfile which holds taste math).
+/// One row per Supabase auth user. Holds display name, avatar, join date, public-profile config.
+model UserProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  displayName String?
+  avatarUrl   String?
+  bio         String? @db.Text
+
+  // Optional public-profile settings (Profile → Share)
+  isProfilePublic   Boolean @default(false)
+  publicProfileSlug String? @unique
+
+  // Cached signature quote shown at top of Profile page
+  signatureQuote            String?   @db.Text
+  signatureQuoteGeneratedAt DateTime?
+
+  // Tracking
+  joinedAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user_profiles")
+}
+
+/// Onboarding progress flags — drives the Account_Setup flow and
+/// conditional nudges (e.g., "Finish your palate quiz").
+model UserOnboardingState {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  hasCompletedQuiz         Boolean @default(false)
+  hasSetDisplayName        Boolean @default(false)
+  hasScannedFirstLabel     Boolean @default(false)
+  hasLoggedFirstDiaryEntry Boolean @default(false)
+  hasAddedCellarBottle     Boolean @default(false)
+
+  onboardingCompletedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user_onboarding_states")
+}
+
+// ============================================
+// [KINFOLK] CELLAR (INVENTORY)
+// Drives: sakeyo_Cellar.html, Cellar_Add.html, Cellar_Detail.html
+// ============================================
+
+/// One row per bottle the user owns. Unlike UserBottleRating (taste signal)
+/// or UserSakeDiaryEntry (tasting event), this tracks physical inventory state.
+model CellarEntry {
+  id           String @id @default(cuid())
+  userId       String
+  sakeBottleId String
+
+  // Purchase info
+  purchaseDate  DateTime?
+  source        String?  // "Shop, bar, trip — wherever"
+  price         Float?
+  priceCurrency String?
+  volumeMl      Int?     // 180, 300, 500, 720, 1800, or custom
+
+  // Status tracking
+  status     CellarEntryStatus @default(UNOPENED)
+  openedAt   DateTime? // Set when user marks as opened (or via Cellar_Add "Opened today")
+  finishedAt DateTime? // Set when user marks as finished
+
+  // Storage
+  storageType StorageType?
+  location    String?  // Free-form label, e.g. "Wine fridge · A-3"
+
+  // User notes
+  notes String? @db.Text
+
+  // Alerts
+  drinkByAlertsEnabled Boolean @default(false)
+
+  // Derived / cached drink-by date (computed from bottle style + openedAt).
+  // Populated by background job or on-write; nullable when not yet computed.
+  drinkByDate DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sakeBottle SakeBottle @relation(fields: [sakeBottleId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@index([sakeBottleId])
+  @@index([userId, drinkByDate])
+  @@map("cellar_entries")
+}
+
+// ============================================
+// [KINFOLK] DIARY EXTENSIONS
+// Drives: Diary_Add.html "Paired with" multi-row builder
+// ============================================
+
+/// A single "Paired with" entry attached to a UserSakeDiaryEntry.
+/// Multiple rows per diary entry, ordered by orderIndex.
+model DiaryPairing {
+  id           String @id @default(cuid())
+  diaryEntryId String
+
+  dishName     String
+  reactionNote String? @db.Text // e.g. "lifted the dashi"
+  orderIndex   Int     @default(0)
+
+  createdAt DateTime @default(now())
+
+  diaryEntry UserSakeDiaryEntry @relation(fields: [diaryEntryId], references: [id], onDelete: Cascade)
+
+  @@index([diaryEntryId])
+  @@map("diary_pairings")
+}
+
+// ============================================
+// [KINFOLK] PLACES, WISHLIST & PASSPORT
+// Drives: Wishlist.html, Passport.html, Home "Top breweries" feed
+// ============================================
+
+/// Bars, restaurants, tasting rooms, shops, brewery tasting rooms, etc.
+/// Distinct from SakeBrewery (which is the production entity). A brewery's
+/// tasting room that is visitable is both: a SakeBrewery record AND a Place
+/// record (linked via name/address, not a hard FK — intentional to keep
+/// the catalogs editorially independent).
+model Place {
+  id String @id @default(cuid())
+
+  name        String
+  type        PlaceType
+  prefecture  String?
+  city        String?
+  address     String?
+  website     String?
+  phone       String?
+  description String? @db.Text
+  imageUrl    String?
+
+  // Editorial source attribution (e.g., Wishlist "source quote")
+  sourceQuote          String? @db.Text
+  sourceLearnArticleId String?
+
+  // Coordinates
+  latitude  Float?
+  longitude Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sourceLearnArticle LearnArticle?    @relation(fields: [sourceLearnArticleId], references: [id])
+  savedByUsers       UserSavedPlace[]
+  passportEntries    PassportEntry[]
+
+  @@index([type])
+  @@index([prefecture])
+  @@map("places")
+}
+
+/// User's saved/wishlisted places. "Wishlist" tab on Wishlist.html.
+model UserSavedPlace {
+  id      String   @id @default(cuid())
+  userId  String
+  placeId String
+  savedAt DateTime @default(now())
+
+  place Place @relation(fields: [placeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, placeId])
+  @@index([userId])
+  @@map("user_saved_places")
+}
+
+/// A Passport entry: a logged visit to a Place, with optional bottles tasted
+/// and photos. Drives sakeyo_Passport.html.
+model PassportEntry {
+  id      String @id @default(cuid())
+  userId  String
+  placeId String
+
+  visitDate     DateTime
+  durationHours Float?
+  notes         String? @db.Text
+
+  // Attribution — "From article" link shown on passport card
+  sourceLearnArticleId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  place              Place                 @relation(fields: [placeId], references: [id])
+  sourceLearnArticle LearnArticle?         @relation(fields: [sourceLearnArticleId], references: [id])
+  drankBottles       PassportEntryBottle[]
+  photos             PassportPhoto[]
+
+  @@index([userId, visitDate])
+  @@index([placeId])
+  @@map("passport_entries")
+}
+
+/// "What we drank" row on a Passport entry. Optional bottleId for catalog match,
+/// fallback to free-text bottleName for unrecognized bottles.
+model PassportEntryBottle {
+  id              String  @id @default(cuid())
+  passportEntryId String
+  sakeBottleId    String?
+  bottleName      String? // Free text when sakeBottleId is null
+  rating          Int?    // 1-5
+  notes           String?
+
+  createdAt DateTime @default(now())
+
+  passportEntry PassportEntry @relation(fields: [passportEntryId], references: [id], onDelete: Cascade)
+  sakeBottle    SakeBottle?   @relation(fields: [sakeBottleId], references: [id])
+
+  @@index([passportEntryId])
+  @@map("passport_entry_bottles")
+}
+
+/// Photos attached to a Passport entry.
+model PassportPhoto {
+  id              String @id @default(cuid())
+  passportEntryId String
+  imageUrl        String
+  caption         String?
+  orderIndex      Int    @default(0)
+  createdAt       DateTime @default(now())
+
+  passportEntry PassportEntry @relation(fields: [passportEntryId], references: [id], onDelete: Cascade)
+
+  @@index([passportEntryId])
+  @@map("passport_photos")
+}
+
+// ============================================
+// [KINFOLK] CALENDAR & EVENTS
+// Drives: Calendar.html, Calendar_Agenda.html, Event_Detail.html
+// ============================================
+
+model Event {
+  id   String  @id @default(cuid())
+  slug String? @unique
+
+  name        String
+  type        EventType
+  lede        String? // Short subhead
+  description String? @db.Text
+  imageUrl    String?
+
+  // Logistics
+  startAt         DateTime
+  endAt           DateTime?
+  durationMinutes Int?
+  timezone        String?
+
+  // Location (placeId when cataloged; venueName/address as fallback / override)
+  placeId      String?
+  venueName    String?
+  venueAddress String?
+  prefecture   String?
+
+  // Pricing & seats
+  price         Float?
+  priceCurrency String?
+  maxSeats      Int?
+  reservedSeats Int    @default(0)
+
+  // Host (denormalized for simplicity; can be normalized to Host table later)
+  hostUserId    String?
+  hostName      String?
+  hostRole      String?
+  hostBio       String? @db.Text
+  hostAvatarUrl String?
+
+  // Marketplace tie-in copy shown on Event_Detail
+  marketplaceTieInText String? @db.Text
+
+  // Editorial flags
+  isFeatured  Boolean   @default(false)
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  place        Place?             @relation(fields: [placeId], references: [id])
+  savedByUsers UserSavedEvent[]
+  reservations EventReservation[]
+
+  @@index([type])
+  @@index([startAt])
+  @@index([prefecture])
+  @@map("events")
+}
+
+model UserSavedEvent {
+  id      String   @id @default(cuid())
+  userId  String
+  eventId String
+  savedAt DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventId])
+  @@index([userId])
+  @@map("user_saved_events")
+}
+
+/// User RSVP/reservation. Event_Detail "Reserve" button writes here.
+model EventReservation {
+  id      String @id @default(cuid())
+  userId  String
+  eventId String
+
+  seats  Int                    @default(1)
+  status EventReservationStatus @default(CONFIRMED)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventId])
+  @@index([eventId])
+  @@map("event_reservations")
+}
+
+// ============================================
+// [KINFOLK] ALERTS / NOTIFICATIONS
+// Drives: Alerts.html (inbox), plus push-notification triggers
+// ============================================
+
+/// User-facing notification row. Polymorphic via (entityType, entityId) —
+/// deep-link path optional for client-side routing.
+model Alert {
+  id     String @id @default(cuid())
+  userId String
+
+  type       AlertType
+  entityType AlertEntityType @default(NONE)
+  entityId   String?
+
+  title       String
+  description String? @db.Text
+
+  isRead Boolean   @default(false)
+  readAt DateTime?
+
+  // Optional deep-link path resolved by the app router
+  deepLinkPath String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, isRead])
+  @@index([userId, createdAt])
+  @@map("alerts")
+}
+
+// ============================================
+// [KINFOLK] COUNTER (COMMUNITY)
+// Drives: Counter.html feed, Counter_Note.html detail+replies
+// ============================================
+
+/// A community post. Three post types share this table for a unified feed;
+/// type-specific fields are nullable.
+model CounterPost {
+  id     String @id @default(cuid())
+  userId String
+
+  type CounterPostType
+
+  headline String?     // Optional title (e.g., shared sake note headline)
+  body     String      @db.Text
+
+  // SAKE_SHARE — link to bottle being shared
+  sakeBottleId String?
+
+  // TRIP — city/prefecture context
+  tripCity       String?
+  tripPrefecture String?
+
+  // ASK — optional context image
+  askContextImageUrl String?
+
+  // Moderation / curation
+  isPinned Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sakeBottle SakeBottle?            @relation(fields: [sakeBottleId], references: [id])
+  replies    CounterReply[]
+  savedBy    UserSavedCounterPost[]
+
+  @@index([type, createdAt])
+  @@index([userId])
+  @@map("counter_posts")
+}
+
+model CounterReply {
+  id            String @id @default(cuid())
+  counterPostId String
+  userId        String
+
+  body       String  @db.Text
+  isEndorsed Boolean @default(false) // Pinned/expert answer indicator
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  counterPost CounterPost @relation(fields: [counterPostId], references: [id], onDelete: Cascade)
+
+  @@index([counterPostId, createdAt])
+  @@map("counter_replies")
+}
+
+model UserSavedCounterPost {
+  id            String   @id @default(cuid())
+  userId        String
+  counterPostId String
+  savedAt       DateTime @default(now())
+
+  counterPost CounterPost @relation(fields: [counterPostId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, counterPostId])
+  @@index([userId])
+  @@map("user_saved_counter_posts")
+}
+
+// ============================================
+// [KINFOLK] BOOKMARKS — LEARN ARTICLES
+// Drives: Pairings.html (bookmark button on editorial pairing guides)
+// ============================================
+
+model UserSavedLearnArticle {
+  id             String   @id @default(cuid())
+  userId         String
+  learnArticleId String
+  savedAt        DateTime @default(now())
+
+  learnArticle LearnArticle @relation(fields: [learnArticleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, learnArticleId])
+  @@index([userId])
+  @@map("user_saved_learn_articles")
+}

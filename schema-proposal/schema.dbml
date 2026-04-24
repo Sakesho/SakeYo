@@ -1,0 +1,971 @@
+// ============================================================================
+// SakeYō proposed schema — Kinfolk-NS prototype support
+// ============================================================================
+// Paste into dbdiagram.io (https://dbdiagram.io) to render an interactive ERD.
+// Mirrors schema.prisma. New [KINFOLK] additions are in TableGroups at the bottom.
+//
+// Conventions:
+//   • PKs are String cuid() — rendered as `varchar [pk]` here for DBML purity.
+//   • userId is a Supabase auth user id — no local users table (FKs not rendered).
+//   • Soft "[KINFOLK]" tag in Notes marks new fields on existing tables.
+// ============================================================================
+
+Project sakeyo {
+  database_type: 'PostgreSQL'
+  Note: 'Proposed schema update for SakeYō — adds Cellar, Wishlist/Places, Passport, Events, Alerts, Counter community, Diary pairings. See schema.prisma + SCHEMA_CHANGES.md.'
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+Enum UnrecognizedSakeStatus {
+  PENDING
+  IN_REVIEW
+  ENTERED
+  REJECTED
+}
+
+Enum PouredTemp {
+  COLD
+  ROOM
+  WARM
+  HOT
+}
+
+Enum VesselShape {
+  HIRAGATA
+  SUGI_NARI
+  TSUTSU_GATA
+  WINE_GLASS
+  OTHER
+}
+
+Enum StorageType {
+  FRIDGE
+  COOL_CELLAR
+  ROOM
+  OTHER
+}
+
+Enum CellarEntryStatus {
+  UNOPENED
+  OPENED
+  FINISHED
+  AGING_INTENTIONALLY
+}
+
+Enum PlaceType {
+  BAR
+  RESTAURANT
+  BREWERY
+  SHOP
+  TASTING_ROOM
+  OTHER
+}
+
+Enum EventType {
+  SAKE_TASTING
+  SAKE_EDUCATION
+  PAIRING_DINNER
+  BREWER_VISIT
+  FESTIVAL
+  BAR_TAKEOVER
+  OTHER
+}
+
+Enum AlertType {
+  CELLAR_DRINKING_WINDOW
+  CELLAR_EXPIRING
+  EVENT_TOMORROW
+  EVENT_THIS_WEEK
+  COMMUNITY_REPLY
+  RECOMMENDATION_SAKE
+  RECOMMENDATION_ARTICLE
+  OTHER
+}
+
+Enum AlertEntityType {
+  CELLAR_ENTRY
+  EVENT
+  COUNTER_POST
+  COUNTER_REPLY
+  LEARN_ARTICLE
+  SAKE_BOTTLE
+  NONE
+}
+
+Enum CounterPostType {
+  SAKE_SHARE
+  ASK
+  TRIP
+}
+
+Enum EventReservationStatus {
+  CONFIRMED
+  CANCELED
+  WAITLISTED
+}
+
+// ============================================================================
+// EXISTING SCHEMA
+// ============================================================================
+
+Table user_taste_profiles {
+  id varchar [pk]
+  userId varchar [unique, not null]
+  source varchar [note: 'quiz | ratings | mixed']
+  quizResultId varchar
+  quizVersion varchar
+  experienceLevel varchar
+  finalFlavorIntensityMinPref float
+  finalFlavorIntensityMaxPref float
+  smoothnessMinPref float
+  smoothnessMaxPref float
+  finishLengthMinPref float
+  finishLengthMaxPref float
+  aromaIntensityMinPref float
+  aromaIntensityMaxPref float
+  complexityMinPref float
+  complexityMaxPref float
+  weightMinPref float
+  weightMaxPref float
+  prefersSakeSpontaneousDiscovery float
+  hasAffinityTowards float
+  prefersWarm float
+  prefersCold float
+  prefersHotKan float
+  prefersClassicStyles float
+  prefersModernStyles float
+  prefersMinimalFiltered float
+  prefersAged float
+  prefersNigori float
+  prefersSparkling float
+  prefersKoshu float
+  prefersGenshu float
+  prefersNamazake float
+  prefersMuroka float
+  prefersTokubetsu float
+  prefersYamahai float
+  prefersKimoto float
+  prefersSokujo float
+  prefersShizuku float
+  prefersArabashiri float
+  prefersNakadori float
+  prefersResponsible float
+  lightFullBodyPref float
+  dryMin float
+  dryMid float
+  dryMax float
+  fruitsavoryMin float
+  fruitsavoryMid float
+  fruitsavoryMax float
+  acidMin float
+  acidMid float
+  acidMax float
+  bodyMin float
+  bodyMid float
+  bodyMax float
+  dryness float [note: 'legacy, use dryMid']
+  fruitySavory float [note: 'legacy, use fruitsavoryMid']
+  harperAcidity float [note: 'legacy, use acidMid']
+  harperBody float [note: 'legacy, use bodyMid']
+  wLightDelicate float
+  wFreshLively float
+  wFruityAromatic float
+  wDryCrisp float
+  wMildSoft float
+  wMellowFlavorful float
+  wFullBold float
+  wRichComplex float
+  wSweetLush float
+  wRichAged float
+  updatedFromQuizAt timestamptz
+  updatedFromRatingsAt timestamptz
+  userName varchar
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table quiz_results {
+  id varchar [pk]
+  userId varchar [not null]
+  quizVersion varchar
+  experienceLevel varchar
+  dryMin float
+  dryMax float
+  dryMid float
+  fsMin float
+  fsMax float
+  fsMid float
+  acidityMin float
+  acidityMax float
+  acidityMid float
+  bodyMin float
+  bodyMax float
+  bodyMid float
+  lightDelicateScore float
+  freshLivelyScore float
+  fruityAromaticScore float
+  dryCrispScore float
+  mildSoftScore float
+  mellowFlavorfulScore float
+  fullBoldScore float
+  richComplexScore float
+  sweetLushScore float
+  richAgedScore float
+  createdAt timestamptz [default: `now()`]
+}
+
+Table user_bottle_ratings {
+  id varchar [pk]
+  sakeBottleId varchar [not null]
+  userId varchar [not null]
+  rating int [note: '1-5']
+  overallRating int [note: 'legacy']
+  notes text
+  isFavorite boolean [default: false]
+  tastedAt timestamptz
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+
+  Indexes {
+    (userId, sakeBottleId) [unique]
+  }
+}
+
+Table user_contribution_profiles {
+  id varchar [pk]
+  userId varchar [unique, not null]
+  contributionCount int [default: 0]
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table user_sake_diary_entries {
+  id varchar [pk]
+  userId varchar [not null]
+  sakeId varchar
+  unrecognizedSakeId varchar
+  sakeName varchar [not null]
+  brewery varchar
+  classification varchar
+  rating int [default: 0]
+  isFavorite boolean [default: false]
+  aroma "text[]" [note: 'e.g. ["Fruity","Melon"]']
+  taste "text[]"
+  finish varchar
+  servingTemp varchar [note: 'legacy; prefer pouredTemp']
+  occasion varchar
+  location varchar
+  pouredTemp PouredTemp [note: '[KINFOLK]']
+  vesselShape VesselShape [note: '[KINFOLK]']
+  styleFlags "text[]" [note: '[KINFOLK] multi-select Style chips']
+  notes text
+  date timestamptz [default: `now()`]
+  imageUrl varchar
+  title varchar [note: 'legacy']
+  context varchar [note: 'legacy']
+  purchasedOn timestamptz [note: 'legacy']
+  purchasedAt varchar [note: 'legacy']
+  drinkDate timestamptz [note: 'legacy']
+  finishedOn timestamptz [note: 'legacy']
+  status varchar [note: 'legacy']
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table unrecognized_sakes {
+  id varchar [pk]
+  userId varchar [not null]
+  userInputName varchar [not null]
+  status UnrecognizedSakeStatus [default: `PENDING`]
+  frontImageUrl varchar
+  backImageUrl varchar
+  aiExtractedData json
+  imageAnalysisId varchar
+  rejectedMatchIds "text[]"
+  rewardGranted boolean [default: false]
+  matchedSakeId varchar
+  adminNotes text
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table sake_bottles {
+  id varchar [pk]
+  slug varchar [unique]
+  name varchar [not null]
+  brand varchar
+  shortDescription varchar
+  description text
+  status varchar [note: 'DRAFT | PUBLISHED | ARCHIVED']
+  bullet1 varchar
+  bullet2 varchar
+  bullet3 varchar
+  classification varchar
+  sakeProfileInfoId varchar
+  imageUrl varchar
+  breweryId varchar
+  yeastId varchar
+  riceType varchar
+  prefecture varchar
+  giRegionId varchar
+  brewingYear varchar
+  productionYear int
+  vintage varchar
+  rprRaw float
+  rprNormalized float
+  smv float
+  acidity float
+  aminoAcids float
+  abv float
+  kasuBuai float
+  polishMethod varchar
+  rprNormRuleVersion varchar
+  rprNormalizedAt timestamptz
+  harperD float
+  harperFS float
+  harperA float
+  harperB float
+  primaryHarperProfileKey varchar
+  secondaryHarperProfileKey varchar
+  profileManuallyAssigned boolean [default: false]
+  axesManuallyAssigned boolean [default: false]
+  classificationRuleVersion varchar
+  classifiedAt timestamptz
+  classificationNotes text
+  tastingNotes text
+  isAged boolean [default: false]
+  isUsuNigori boolean [default: false]
+  isNigori boolean [default: false]
+  isSparkling boolean [default: false]
+  isGenshu boolean [default: false]
+  isNama boolean [default: false]
+  isMuroka boolean [default: false]
+  isYamahai boolean [default: false]
+  isKimoto boolean [default: false]
+  isBodaiMoto boolean [default: false]
+  isTaruzake boolean [default: false]
+  isDessert boolean [default: false]
+  averageUserRating float
+  userRatingCount int
+  volumeMl int
+  price float
+  priceCurrency varchar
+  awards json
+  janCode varchar
+  externalId varchar
+  externalSource varchar
+  drinkWindowMonthsAfterBrewing int [note: '[KINFOLK] drives Cellar window']
+  drinkWindowMonthsAfterOpening int [note: '[KINFOLK] drives Cellar window']
+  lightSensitive boolean [default: false, note: '[KINFOLK]']
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table sake_bottle_serving_temps {
+  id varchar [pk]
+  sakeBottleId varchar [not null]
+  temperature varchar [note: 'Cold | Chilled | Room | Warm | Hot']
+  rating varchar [note: 'Good | Very Good']
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+
+  Indexes {
+    (sakeBottleId, temperature) [unique]
+  }
+}
+
+Table sake_breweries {
+  id varchar [pk]
+  name varchar [not null]
+  nameJapanese varchar
+  title varchar
+  description text
+  prefecture varchar
+  prefectureId varchar
+  region varchar
+  city varchar
+  address varchar
+  website varchar
+  email varchar
+  phone varchar
+  imageUrl varchar
+  logoUrl varchar
+  badgeImage varchar
+  foundedYear int
+  history text
+  craftIdentity text
+  waterSource varchar
+  specialtyStyle varchar
+  tojiName varchar
+  tojiSchool varchar
+  productionVolume int
+  acceptsVisitors boolean [default: false]
+  visitInfo text
+  latitude float
+  longitude float
+  bullet1 varchar
+  bullet2 varchar
+  bullet3 varchar
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table sake_profile_infos {
+  id varchar [pk]
+  profileName varchar [not null]
+  displayName varchar
+  japaneseName varchar
+  shortDescription varchar
+  longDescription text
+  flavorProfile text
+  usageRecommendations text
+  bestServingTemp varchar
+  originInfo text
+  imageUrl varchar
+  displayOrder int
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table sake_terms {
+  id varchar [pk]
+  term varchar [not null]
+  termJapanese varchar
+  description text
+  shortDescription varchar
+  category varchar
+  termType varchar
+  isMethod boolean [default: false]
+  isGrade boolean [default: false]
+  isStyle boolean [default: false]
+  humanReadable text
+  synonyms varchar
+  relatedTerms varchar
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table sake_bottle_terms {
+  id varchar [pk]
+  sakeBottleId varchar [not null]
+  sakeTermId varchar [not null]
+  termType varchar
+  confidence float
+  createdAt timestamptz [default: `now()`]
+
+  Indexes {
+    (sakeBottleId, sakeTermId) [unique]
+  }
+}
+
+Table gi_regions {
+  id varchar [pk]
+  name varchar [not null]
+  nameJapanese varchar
+  description text
+  prefecture varchar
+  characteristics text
+  recognitionDate timestamptz
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table yeasts {
+  id varchar [pk]
+  code varchar [unique, not null]
+  name varchar [not null]
+  nameJapanese varchar
+  description text
+  characteristics text
+  flavorProfile text
+  aromaCharacteristics text
+  fermentationTempLow float
+  fermentationTempHigh float
+  origin varchar
+  discoveredBy varchar
+  discoveredYear int
+  foamingBehavior varchar
+  hasLowAlcoholVariant boolean [default: false]
+  aromaticProfile varchar [note: 'neutral | aromatic | very_aromatic']
+  harperFsAdjustment int
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table rpn_normalization_points {
+  id varchar [pk]
+  rpnValue float [not null]
+  normalizedValue float [not null]
+  expandedRprDisplay varchar
+  notes varchar
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table rpn_normalization_rules {
+  id varchar [pk]
+  ruleId int [unique, not null]
+  inputRpnFixedValue float
+  methodBeingNormalized varchar
+  targetMethodClass varchar
+  useSingleInputRatio boolean [default: false]
+  expandLowerOption varchar
+  isActive boolean [default: true]
+  description text
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table settings {
+  id varchar [pk]
+  key varchar [unique, not null]
+  value varchar [not null]
+  valueType varchar [default: 'string']
+  description varchar
+  category varchar
+  isEditable boolean [default: true]
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table learn_articles {
+  id varchar [pk]
+  slug varchar [unique, not null]
+  title varchar [not null]
+  excerpt text [not null]
+  category varchar [not null]
+  readTimeMinutes int [default: 5]
+  imageUrl varchar
+  content text [not null]
+  isFeatured boolean [default: false]
+  published boolean [default: false]
+  sortOrder int [default: 0]
+  publishedAt timestamptz
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+Table image_analyses {
+  id varchar [pk]
+  imageUrl varchar
+  rawResponse json [not null]
+  matchedSakes "text[]"
+  explanations json [not null]
+  userId varchar
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+}
+
+// ============================================================================
+// [KINFOLK] NEW TABLES
+// ============================================================================
+
+Table user_profiles {
+  id varchar [pk]
+  userId varchar [unique, not null]
+  displayName varchar
+  avatarUrl varchar
+  bio text
+  isProfilePublic boolean [default: false]
+  publicProfileSlug varchar [unique]
+  signatureQuote text
+  signatureQuoteGeneratedAt timestamptz
+  joinedAt timestamptz [default: `now()`]
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+  Note: '[KINFOLK] display-facing profile (distinct from UserTasteProfile)'
+}
+
+Table user_onboarding_states {
+  id varchar [pk]
+  userId varchar [unique, not null]
+  hasCompletedQuiz boolean [default: false]
+  hasSetDisplayName boolean [default: false]
+  hasScannedFirstLabel boolean [default: false]
+  hasLoggedFirstDiaryEntry boolean [default: false]
+  hasAddedCellarBottle boolean [default: false]
+  onboardingCompletedAt timestamptz
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+  Note: '[KINFOLK] drives Account_Setup + nudge copy'
+}
+
+Table cellar_entries {
+  id varchar [pk]
+  userId varchar [not null]
+  sakeBottleId varchar [not null]
+  purchaseDate timestamptz
+  source varchar [note: 'Shop, bar, trip — wherever']
+  price float
+  priceCurrency varchar
+  volumeMl int [note: '180 | 300 | 500 | 720 | 1800 | custom']
+  status CellarEntryStatus [default: `UNOPENED`]
+  openedAt timestamptz
+  finishedAt timestamptz
+  storageType StorageType
+  location varchar [note: 'e.g. Wine fridge · A-3']
+  notes text
+  drinkByAlertsEnabled boolean [default: false]
+  drinkByDate timestamptz [note: 'computed']
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+  Note: '[KINFOLK] per-bottle inventory state'
+
+  Indexes {
+    (userId, status)
+    sakeBottleId
+    (userId, drinkByDate)
+  }
+}
+
+Table diary_pairings {
+  id varchar [pk]
+  diaryEntryId varchar [not null]
+  dishName varchar [not null]
+  reactionNote text
+  orderIndex int [default: 0]
+  createdAt timestamptz [default: `now()`]
+  Note: '[KINFOLK] multi-row "Paired with" builder on Diary_Add'
+
+  Indexes {
+    diaryEntryId
+  }
+}
+
+Table places {
+  id varchar [pk]
+  name varchar [not null]
+  type PlaceType [not null]
+  prefecture varchar
+  city varchar
+  address varchar
+  website varchar
+  phone varchar
+  description text
+  imageUrl varchar
+  sourceQuote text [note: 'editorial quote']
+  sourceLearnArticleId varchar
+  latitude float
+  longitude float
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+  Note: '[KINFOLK] bars / restaurants / tasting rooms / shops / brewery tasting rooms'
+
+  Indexes {
+    type
+    prefecture
+  }
+}
+
+Table user_saved_places {
+  id varchar [pk]
+  userId varchar [not null]
+  placeId varchar [not null]
+  savedAt timestamptz [default: `now()`]
+
+  Indexes {
+    (userId, placeId) [unique]
+    userId
+  }
+}
+
+Table passport_entries {
+  id varchar [pk]
+  userId varchar [not null]
+  placeId varchar [not null]
+  visitDate timestamptz [not null]
+  durationHours float
+  notes text
+  sourceLearnArticleId varchar
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+  Note: '[KINFOLK] logged visit; drives Passport page'
+
+  Indexes {
+    (userId, visitDate)
+    placeId
+  }
+}
+
+Table passport_entry_bottles {
+  id varchar [pk]
+  passportEntryId varchar [not null]
+  sakeBottleId varchar
+  bottleName varchar [note: 'fallback free text']
+  rating int
+  notes varchar
+  createdAt timestamptz [default: `now()`]
+  Note: '[KINFOLK] "What we drank" per passport entry'
+
+  Indexes {
+    passportEntryId
+  }
+}
+
+Table passport_photos {
+  id varchar [pk]
+  passportEntryId varchar [not null]
+  imageUrl varchar [not null]
+  caption varchar
+  orderIndex int [default: 0]
+  createdAt timestamptz [default: `now()`]
+
+  Indexes {
+    passportEntryId
+  }
+}
+
+Table events {
+  id varchar [pk]
+  slug varchar [unique]
+  name varchar [not null]
+  type EventType [not null]
+  lede varchar
+  description text
+  imageUrl varchar
+  startAt timestamptz [not null]
+  endAt timestamptz
+  durationMinutes int
+  timezone varchar
+  placeId varchar
+  venueName varchar
+  venueAddress varchar
+  prefecture varchar
+  price float
+  priceCurrency varchar
+  maxSeats int
+  reservedSeats int [default: 0]
+  hostUserId varchar
+  hostName varchar
+  hostRole varchar
+  hostBio text
+  hostAvatarUrl varchar
+  marketplaceTieInText text
+  isFeatured boolean [default: false]
+  published boolean [default: false]
+  publishedAt timestamptz
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+  Note: '[KINFOLK] Calendar + Event_Detail'
+
+  Indexes {
+    type
+    startAt
+    prefecture
+  }
+}
+
+Table user_saved_events {
+  id varchar [pk]
+  userId varchar [not null]
+  eventId varchar [not null]
+  savedAt timestamptz [default: `now()`]
+
+  Indexes {
+    (userId, eventId) [unique]
+    userId
+  }
+}
+
+Table event_reservations {
+  id varchar [pk]
+  userId varchar [not null]
+  eventId varchar [not null]
+  seats int [default: 1]
+  status EventReservationStatus [default: `CONFIRMED`]
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+
+  Indexes {
+    (userId, eventId) [unique]
+    eventId
+  }
+}
+
+Table alerts {
+  id varchar [pk]
+  userId varchar [not null]
+  type AlertType [not null]
+  entityType AlertEntityType [default: `NONE`]
+  entityId varchar [note: 'polymorphic ref']
+  title varchar [not null]
+  description text
+  isRead boolean [default: false]
+  readAt timestamptz
+  deepLinkPath varchar
+  createdAt timestamptz [default: `now()`]
+  Note: '[KINFOLK] inbox on Alerts.html'
+
+  Indexes {
+    (userId, isRead)
+    (userId, createdAt)
+  }
+}
+
+Table counter_posts {
+  id varchar [pk]
+  userId varchar [not null]
+  type CounterPostType [not null]
+  headline varchar
+  body text [not null]
+  sakeBottleId varchar
+  tripCity varchar
+  tripPrefecture varchar
+  askContextImageUrl varchar
+  isPinned boolean [default: false]
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+  Note: '[KINFOLK] unified community post (Sake share / Ask / Trip)'
+
+  Indexes {
+    (type, createdAt)
+    userId
+  }
+}
+
+Table counter_replies {
+  id varchar [pk]
+  counterPostId varchar [not null]
+  userId varchar [not null]
+  body text [not null]
+  isEndorsed boolean [default: false]
+  createdAt timestamptz [default: `now()`]
+  updatedAt timestamptz
+
+  Indexes {
+    (counterPostId, createdAt)
+  }
+}
+
+Table user_saved_counter_posts {
+  id varchar [pk]
+  userId varchar [not null]
+  counterPostId varchar [not null]
+  savedAt timestamptz [default: `now()`]
+
+  Indexes {
+    (userId, counterPostId) [unique]
+    userId
+  }
+}
+
+Table user_saved_learn_articles {
+  id varchar [pk]
+  userId varchar [not null]
+  learnArticleId varchar [not null]
+  savedAt timestamptz [default: `now()`]
+
+  Indexes {
+    (userId, learnArticleId) [unique]
+    userId
+  }
+}
+
+// ============================================================================
+// RELATIONSHIPS (explicit Ref lines for ERD clarity)
+// ============================================================================
+
+// Existing schema relations
+Ref: user_bottle_ratings.sakeBottleId > sake_bottles.id
+Ref: user_sake_diary_entries.sakeId > sake_bottles.id
+Ref: user_sake_diary_entries.unrecognizedSakeId > unrecognized_sakes.id
+Ref: unrecognized_sakes.matchedSakeId > sake_bottles.id
+Ref: unrecognized_sakes.imageAnalysisId > image_analyses.id
+Ref: sake_bottles.breweryId > sake_breweries.id
+Ref: sake_bottles.sakeProfileInfoId > sake_profile_infos.id
+Ref: sake_bottles.giRegionId > gi_regions.id
+Ref: sake_bottles.yeastId > yeasts.id
+Ref: sake_bottle_serving_temps.sakeBottleId > sake_bottles.id [delete: cascade]
+Ref: sake_bottle_terms.sakeBottleId > sake_bottles.id [delete: cascade]
+Ref: sake_bottle_terms.sakeTermId > sake_terms.id [delete: cascade]
+
+// [KINFOLK] new relations
+Ref: cellar_entries.sakeBottleId > sake_bottles.id [delete: cascade]
+
+Ref: diary_pairings.diaryEntryId > user_sake_diary_entries.id [delete: cascade]
+
+Ref: places.sourceLearnArticleId > learn_articles.id
+Ref: user_saved_places.placeId > places.id [delete: cascade]
+
+Ref: passport_entries.placeId > places.id
+Ref: passport_entries.sourceLearnArticleId > learn_articles.id
+Ref: passport_entry_bottles.passportEntryId > passport_entries.id [delete: cascade]
+Ref: passport_entry_bottles.sakeBottleId > sake_bottles.id
+Ref: passport_photos.passportEntryId > passport_entries.id [delete: cascade]
+
+Ref: events.placeId > places.id
+Ref: user_saved_events.eventId > events.id [delete: cascade]
+Ref: event_reservations.eventId > events.id [delete: cascade]
+
+Ref: counter_posts.sakeBottleId > sake_bottles.id
+Ref: counter_replies.counterPostId > counter_posts.id [delete: cascade]
+Ref: user_saved_counter_posts.counterPostId > counter_posts.id [delete: cascade]
+
+Ref: user_saved_learn_articles.learnArticleId > learn_articles.id [delete: cascade]
+
+// ============================================================================
+// TABLE GROUPS (for dbdiagram.io visual grouping)
+// ============================================================================
+
+TableGroup "User & Taste" {
+  user_taste_profiles
+  quiz_results
+  user_bottle_ratings
+  user_contribution_profiles
+  user_profiles
+  user_onboarding_states
+}
+
+TableGroup "Sake Catalog" {
+  sake_bottles
+  sake_breweries
+  sake_profile_infos
+  gi_regions
+  yeasts
+  sake_terms
+  sake_bottle_terms
+  sake_bottle_serving_temps
+  rpn_normalization_points
+  rpn_normalization_rules
+}
+
+TableGroup "Diary" {
+  user_sake_diary_entries
+  diary_pairings
+  unrecognized_sakes
+  image_analyses
+}
+
+TableGroup "Cellar" {
+  cellar_entries
+}
+
+TableGroup "Places · Wishlist · Passport" {
+  places
+  user_saved_places
+  passport_entries
+  passport_entry_bottles
+  passport_photos
+}
+
+TableGroup "Events" {
+  events
+  user_saved_events
+  event_reservations
+}
+
+TableGroup "Counter (Community)" {
+  counter_posts
+  counter_replies
+  user_saved_counter_posts
+}
+
+TableGroup "Alerts & Content" {
+  alerts
+  learn_articles
+  user_saved_learn_articles
+  settings
+}

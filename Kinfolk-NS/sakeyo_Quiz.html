@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Find your palate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=supreme@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F; --sage-deep:#1F4E39;
+  --sans:'Supreme','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Newsreader', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow:hidden;border-radius:42px;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a;display:flex;flex-direction:column}
+
+/* HEADER */
+.hdr{background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset;flex-shrink:0}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px;opacity:1;transition:opacity .15s}
+.hdr-back.hide{opacity:0;pointer-events:none}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-progress{display:flex;align-items:center;gap:5px;width:64px;justify-content:flex-end}
+.hdr-progress .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.16);transition:all .2s ease}
+.hdr-progress .dot.done{background:rgba(255,255,255,0.5)}
+.hdr-progress .dot.active{background:var(--crimson);width:12px;border-radius:3px}
+
+/* CONTENT */
+.content{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;display:flex;flex-direction:column}
+.content::-webkit-scrollbar{display:none}
+
+.quiz-screen{display:none;flex:1;flex-direction:column}
+.quiz-screen.active{display:flex}
+
+/* INTRO */
+.intro{background:var(--black);color:var(--cream);padding:32px 26px 40px;flex:1;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.intro-kanji{position:absolute;top:-20px;right:-40px;font-family:var(--sans);font-size:340px;font-weight:400;color:#fff;opacity:0.035;line-height:0.8;pointer-events:none;user-select:none;z-index:0}
+.intro-top{position:relative;z-index:2}
+.intro-label{font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,235,0.55);margin-bottom:18px}
+.intro-title{font-family:var(--sans);font-size:44px;font-weight:400;color:var(--cream);line-height:1.05;letter-spacing:-0.02em;margin-top:4px;max-width:12ch}
+.intro-dek{font-family:var(--sans);font-style:italic;font-size:15px;color:rgba(245,240,235,0.62);line-height:1.55;margin-top:22px;max-width:30ch}
+.intro-meta{position:relative;z-index:2;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,240,235,0.42);display:flex;gap:16px;align-items:center}
+.intro-meta .dot-sep{width:3px;height:3px;border-radius:50%;background:currentColor;opacity:0.6}
+
+/* QUESTION */
+.question{padding:22px 22px 10px;flex:1;display:flex;flex-direction:column}
+.q-label{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--crimson);margin-bottom:10px}
+.q-title{font-family:var(--sans);font-size:26px;font-weight:400;color:var(--ink);line-height:1.18;letter-spacing:-0.018em;max-width:15ch}
+.q-sub{font-family:var(--sans);font-style:italic;font-size:13.5px;color:var(--ink-mute);line-height:1.55;margin-top:10px;max-width:42ch}
+.q-hint{font-family:var(--sans);font-style:italic;font-size:12px;color:var(--ink-faint);line-height:1.5;margin-top:14px;padding:10px 12px;background:var(--cream-deep);border-left:2px solid var(--hair);border-radius:0 4px 4px 0}
+.q-body{margin-top:22px;flex:1}
+
+/* TILES (Q1 experience) */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.tile{padding:22px 14px;border:1px solid var(--hair-strong);border-radius:var(--r-md);background:#fff;cursor:pointer;text-align:center;transition:all .15s ease;display:flex;flex-direction:column;align-items:center;gap:10px;min-height:120px;justify-content:center}
+.tile:hover{border-color:var(--ink-faint)}
+.tile.selected{background:var(--sage);border-color:var(--sage);color:#fff}
+.tile-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--ink-mute)}
+.tile.selected .tile-icon{color:#fff}
+.tile-icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tile-label{font-family:var(--sans);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-0.008em;line-height:1.25}
+.tile.selected .tile-label{color:#fff}
+.tile-desc{font-family:var(--sans);font-style:italic;font-size:11px;color:var(--ink-faint);letter-spacing:0;line-height:1.4}
+.tile.selected .tile-desc{color:rgba(255,255,255,0.78)}
+
+/* RANGE PILLS (Q2-Q5) */
+.range-val{font-family:var(--sans);font-style:italic;font-size:13px;color:var(--ink-mute);letter-spacing:0;margin-top:6px;margin-bottom:16px;min-height:18px}
+.range-val .num{font-style:normal;font-weight:600;color:var(--ink);margin-left:4px;font-size:11.5px;letter-spacing:-0.005em}
+.pills{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.pill{padding:14px 4px 10px;border:1px solid var(--hair-strong);border-radius:var(--r-sm);background:#fff;text-align:center;cursor:pointer;user-select:none;transition:all .15s ease;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.pill:hover{border-color:var(--ink-faint)}
+.pill .pnum{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-0.008em}
+.pill .plbl{font-family:var(--sans);font-size:9.5px;font-style:italic;color:var(--ink-faint);letter-spacing:0;line-height:1.1;text-align:center}
+.pill.in{background:var(--sage);border-color:var(--sage);color:#fff}
+.pill.in .pnum{color:#fff}
+.pill.in .plbl{color:rgba(255,255,255,0.8)}
+.pill.edge{background:var(--sage-deep);border-color:var(--sage-deep)}
+.range-tip{font-family:var(--sans);font-style:italic;font-size:11.5px;color:var(--ink-faint);letter-spacing:0;margin-top:14px;line-height:1.45}
+
+/* ADVENTUROUSNESS CARDS (Q6) */
+.adv-cards{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.adv-card{padding:16px 18px 14px 46px;border:1px solid var(--hair-strong);border-radius:var(--r-md);background:#fff;cursor:pointer;position:relative;transition:all .15s ease;text-align:left;width:100%}
+.adv-card::before{content:"";position:absolute;top:19px;left:16px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--ink-faint);background:#fff;transition:all .15s ease}
+.adv-card::after{content:"";position:absolute;top:25px;left:22px;width:6px;height:6px;border-radius:50%;background:var(--crimson);opacity:0;transition:opacity .15s ease}
+.adv-card.selected{border-color:var(--crimson);background:rgba(155,27,27,0.04)}
+.adv-card.selected::before{border-color:var(--crimson)}
+.adv-card.selected::after{opacity:1}
+.adv-title{font-family:var(--sans);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-0.01em;margin-bottom:4px}
+.adv-desc{font-family:var(--sans);font-size:12.5px;color:var(--ink-mute);line-height:1.5;letter-spacing:-0.005em;font-style:italic}
+
+/* RESULTS */
+.results{flex:1;display:flex;flex-direction:column}
+.results-hero{background:var(--black);color:var(--cream);padding:30px 26px 30px;position:relative;overflow:hidden}
+.results-hero-kanji{position:absolute;top:-10px;right:-30px;font-family:var(--sans);font-size:220px;font-weight:400;color:#fff;opacity:0.05;line-height:0.8;pointer-events:none;user-select:none;z-index:0}
+.results-label{position:relative;z-index:2;font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,235,0.55);margin-bottom:8px}
+.results-title{position:relative;z-index:2;font-family:var(--sans);font-size:30px;font-weight:400;color:var(--cream);line-height:1.15;letter-spacing:-0.015em;max-width:16ch}
+.results-sig{position:relative;z-index:2;font-family:var(--sans);font-style:italic;font-size:14px;color:rgba(245,240,235,0.78);line-height:1.6;margin-top:14px;padding:10px 0 4px 14px;border-left:2px solid var(--crimson);max-width:38ch}
+.results-sig .accent{color:#fff;font-style:normal;font-weight:600;letter-spacing:-0.005em}
+
+.results-body{padding:20px 22px 10px}
+.results-sec{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:12px;margin:6px 0 4px}
+.results-sec::after{content:"";flex:1;height:1px;background:var(--hair)}
+.results-sub{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-mute);letter-spacing:0;line-height:1.5;margin-bottom:14px;max-width:42ch}
+
+.aff-list{display:flex;flex-direction:column;gap:2px}
+.aff-row{padding:12px 0;border-top:1px solid var(--hair)}
+.aff-row:first-child{border-top:none;padding-top:6px}
+.aff-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
+.aff-name{font-family:var(--sans);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-0.012em}
+.aff-pct{font-family:var(--sans);font-size:16px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;font-variant-numeric:tabular-nums}
+.aff-top-1 .aff-pct, .aff-top-1 .aff-name{color:var(--crimson)}
+.aff-bar{height:3px;background:var(--hair);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.aff-fill{height:100%;background:var(--sage);border-radius:3px}
+.aff-top-1 .aff-fill{background:var(--crimson)}
+.aff-desc{font-family:var(--sans);font-style:italic;font-size:11.5px;color:var(--ink-mute);line-height:1.5;letter-spacing:0;max-width:46ch}
+
+.axis-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.axis-chip{padding:5px 10px;border:1px solid var(--hair-strong);border-radius:100px;font-family:var(--sans);font-size:11px;color:var(--ink);letter-spacing:-0.005em;background:#fff}
+.axis-chip strong{color:var(--crimson);font-weight:600;margin-right:4px}
+
+.results-foot{padding:14px 22px 16px;text-align:center}
+.results-foot-glyph{font-family:var(--sans);font-size:48px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none}
+
+/* NAV FOOTER */
+.quiz-nav{padding:12px 18px 16px;background:var(--cream);border-top:1px solid var(--hair);display:flex;gap:10px;flex-shrink:0;align-items:center}
+.nav-back{padding:13px 18px;border-radius:100px;font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--ink-mute);background:transparent;cursor:pointer;letter-spacing:-0.005em;transition:opacity .15s}
+.nav-back.hide{display:none}
+.nav-next{flex:1;padding:15px 22px;background:var(--crimson);color:#fff;border-radius:100px;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:-0.005em;cursor:pointer;box-shadow:0 2px 6px rgba(155,27,27,0.18), 0 10px 20px -4px rgba(155,27,27,0.22);display:flex;align-items:center;justify-content:center;gap:8px}
+.nav-next svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-next.secondary{background:transparent;color:var(--crimson);border:1px solid var(--crimson);box-shadow:none}
+
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}.quiz-nav{padding-bottom:calc(16px + env(safe-area-inset-bottom))!important}}
+h1, h2, .q-title, .intro-title, .results-title, .kit-title { font-variation-settings: "opsz" 44; }
+.prose, body, p { font-variation-settings: "opsz" 16; }
+</style>
+</head>
+<body data-screen-label="Quiz · Kinfolk">
+<div class="device"><div class="phone">
+
+<!-- HEADER -->
+<header class="hdr">
+  <button class="hdr-back hide" id="hdr-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</button>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-progress" id="hdr-progress">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<div class="content" id="content">
+
+  <!-- SCREEN 0: INTRO -->
+  <section class="quiz-screen active" data-screen="0">
+    <div class="intro">
+      <div class="intro-kanji">味</div>
+      <div class="intro-top">
+        <div class="intro-label">Taste questionnaire</div>
+        <h1 class="intro-title">Find your palate.</h1>
+        <p class="intro-dek">Six quick questions, about a minute. We'll map where your taste lives — then suggest bottles from there.</p>
+      </div>
+      <div class="intro-meta">
+        <span>6 questions</span>
+        <span class="dot-sep"></span>
+        <span>≈ 60 seconds</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 1: EXPERIENCE -->
+  <section class="quiz-screen" data-screen="1">
+    <div class="question">
+      <div class="q-label">Question 1 of 6</div>
+      <h2 class="q-title">How familiar are you with sake?</h2>
+      <p class="q-sub">No wrong answer — this just tunes how we frame things.</p>
+      <div class="q-body">
+        <div class="tiles" id="exp-tiles">
+          <button class="tile" data-exp="new">
+            <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v10c0 5 9 5 9 5s9 0 9-5V7z"/></svg></div>
+            <div class="tile-label">New to sake</div>
+            <div class="tile-desc">Just starting out</div>
+          </button>
+          <button class="tile" data-exp="occasional">
+            <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M5 8v13h14V8"/><path d="M3 8h18l-2-4H5z"/></svg></div>
+            <div class="tile-label">Occasional drinker</div>
+            <div class="tile-desc">A few times a year</div>
+          </button>
+          <button class="tile" data-exp="favorites">
+            <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.1 6.3 7 1-5 4.9 1.2 6.8L12 17.8 5.7 21l1.2-6.8-5-4.9 7-1z"/></svg></div>
+            <div class="tile-label">Have some favorites</div>
+            <div class="tile-desc">I know what I like</div>
+          </button>
+          <button class="tile" data-exp="connoisseur">
+            <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M8 21V9a4 4 0 0 0-4-4"/><path d="M16 21V9a4 4 0 0 1 4-4"/><path d="M12 13v8"/><circle cx="12" cy="6" r="2"/></svg></div>
+            <div class="tile-label">Know my way around</div>
+            <div class="tile-desc">Kimoto, ginjo, koshu all fair game</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: SWEETNESS -->
+  <section class="quiz-screen" data-screen="2">
+    <div class="question">
+      <div class="q-label">Question 2 of 6</div>
+      <h2 class="q-title">How sweet do you take your drinks?</h2>
+      <p class="q-sub">Tap the sweetness you live in. A second tap widens the range — it's okay to be flexible.</p>
+      <div class="q-hint"><strong style="font-style:normal;color:var(--ink)">Coffee:</strong> black → coffee with milk → a little sugar → latte with syrup → mocha<br><strong style="font-style:normal;color:var(--ink)">Bubble tea:</strong> 0% → 25% → 50% → 75% → 100% sugar</div>
+      <div class="q-body">
+        <div class="range-val"><span id="D-val">Pick where you land</span><span class="num" id="D-num"></span></div>
+        <div class="pills" id="D-pills"></div>
+        <div class="range-tip">A second tap on another pill widens your range. Tap inside a range to narrow it.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: ACIDITY -->
+  <section class="quiz-screen" data-screen="3">
+    <div class="question">
+      <div class="q-label">Question 3 of 6</div>
+      <h2 class="q-title">How much zing do you want?</h2>
+      <p class="q-sub">Acidity is the bright-tart lift. Some drinkers love it; some find it pointy.</p>
+      <div class="q-hint"><strong style="font-style:normal;color:var(--ink)">Drinks:</strong> still water → iced tea → lemonade → kombucha → pure lemon juice</div>
+      <div class="q-body">
+        <div class="range-val"><span id="A-val">Pick where you land</span><span class="num" id="A-num"></span></div>
+        <div class="pills" id="A-pills"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 4: BODY -->
+  <section class="quiz-screen" data-screen="4">
+    <div class="question">
+      <div class="q-label">Question 4 of 6</div>
+      <h2 class="q-title">How full should a drink feel?</h2>
+      <p class="q-sub">Body is the weight on your palate — airy to coating.</p>
+      <div class="q-hint"><strong style="font-style:normal;color:var(--ink)">Drinks:</strong> sparkling water → light lager → red wine → whole milk → milkshake or stout</div>
+      <div class="q-body">
+        <div class="range-val"><span id="B-val">Pick where you land</span><span class="num" id="B-num"></span></div>
+        <div class="pills" id="B-pills"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 5: FRUIT OR EARTH -->
+  <section class="quiz-screen" data-screen="5">
+    <div class="question">
+      <div class="q-label">Question 5 of 6</div>
+      <h2 class="q-title">Fruit or earth?</h2>
+      <p class="q-sub">The aromatic direction — juicy and fruity on one end, deep and savory on the other. Stouts are polarizing for a reason.</p>
+      <div class="q-hint"><strong style="font-style:normal;color:var(--ink)">Beer:</strong> hazy IPA → pilsner → lager → porter → stout<br><strong style="font-style:normal;color:var(--ink)">Wine:</strong> tropical whites → crisp whites → light reds → bold earthy reds → natural or orange wine</div>
+      <div class="q-body">
+        <div class="range-val"><span id="FS-val">Pick where you land</span><span class="num" id="FS-num"></span></div>
+        <div class="pills" id="FS-pills"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 6: ADVENTUROUSNESS -->
+  <section class="quiz-screen" data-screen="6">
+    <div class="question">
+      <div class="q-label">Question 6 of 6</div>
+      <h2 class="q-title">How adventurous?</h2>
+      <p class="q-sub">Some sake corners are rare and polarizing — aged koshu, tart bodaimoto, funky nigori. This decides whether we show them to you.</p>
+      <div class="q-body">
+        <div class="adv-cards" id="adv-cards">
+          <button class="adv-card" data-adv="classics">
+            <div class="adv-title">Classics only</div>
+            <div class="adv-desc">Stick to the approachable styles. No weird aged or sour stuff.</div>
+          </button>
+          <button class="adv-card" data-adv="mix">
+            <div class="adv-title">Mix in the new</div>
+            <div class="adv-desc">Mostly familiar, with some off-the-beaten-path picks sprinkled in. Aged koshu welcome.</div>
+          </button>
+          <button class="adv-card" data-adv="weird">
+            <div class="adv-title">Take me off the map</div>
+            <div class="adv-desc">Show me everything — sour, funky, aged, wild-fermented. I want the full shelf.</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 7: RESULTS -->
+  <section class="quiz-screen" data-screen="7">
+    <div class="results">
+      <div class="results-hero">
+        <div class="results-hero-kanji">味</div>
+        <div class="results-label">Your palate</div>
+        <h2 class="results-title">Here's where you land.</h2>
+        <div class="results-sig" id="results-sig"></div>
+      </div>
+      <div class="results-body">
+        <div class="results-sec">Your axes</div>
+        <p class="results-sub">Where you drink on each of the four scales.</p>
+        <div class="axis-chips" id="axis-chips"></div>
+
+        <div class="results-sec" style="margin-top:22px">Top profiles</div>
+        <p class="results-sub">These are the sake styles that best match the ranges you set.</p>
+        <div class="aff-list" id="aff-list"></div>
+      </div>
+      <div class="results-foot">
+        <div class="results-foot-glyph">代</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- NAV FOOTER -->
+<footer class="quiz-nav">
+  <button class="nav-back hide" id="nav-back">Back</button>
+  <button class="nav-next" id="nav-next">Begin <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+</footer>
+
+</div></div>
+
+<script>
+// =============== STATE ===============
+const state = {
+  screen: 0,
+  experience: null,
+  D:  [3, 3],  // sweetness 1=sweet .. 5=dry
+  A:  [3, 3],  // acidity
+  B:  [3, 3],  // body
+  FS: [3, 3],  // fruity-savory
+  adv: null
+};
+
+const AXES = [
+  { key: 'D',  labels: ['very sweet','sweet','half','barely','bone dry'] },
+  { key: 'A',  labels: ['still','mild','bright','tart','sharp'] },
+  { key: 'B',  labels: ['airy','light','medium','full','heavy'] },
+  { key: 'FS', labels: ['fruit','fruity','balanced','earthy','umami'] }
+];
+
+const STYLES = [
+  { name: 'Rich',    env: { D:[2,5], A:[3,5], FS:[4,5], B:[3,5] }, flag: null,
+    desc: 'Deep, savory, complex — kimoto or yamahai. Umami, long finish, often served warm.' },
+  { name: 'Aged',    env: { D:[2,5], A:[2,5], FS:[3,5], B:[2,5] }, flag: 'aged',
+    desc: 'Transformed by time. Amber, caramel, dried-fruit. Koshu and aged kijoshu — after-dinner.' },
+  { name: 'Mellow',  env: { D:[2,4], A:[1,4], FS:[2,4], B:[2,4] }, flag: null,
+    desc: 'Balanced and rice-forward — the broad middle. Stays out of the way across most food.' },
+  { name: 'Dry',     env: { D:[4,5], A:[3,5], FS:[2,4], B:[2,5] }, flag: null,
+    desc: 'Crisp and precisely dry with a sharp finish. Food-friendly tanrei karakuchi.' },
+  { name: 'Clean',   env: { D:[2,4], A:[1,4], FS:[1,2], B:[2,4] }, flag: null,
+    desc: 'Polished and restrained — elegant ginjo, clean-finishing, nothing left on the palate.' },
+  { name: 'Fruity',  env: { D:[1,3], A:[1,4], FS:[1,2], B:[2,4] }, flag: null,
+    desc: 'Aromatic and juicy — banana, melon, lychee. Where most new drinkers begin.' },
+  { name: 'Heavy',   env: { D:[2,3], A:[3,4], FS:[3,4], B:[4,5] }, flag: null,
+    desc: 'Full-bodied and high-alcohol — genshu. Robust, built for dinner-weight food.' },
+  { name: 'Light',   env: { D:[2,4], A:[2,5], FS:[1,4], B:[1,2] }, flag: null,
+    desc: 'Clean, easy-drinking, low-alcohol. A gentler style, best chilled — an opener.' },
+  { name: 'Fresh',   env: { D:[2,4], A:[2,5], FS:[1,3], B:[2,4] }, flag: null,
+    desc: 'Vibrant and unfinished — nama or shibori-tate. Green, peppery, drink cold and young.' },
+  { name: 'Sour',    env: { D:[1,5], A:[3,5], FS:[1,5], B:[2,5] }, flag: 'sour',
+    desc: 'Tart and wine-like — from white/black koji or bodaimoto. Rare, deliberate, natural-wine adjacent.' },
+  { name: 'Sweet',   env: { D:[1,2], A:[1,5], FS:[1,3], B:[2,5] }, flag: 'sweet',
+    desc: 'Richly sweet with acidity — nigori, kijoshu, dessert-leaning. For contrast or after-dinner.' }
+];
+
+const WEIGHTS = { FS: 0.35, D: 0.25, A: 0.20, B: 0.20 };
+
+// =============== MATH ===============
+function rlen(r){ return r[1] - r[0] + 1; }
+function intersect(a, b){
+  const lo = Math.max(a[0], b[0]);
+  const hi = Math.min(a[1], b[1]);
+  return hi >= lo ? [lo, hi] : null;
+}
+function computeUnlocks(){
+  const unlocks = { aged: false, sour: false, sweet: false };
+  if (state.adv === 'weird') { unlocks.aged = true; unlocks.sour = true; unlocks.sweet = true; }
+  if (state.adv === 'mix')   { unlocks.aged = true; }
+  if (state.experience === 'connoisseur') unlocks.aged = true;
+  if (state.D && state.D[0] === 1) unlocks.sweet = true;
+  return unlocks;
+}
+function affinity(style, unlocks, adv){
+  let raw = 0;
+  for (const k of ['FS','D','A','B']) {
+    const inter = intersect(state[k], style.env[k]);
+    const overlap = inter ? rlen(inter) / Math.min(rlen(state[k]), rlen(style.env[k])) : 0;
+    raw += overlap * WEIGHTS[k];
+  }
+  let pct = raw;
+  if (style.flag) {
+    if (!unlocks[style.flag]) pct *= 0.22;
+    else if (adv === 'classics') pct *= 0.80;
+    else if (adv === 'weird')    pct *= 1.10;
+  }
+  return Math.max(0, Math.min(1, pct));
+}
+
+// =============== SCREEN NAV ===============
+function showScreen(n){
+  state.screen = Math.max(0, Math.min(7, n));
+  document.querySelectorAll('.quiz-screen').forEach(s => {
+    s.classList.toggle('active', +s.dataset.screen === state.screen);
+  });
+  renderHeader();
+  renderFooter();
+  if (state.screen === 7) renderResults();
+  document.getElementById('content').scrollTop = 0;
+}
+function next(){
+  if (state.screen === 0) { showScreen(1); return; }
+  if (state.screen === 6) {
+    // persist for handoff to Palate Tune
+    try {
+      localStorage.setItem('sakeyo_palate', JSON.stringify({
+        D: state.D, A: state.A, B: state.B, FS: state.FS,
+        unlocks: computeUnlocks(),
+        adv: state.adv || 'mix',
+        experience: state.experience
+      }));
+    } catch(e) {}
+    showScreen(7);
+    return;
+  }
+  if (state.screen === 7) {
+    // go to Palate Tune
+    window.location.href = 'sakeyo_Palate_Tune.html';
+    return;
+  }
+  showScreen(state.screen + 1);
+}
+function back(){
+  if (state.screen <= 0) return;
+  showScreen(state.screen - 1);
+}
+
+// =============== HEADER / FOOTER ===============
+function renderHeader(){
+  const back = document.getElementById('hdr-back');
+  back.classList.toggle('hide', state.screen === 0 || state.screen === 7);
+  const dots = document.querySelectorAll('#hdr-progress .dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('done','active');
+    if (state.screen === 0) return;
+    if (state.screen === 7) d.classList.add('done');
+    else if (i < state.screen - 1) d.classList.add('done');
+    else if (i === state.screen - 1) d.classList.add('active');
+  });
+}
+function renderFooter(){
+  const next = document.getElementById('nav-next');
+  const backBtn = document.getElementById('nav-back');
+  backBtn.classList.toggle('hide', state.screen === 0 || state.screen === 7);
+
+  if (state.screen === 0) {
+    next.innerHTML = 'Begin <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
+  } else if (state.screen === 6) {
+    next.innerHTML = 'See my palate <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
+  } else if (state.screen === 7) {
+    next.innerHTML = 'Open full palate <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
+  } else {
+    next.innerHTML = 'Next <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
+  }
+}
+
+// =============== TILES (Q1) ===============
+document.querySelectorAll('#exp-tiles .tile').forEach(t => {
+  t.addEventListener('click', () => {
+    state.experience = t.dataset.exp;
+    document.querySelectorAll('#exp-tiles .tile').forEach(x => x.classList.toggle('selected', x === t));
+  });
+});
+
+// =============== RANGE PILLS (Q2-Q5) ===============
+function togglePill(axisKey, v){
+  const [min, max] = state[axisKey];
+  if (min === max) {
+    if (v < min) state[axisKey] = [v, max];
+    else if (v > max) state[axisKey] = [min, v];
+  } else {
+    if (v >= min && v <= max) state[axisKey] = [v, v];
+    else if (v < min)          state[axisKey] = [v, max];
+    else                        state[axisKey] = [min, v];
+  }
+  renderAxis(axisKey);
+}
+function buildAxis(axisKey){
+  const meta = AXES.find(a => a.key === axisKey);
+  const host = document.getElementById(axisKey + '-pills');
+  host.innerHTML = '';
+  for (let i = 1; i <= 5; i++) {
+    const b = document.createElement('button');
+    b.className = 'pill';
+    b.dataset.v = i;
+    b.innerHTML = '<span class="pnum">' + i + '</span><span class="plbl">' + meta.labels[i-1] + '</span>';
+    b.addEventListener('click', () => togglePill(axisKey, i));
+    host.appendChild(b);
+  }
+  renderAxis(axisKey);
+}
+function renderAxis(axisKey){
+  const meta = AXES.find(a => a.key === axisKey);
+  const host = document.getElementById(axisKey + '-pills');
+  const [min, max] = state[axisKey];
+  host.querySelectorAll('.pill').forEach(p => {
+    const v = +p.dataset.v;
+    p.classList.toggle('in', v >= min && v <= max);
+    p.classList.toggle('edge', (v === min || v === max) && min !== max);
+  });
+  const val = document.getElementById(axisKey + '-val');
+  const num = document.getElementById(axisKey + '-num');
+  if (min === max) {
+    val.textContent = meta.labels[min-1];
+    num.textContent = min;
+  } else {
+    val.textContent = meta.labels[min-1] + ' → ' + meta.labels[max-1];
+    num.textContent = min + '–' + max;
+  }
+}
+
+// =============== ADV CARDS (Q6) ===============
+document.querySelectorAll('#adv-cards .adv-card').forEach(c => {
+  c.addEventListener('click', () => {
+    state.adv = c.dataset.adv;
+    document.querySelectorAll('#adv-cards .adv-card').forEach(x => x.classList.toggle('selected', x === c));
+  });
+});
+
+// =============== RESULTS ===============
+function renderResults(){
+  const unlocks = computeUnlocks();
+  const adv = state.adv || 'mix';
+  const scored = STYLES.map(s => ({ ...s, score: affinity(s, unlocks, adv) }))
+                       .filter(s => !s.flag || unlocks[s.flag])
+                       .sort((a, b) => b.score - a.score);
+  const top3 = scored.slice(0, 3);
+
+  // signature
+  const primary = top3[0];
+  const secondary = top3[1];
+  const fsMid = (state.FS[0] + state.FS[1]) / 2;
+  const fsWord = fsMid <= 2.3 ? 'fruit-forward' : fsMid >= 3.7 ? 'savory' : 'balanced';
+  const bMid = (state.B[0] + state.B[1]) / 2;
+  const bWord = bMid <= 2.3 ? 'light-bodied' : bMid >= 3.7 ? 'full-bodied' : 'medium-bodied';
+  const dSpan = state.D[1] - state.D[0];
+  const dMid = (state.D[0] + state.D[1]) / 2;
+  const dWord = dSpan >= 2 ? 'flexible on sweetness' : dMid >= 4 ? 'dry-leaning' : dMid <= 2 ? 'sweet-leaning' : 'medium on dryness';
+  const sigLine = 'You lean <span class="accent">' + primary.name.toLowerCase() + '</span>' +
+                  (secondary ? ' with a side of <span class="accent">' + secondary.name.toLowerCase() + '</span>' : '') +
+                  '. ' + fsWord.charAt(0).toUpperCase() + fsWord.slice(1) + ', ' + bWord + ', ' + dWord + '.';
+  document.getElementById('results-sig').innerHTML = sigLine;
+
+  // axis chips
+  const chipHost = document.getElementById('axis-chips');
+  chipHost.innerHTML = '';
+  const axisNames = { D: 'Sweetness', A: 'Acidity', B: 'Body', FS: 'Fruity ↔ Savory' };
+  for (const k of ['D','A','B','FS']) {
+    const meta = AXES.find(a => a.key === k);
+    const [min, max] = state[k];
+    const label = (min === max) ? meta.labels[min-1] : meta.labels[min-1] + ' → ' + meta.labels[max-1];
+    const chip = document.createElement('div');
+    chip.className = 'axis-chip';
+    chip.innerHTML = '<strong>' + axisNames[k] + '</strong>' + label;
+    chipHost.appendChild(chip);
+  }
+
+  // affinity bars (top 3, 11 would be too much on results)
+  const affHost = document.getElementById('aff-list');
+  affHost.innerHTML = '';
+  top3.forEach((s, idx) => {
+    const pct = Math.round(s.score * 100);
+    const row = document.createElement('div');
+    row.className = 'aff-row' + (idx === 0 ? ' aff-top-1' : '');
+    row.innerHTML =
+      '<div class="aff-head"><span class="aff-name">' + s.name + '</span><span class="aff-pct">' + pct + '%</span></div>' +
+      '<div class="aff-bar"><div class="aff-fill" style="width:' + pct + '%"></div></div>' +
+      '<div class="aff-desc">' + s.desc + '</div>';
+    affHost.appendChild(row);
+  });
+}
+
+// =============== BOOT ===============
+document.getElementById('hdr-back').addEventListener('click', back);
+document.getElementById('nav-back').addEventListener('click', back);
+document.getElementById('nav-next').addEventListener('click', next);
+
+['D','A','B','FS'].forEach(buildAxis);
+showScreen(0);
+</script>
+</body></html>

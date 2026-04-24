@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Retake quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=supreme@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F;
+  --sans:'Supreme','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Newsreader', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{width:64px}
+
+/* GREET */
+.greet{background:var(--black);padding:18px 22px 30px;position:relative;overflow:hidden;color:#fff}
+.kanji-watermark{position:absolute;top:-10px;right:-40px;font-family:var(--sans);font-size:260px;font-weight:400;color:#fff;opacity:0.04;line-height:0.8;pointer-events:none;user-select:none;z-index:0}
+.greet-ovr{font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,235,0.55);position:relative;z-index:2}
+.greet-name{font-family:var(--sans);font-size:30px;font-weight:400;color:var(--cream);margin-top:6px;line-height:1.15;letter-spacing:-0.015em;position:relative;z-index:2}
+.greet-dek{font-family:var(--sans);font-style:italic;font-size:14px;color:rgba(245,240,235,0.62);line-height:1.5;margin-top:10px;max-width:36ch;position:relative;z-index:2}
+
+/* BLEND CARD */
+.blend{margin:-16px 22px 0;background:var(--cream);border:1px solid var(--hair-strong);border-radius:var(--r-sm);padding:18px;position:relative;z-index:3;box-shadow:0 10px 30px -16px rgba(16,24,32,0.22)}
+.blend-ovr{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px}
+.blend-bar{display:flex;height:8px;border-radius:100px;overflow:hidden;background:var(--hair);margin-bottom:12px}
+.blend-bar .seg-quiz{background:var(--sage)}
+.blend-bar .seg-diary{background:var(--crimson)}
+.blend-legend{display:flex;gap:18px;flex-wrap:wrap}
+.blend-legend .item{display:flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12.5px;color:var(--ink);letter-spacing:-0.005em}
+.blend-legend .dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.blend-legend .dot.quiz{background:var(--sage)}
+.blend-legend .dot.diary{background:var(--crimson)}
+.blend-legend .item strong{font-weight:600}
+.blend-legend .item .sub{font-style:italic;color:var(--ink-mute);font-weight:400;margin-left:4px}
+.blend-note{font-family:var(--sans);font-style:italic;font-size:12px;color:var(--ink-mute);line-height:1.5;margin-top:12px;padding-top:12px;border-top:1px solid var(--hair);letter-spacing:0}
+
+/* SECTION LABEL */
+.sec-label{padding:30px 22px 0;position:relative;z-index:2}
+.sec-lbl{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:12px;margin:0}
+.sec-lbl::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sec-sub{padding:8px 22px 0;font-family:var(--sans);font-style:italic;font-size:13.5px;color:var(--ink-mute);letter-spacing:0;line-height:1.5;max-width:42ch}
+
+/* OPTION CARDS */
+.options{padding:16px 22px 0;display:flex;flex-direction:column;gap:10px}
+.opt{border:1px solid var(--hair-strong);border-radius:var(--r-sm);padding:16px 16px 16px 46px;background:var(--cream);position:relative;cursor:pointer;display:block}
+.opt::before{content:"";position:absolute;top:18px;left:16px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--ink-faint);background:transparent;transition:all .15s ease}
+.opt::after{content:"";position:absolute;top:24px;left:22px;width:6px;height:6px;border-radius:50%;background:var(--crimson);opacity:0;transition:opacity .15s ease}
+.opt.selected{border-color:var(--crimson);background:rgba(155,27,27,0.04)}
+.opt.selected::before{border-color:var(--crimson)}
+.opt.selected::after{opacity:1}
+.opt-top{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.opt-title{font-family:var(--sans);font-size:15.5px;font-weight:600;color:var(--ink);letter-spacing:-0.012em}
+.opt-tag{font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage);padding:2px 7px;border:1px solid rgba(45,107,79,0.35);border-radius:100px;line-height:1.4}
+.opt-tag.warn{color:var(--crimson);border-color:rgba(155,27,27,0.3)}
+.opt-desc{font-family:var(--sans);font-size:13px;color:var(--ink-mute);line-height:1.5;letter-spacing:-0.005em}
+.opt-desc strong{color:var(--ink);font-weight:500}
+
+/* CAUTION */
+.caution{margin:18px 22px 0;padding:12px 14px;border-left:2px solid var(--crimson);background:rgba(155,27,27,0.04);font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink);line-height:1.5;letter-spacing:0;border-radius:0 var(--r-sm) var(--r-sm) 0}
+.caution strong{font-style:normal;font-weight:600}
+
+/* CTA */
+.cta-zone{padding:24px 18px 10px}
+.btn-save{width:100%;padding:16px 22px;background:var(--crimson);color:#fff;border-radius:100px;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:-0.005em;border:none;cursor:pointer;box-shadow:0 2px 6px rgba(155,27,27,0.18), 0 10px 20px -4px rgba(155,27,27,0.22);display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-save svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn-cancel{display:block;width:100%;text-align:center;padding:14px 0 6px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-mute);letter-spacing:-0.005em}
+
+.foot{padding:30px 22px 18px;text-align:center}
+.foot-glyph{font-family:var(--sans);font-size:56px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none}
+
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}}
+h1, h2, .art-title, .type-hero, .type-greeting, .kit-title, .greet-name, .hero-h1, .name-primary, .name-secondary { font-variation-settings: "opsz" 44; }
+.prose, .prose p, body { font-variation-settings: "opsz" 16; }
+</style>
+</head>
+<body data-screen-label="Quiz Retake · Kinfolk">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right"></div>
+</header>
+
+<div class="greet">
+  <div class="kanji-watermark">代</div>
+  <div class="greet-ovr">Retake the quiz</div>
+  <div class="greet-name">Reshape your palate.</div>
+  <div class="greet-dek">Tastes move. If your recent bottles don't feel like <em>you</em> anymore, start over — or nudge the blend.</div>
+</div>
+
+<!-- BLEND STATUS -->
+<div class="blend">
+  <div class="blend-ovr">Your palate today</div>
+  <div class="blend-bar">
+    <div class="seg-quiz" style="flex:40"></div>
+    <div class="seg-diary" style="flex:60"></div>
+  </div>
+  <div class="blend-legend">
+    <div class="item"><span class="dot quiz"></span><strong>40%</strong> quiz <span class="sub">· first answers</span></div>
+    <div class="item"><span class="dot diary"></span><strong>60%</strong> diary <span class="sub">· 24 ratings</span></div>
+  </div>
+  <div class="blend-note">Your ratings are beginning to lead. Past ~50 bottles, they take over and the quiz fades out.</div>
+</div>
+
+<!-- CHOICE -->
+<div class="sec-label"><h2 class="sec-lbl">When you retake</h2></div>
+<p class="sec-sub">Choose how the new quiz mixes with the bottles you've already rated.</p>
+
+<div class="options">
+  <label class="opt selected" data-opt="keep">
+    <input type="radio" name="retake-mode" value="keep" checked hidden>
+    <div class="opt-top">
+      <div class="opt-title">Keep my ratings</div>
+      <span class="opt-tag">Recommended</span>
+    </div>
+    <div class="opt-desc">The new quiz replaces the old one, then blends with your <strong>24 rated bottles</strong> as before. Your diary keeps teaching us.</div>
+  </label>
+  <label class="opt" data-opt="fresh">
+    <input type="radio" name="retake-mode" value="fresh" hidden>
+    <div class="opt-top">
+      <div class="opt-title">Start fresh</div>
+      <span class="opt-tag warn">Resets palate</span>
+    </div>
+    <div class="opt-desc">Only the new quiz shapes recommendations. Your ratings <strong>stay in your diary</strong> but stop influencing your palate until you log new bottles.</div>
+  </label>
+</div>
+
+<div class="caution">
+  <strong>Heads up.</strong> You can retake the quiz anytime, but the "start fresh" choice can't be undone — your current blend will be cleared.
+</div>
+
+<div class="cta-zone">
+  <a class="btn-save" href="sakeyo_Quiz.html" style="text-decoration:none">
+    Continue to quiz
+    <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+  </a>
+  <a class="btn-cancel" href="sakeyo_Profile.html">Cancel</a>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+</div>
+
+</div></div>
+<script>
+document.querySelectorAll('.opt').forEach(o => {
+  o.addEventListener('click', () => {
+    document.querySelectorAll('.opt').forEach(x => x.classList.remove('selected'));
+    o.classList.add('selected');
+    const input = o.querySelector('input[type=radio]');
+    if (input) input.checked = true;
+  });
+});
+</script>
+</body></html>

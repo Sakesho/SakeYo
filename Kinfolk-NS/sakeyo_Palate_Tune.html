@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — Your palate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=supreme@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --cream-lit:#F5EBD8; --cream-shadow:#D4C5AA;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F; --sage-deep:#1F4E39;
+  --sans:'Supreme','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Newsreader', Georgia, 'Iowan Old Style', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:64px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{width:64px}
+
+/* GREET */
+.greet{background:var(--black);padding:18px 22px 34px;position:relative;overflow:hidden;color:#fff}
+.kanji-watermark{position:absolute;top:-10px;right:-40px;font-family:var(--sans);font-size:260px;font-weight:400;color:#fff;opacity:0.04;line-height:0.8;pointer-events:none;user-select:none;z-index:0}
+.greet-ovr{font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,235,0.55);position:relative;z-index:2}
+.greet-name{font-family:var(--sans);font-size:30px;font-weight:400;color:var(--cream);margin-top:6px;line-height:1.15;letter-spacing:-0.015em;position:relative;z-index:2}
+.greet-dek{font-family:var(--sans);font-style:italic;font-size:14px;color:rgba(245,240,235,0.62);line-height:1.5;margin-top:10px;max-width:36ch;position:relative;z-index:2}
+
+/* SIGNATURE CARD */
+.sig{margin:-18px 22px 0;background:var(--cream);border:1px solid var(--hair-strong);border-radius:var(--r-sm);padding:18px 20px;position:relative;z-index:3;box-shadow:0 10px 30px -16px rgba(16,24,32,0.22)}
+.sig-ovr{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px}
+.sig-line{font-family:var(--sans);font-style:italic;font-size:15px;color:var(--ink);line-height:1.5;letter-spacing:-0.005em}
+.sig-line .accent{font-style:normal;font-weight:600;color:var(--ink);letter-spacing:-0.008em}
+
+/* SECTION LABEL */
+.sec-label{padding:30px 22px 0;position:relative;z-index:2}
+.sec-lbl{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:12px;margin:0}
+.sec-lbl::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sec-sub{padding:8px 22px 0;font-family:var(--sans);font-style:italic;font-size:13px;color:var(--ink-mute);letter-spacing:0;line-height:1.5;max-width:44ch}
+
+/* AXIS ROW */
+.axes{padding:18px 22px 0}
+.axis{padding:12px 0;border-top:1px solid var(--hair)}
+.axis:first-child{border-top:none;padding-top:4px}
+.axis-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:8px}
+.axis-name{font-family:var(--sans);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-0.012em}
+.axis-val{font-family:var(--sans);font-style:italic;font-size:12.5px;color:var(--ink-mute);letter-spacing:0}
+.axis-val .num{font-style:normal;font-weight:500;color:var(--ink);font-family:var(--sans);font-size:11.5px;letter-spacing:-0.005em;margin-left:4px}
+.axis-hint{font-family:var(--sans);font-style:italic;font-size:11.5px;color:var(--ink-faint);letter-spacing:0;margin-bottom:10px;line-height:1.4}
+.pills{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.pill{padding:10px 2px 8px;border:1px solid var(--hair-strong);border-radius:var(--r-sm);background:transparent;text-align:center;cursor:pointer;user-select:none;transition:background .15s ease, border-color .15s ease, color .15s ease}
+.pill .pnum{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-0.008em;display:block}
+.pill .plbl{font-family:var(--sans);font-size:9px;font-style:italic;color:var(--ink-faint);letter-spacing:0;display:block;margin-top:2px;line-height:1.1;min-height:20px}
+.pill.in{background:var(--sage);border-color:var(--sage);color:#fff}
+.pill.in .pnum{color:#fff}
+.pill.in .plbl{color:rgba(255,255,255,0.78)}
+.pill.edge{background:var(--sage-deep);border-color:var(--sage-deep)}
+
+/* AFFINITY LIST */
+.affs{padding:14px 22px 0}
+.aff{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:12px;row-gap:4px;padding:10px 0;border-top:1px solid var(--hair);align-items:center}
+.aff:first-child{border-top:none;padding-top:4px}
+.aff-name{grid-column:1;grid-row:1;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-0.012em;display:flex;align-items:center;gap:8px}
+.aff-name .lock{display:inline-flex;align-items:center;gap:3px;font-family:var(--sans);font-style:italic;font-size:10px;font-weight:400;color:var(--ink-faint);letter-spacing:0}
+.aff-name .lock svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.aff-pct{grid-column:2;grid-row:1;font-family:var(--sans);font-size:14px;font-weight:500;color:var(--sage);letter-spacing:-0.005em;font-variant-numeric:tabular-nums}
+.aff.muted .aff-pct{color:var(--ink-faint)}
+.aff-bar{grid-column:1 / -1;grid-row:2;height:3px;background:var(--hair);border-radius:3px;overflow:hidden}
+.aff-bar-fill{height:100%;background:var(--sage);border-radius:3px;transition:width .35s cubic-bezier(.2,.7,.2,1)}
+.aff.muted .aff-bar-fill{background:var(--ink-faint)}
+.aff.top .aff-pct{color:var(--crimson)}
+.aff.top .aff-bar-fill{background:var(--crimson)}
+.aff{cursor:pointer;transition:background .15s ease}
+.aff:hover{background:rgba(16,24,32,0.02)}
+.aff-name .pin{display:inline-flex;align-items:center;gap:3px;font-family:var(--sans);font-style:italic;font-size:10px;font-weight:500;color:var(--crimson);letter-spacing:0;padding:1px 6px;border:1px solid rgba(155,27,27,0.25);border-radius:100px;background:rgba(155,27,27,0.04)}
+.aff-chev{grid-column:2;grid-row:1;width:14px;height:14px;fill:none;stroke:var(--crimson);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease;margin-left:6px;align-self:center;opacity:0.7}
+.aff:hover .aff-chev{opacity:1}
+.aff.expanded .aff-chev{transform:rotate(90deg)}
+.aff-pct-wrap{grid-column:2;grid-row:1;display:flex;align-items:center;gap:8px}
+.aff-desc{grid-column:1 / -1;grid-row:3;font-family:var(--sans);font-style:italic;font-size:12px;color:var(--ink-mute);line-height:1.45;letter-spacing:0;margin-top:8px;padding-top:8px;border-top:1px dashed var(--hair-soft);max-width:48ch}
+.aff.muted .aff-desc{color:var(--ink-faint);opacity:0.75}
+.aff-body{grid-column:1 / -1;grid-row:4;display:none;padding:10px 0 6px;margin-top:10px;border-top:1px dashed var(--hair)}
+.aff.expanded .aff-body{display:block}
+.aff-adjust-row{display:flex;align-items:center;gap:10px}
+.aff-adjust-label{font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-mute);min-width:46px}
+.aff-slider{flex:1;appearance:none;-webkit-appearance:none;height:3px;background:var(--hair);border-radius:3px;outline:none;cursor:pointer}
+.aff-slider::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--crimson);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.18);cursor:grab}
+.aff-slider::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.1)}
+.aff-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--crimson);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.18);cursor:grab}
+.aff-computed-hint{font-family:var(--sans);font-style:italic;font-size:11px;color:var(--ink-faint);letter-spacing:0;margin-top:8px;display:flex;align-items:center;gap:8px}
+.aff-reset{display:inline-flex;align-items:center;gap:4px;font-family:var(--sans);font-size:11px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em;border:1px solid rgba(155,27,27,0.25);border-radius:100px;padding:3px 10px;cursor:pointer;font-style:normal}
+.aff-reset svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* UNLOCK CHIPS */
+.unlocks{padding:14px 22px 0;display:flex;flex-wrap:wrap;gap:7px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:100px;border:1px solid var(--hair-strong);background:transparent;font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--ink-mute);letter-spacing:-0.005em;cursor:pointer;user-select:none;transition:all .15s ease}
+.chip svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:0.6}
+.chip.on{background:var(--sage);color:#fff;border-color:var(--sage)}
+.chip.on svg{opacity:0;width:0}
+
+/* ADVENTUROUSNESS SEGMENT */
+.adv-seg{margin:14px 22px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:4px;background:var(--cream-deep);border:1px solid var(--hair);border-radius:100px}
+.adv-seg button{padding:10px 4px;border-radius:100px;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--ink-mute);letter-spacing:-0.005em;cursor:pointer;transition:all .15s ease;line-height:1.2}
+.adv-seg button.on{background:var(--crimson);color:#fff;font-weight:600;box-shadow:0 1px 3px rgba(155,27,27,0.25)}
+
+/* CTA */
+.cta-zone{padding:28px 18px 6px}
+.btn-save{width:100%;padding:16px 22px;background:var(--crimson);color:#fff;border-radius:100px;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:-0.005em;border:none;cursor:pointer;box-shadow:0 2px 6px rgba(155,27,27,0.18), 0 10px 20px -4px rgba(155,27,27,0.22);display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-save svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.retake-link{display:block;text-align:center;padding:14px 0 4px;font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--crimson);letter-spacing:-0.005em}
+.retake-link em{font-style:italic;color:var(--ink-mute);font-weight:400;margin-right:4px}
+
+.foot{padding:24px 22px 18px;text-align:center}
+.foot-glyph{font-family:var(--sans);font-size:56px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none}
+
+@media (max-width:500px){body{padding:0!important;min-height:100vh;min-height:100dvh}.device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}.hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}}
+h1, h2, .art-title, .type-hero, .type-greeting, .kit-title, .greet-name, .hero-h1, .name-primary, .name-secondary { font-variation-settings: "opsz" 44; }
+.prose, .prose p, body { font-variation-settings: "opsz" 16; }
+</style>
+</head>
+<body data-screen-label="Palate · Kinfolk">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back</a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right"></div>
+</header>
+
+<div class="greet">
+  <div class="kanji-watermark">味</div>
+  <div class="greet-ovr">Your palate</div>
+  <div class="greet-name">Here's what we heard.</div>
+  <div class="greet-dek">Tune anything that doesn't feel like you. The profiles below update as you go.</div>
+</div>
+
+<!-- SIGNATURE -->
+<div class="sig">
+  <div class="sig-ovr">Signature</div>
+  <div class="sig-line" id="sig-line">You lean <span class="accent">savory</span>, <span class="accent">medium-bodied</span>, comfortable from dry to a half-sweet middle.</div>
+</div>
+
+<!-- AXES -->
+<div class="sec-label"><h2 class="sec-lbl">Your axes</h2></div>
+<p class="sec-sub">Tap the range you live in. A second tap widens it. A tap inside the range collapses it.</p>
+<div class="axes" id="axes"></div>
+
+<!-- AFFINITIES -->
+<div class="sec-label"><h2 class="sec-lbl">Profile affinity</h2></div>
+<p class="sec-sub">Computed from your axes. <strong style="color:var(--ink);font-weight:600">Tap any profile</strong> to pin a different value. Flag-gated styles stay muted until unlocked.</p>
+<div class="affs" id="affs"></div>
+
+<!-- UNLOCKS -->
+<div class="sec-label"><h2 class="sec-lbl">Style unlocks</h2></div>
+<p class="sec-sub">Turn on styles you want in your recommendations. Off by default for flavors that aren't for everyone.</p>
+<div class="unlocks" id="unlocks">
+  <button class="chip" data-flag="aged"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Aged · koshu</button>
+  <button class="chip" data-flag="sour"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Sour · citric</button>
+  <button class="chip" data-flag="sweet"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Sweet · dessert</button>
+</div>
+
+<!-- ADVENTUROUSNESS -->
+<div class="sec-label"><h2 class="sec-lbl">Adventurousness</h2></div>
+<p class="sec-sub">How much of the weirder end of the shelf we show you.</p>
+<div class="adv-seg" id="adv-seg">
+  <button data-adv="classics">Classics</button>
+  <button data-adv="mix" class="on">Mix it in</button>
+  <button data-adv="weird">Off the map</button>
+</div>
+
+<div class="cta-zone">
+  <button class="btn-save" id="btn-save">
+    <svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
+    Save my palate
+  </button>
+  <a class="retake-link" href="sakeyo_Quiz_Retake.html"><em>Want to start over?</em>Retake the quiz →</a>
+</div>
+
+<div class="foot"><div class="foot-glyph">味</div></div>
+
+</div></div>
+
+<script>
+// ---- STATE ----
+// Axis internal coords follow Harper:
+//   D: 1 = very sweet, 5 = very dry
+//   A: 1 = low acid, 5 = high
+//   B: 1 = light, 5 = full
+//   FS: 1 = very fruity, 5 = very savory
+const state = {
+  D:  [2, 4],   // sweet-to-dry range — flexible middle/dry
+  A:  [3, 4],
+  B:  [3, 4],
+  FS: [3, 5],
+  unlocks: { aged: true, sour: false, sweet: false },
+  adv: 'mix',
+  manualAff: {},     // { styleName: 0-100 } — if set, overrides computed
+  expanded: null     // currently expanded style name (accordion)
+};
+
+const AXES = [
+  {
+    key: 'D',
+    name: 'Sweet ↔ Dry',
+    hint: 'Like coffee: black → mocha · Bubble tea: 0% → 100% sugar',
+    labels: ['very sweet', 'sweet', 'half', 'barely', 'bone dry']
+  },
+  {
+    key: 'A',
+    name: 'Acidity',
+    hint: 'Still water → iced tea → lemonade → kombucha → pure lemon',
+    labels: ['still', 'mild', 'bright', 'tart', 'sharp']
+  },
+  {
+    key: 'B',
+    name: 'Body',
+    hint: 'Sparkling water → light lager → red wine → whole milk → milkshake',
+    labels: ['airy', 'light', 'medium', 'full', 'heavy']
+  },
+  {
+    key: 'FS',
+    name: 'Fruity ↔ Savory',
+    hint: 'Beer: hazy IPA → pilsner → lager → porter → stout · Wine: tropical whites → crisp whites → light reds → bold earthy reds → natural/orange',
+    labels: ['fruit', 'fruity', 'balanced', 'earthy', 'umami']
+  }
+];
+
+// Style envelopes on the 4 axes, distilled from the Harper rules.
+// flag: null, or one of 'aged','sour','sweet','fresh' (flag-gated)
+const STYLES = [
+  { name: 'Rich',    env: { D:[2,5], A:[3,5], FS:[4,5], B:[3,5] }, flag: null,
+    desc: 'Deep, savory, complex — kimoto or yamahai territory. Tangy umami, long finish, often served warm with fatty or grilled food.' },
+  { name: 'Aged',    env: { D:[2,5], A:[2,5], FS:[3,5], B:[2,5] }, flag: 'aged',
+    desc: 'Transformed by time. Amber color, caramel and dried-fruit aromas. Koshu, jukuseishu, or aged kijoshu — after-dinner territory.' },
+  { name: 'Mellow',  env: { D:[2,4], A:[1,4], FS:[2,4], B:[2,4] }, flag: null,
+    desc: 'Balanced and rice-forward — the broad middle. Neither pointedly dry nor sweet, stays out of the way across most food.' },
+  { name: 'Dry',     env: { D:[4,5], A:[3,5], FS:[2,4], B:[2,5] }, flag: null,
+    desc: 'Crisp and precisely dry with a sharp, clean finish. Food-friendly tanrei karakuchi — built to cut, not match.' },
+  { name: 'Clean',   env: { D:[2,4], A:[1,4], FS:[1,2], B:[2,4] }, flag: null,
+    desc: 'Polished and restrained — the clean-finish cousin of Fruity. Elegant ginjo/daiginjo, nothing left on the palate.' },
+  { name: 'Fruity',  env: { D:[1,3], A:[1,4], FS:[1,2], B:[2,4] }, flag: null,
+    desc: 'Aromatic and juicy — banana, melon, lychee on the nose. Sweet-leaning ginjo/daiginjo, where most new drinkers begin.' },
+  { name: 'Heavy',   env: { D:[2,3], A:[3,4], FS:[3,4], B:[4,5] }, flag: null,
+    desc: 'Full-bodied and high-alcohol — genshu territory. Powerful, robust, built for dinner-weight food and small pours.' },
+  { name: 'Light',   env: { D:[2,4], A:[2,5], FS:[1,4], B:[1,2] }, flag: null,
+    desc: 'Clean, easy-drinking, low-alcohol. A gentler style, sometimes sparkling — an opener, best served well chilled.' },
+  { name: 'Fresh',   env: { D:[2,4], A:[2,5], FS:[1,3], B:[2,4] }, flag: null,
+    desc: 'Vibrant and unfinished — unpasteurized nama or freshly pressed shibori-tate. Green, peppery, drink cold and young.' },
+  { name: 'Sour',    env: { D:[1,5], A:[3,5], FS:[1,5], B:[2,5] }, flag: 'sour',
+    desc: 'Tart and white-wine-like, from white/black koji or bodaimoto. A rare, deliberate category — natural-wine adjacent.' },
+  { name: 'Sweet',   env: { D:[1,2], A:[1,5], FS:[1,3], B:[2,5] }, flag: 'sweet',
+    desc: 'Richly sweet with enough acidity to keep it from cloying. Nigori, kijoshu, dessert-leaning — built for contrast or after-dinner.' }
+];
+
+const WEIGHTS = { FS: 0.35, D: 0.25, A: 0.20, B: 0.20 };
+
+// ---- MATH ----
+function rlen(r){ return r[1] - r[0] + 1; }
+function intersect(a, b){
+  const lo = Math.max(a[0], b[0]);
+  const hi = Math.min(a[1], b[1]);
+  return hi >= lo ? [lo, hi] : null;
+}
+function affinity(style){
+  let raw = 0;
+  for (const k of ['FS','D','A','B']) {
+    const inter = intersect(state[k], style.env[k]);
+    // Denominator = smaller of the two ranges. Full containment either way scores 1.00.
+    const overlap = inter ? rlen(inter) / Math.min(rlen(state[k]), rlen(style.env[k])) : 0;
+    raw += overlap * WEIGHTS[k];
+  }
+  let pct = raw; // 0..1
+  if (style.flag) {
+    if (!state.unlocks[style.flag]) pct *= 0.22;
+    else if (state.adv === 'classics') pct *= 0.80;
+    else if (state.adv === 'weird')    pct *= 1.10;
+  } else {
+    if (state.adv === 'classics' && style.name === 'Mellow') pct *= 1.05;
+  }
+  return Math.max(0, Math.min(1, pct));
+}
+
+// ---- TAP-TO-PAINT ----
+function togglePill(axisKey, v){
+  const r = state[axisKey];
+  const [min, max] = r;
+  if (min === max) {
+    if (v < min) state[axisKey] = [v, max];
+    else if (v > max) state[axisKey] = [min, v];
+    // tapping same pill = no change
+  } else {
+    if (v >= min && v <= max) state[axisKey] = [v, v];   // collapse
+    else if (v < min)         state[axisKey] = [v, max]; // extend left
+    else                      state[axisKey] = [min, v]; // extend right
+  }
+  renderAxis(axisKey);
+  renderAffinities();
+  renderSignature();
+}
+
+// ---- RENDER ----
+function renderAxes(){
+  const host = document.getElementById('axes');
+  host.innerHTML = '';
+  for (const a of AXES) {
+    const row = document.createElement('div');
+    row.className = 'axis';
+    row.id = 'ax-' + a.key;
+    row.innerHTML = `
+      <div class="axis-head">
+        <div class="axis-name">${a.name}</div>
+        <div class="axis-val"><span class="val-word"></span><span class="num"></span></div>
+      </div>
+      <div class="axis-hint">${a.hint}</div>
+      <div class="pills"></div>
+    `;
+    const pillsEl = row.querySelector('.pills');
+    for (let i = 1; i <= 5; i++) {
+      const b = document.createElement('button');
+      b.className = 'pill';
+      b.dataset.v = i;
+      b.innerHTML = `<span class="pnum">${i}</span><span class="plbl">${a.labels[i-1]}</span>`;
+      b.addEventListener('click', () => togglePill(a.key, i));
+      pillsEl.appendChild(b);
+    }
+    host.appendChild(row);
+    renderAxis(a.key);
+  }
+}
+function renderAxis(key){
+  const row = document.getElementById('ax-' + key);
+  const [min, max] = state[key];
+  row.querySelectorAll('.pill').forEach(p => {
+    const v = +p.dataset.v;
+    p.classList.toggle('in',   v >= min && v <= max);
+    p.classList.toggle('edge', (v === min || v === max) && min !== max);
+  });
+  const axisMeta = AXES.find(x => x.key === key);
+  const valWord = row.querySelector('.val-word');
+  const valNum  = row.querySelector('.num');
+  if (min === max) { valWord.textContent = axisMeta.labels[min-1]; valNum.textContent = min; }
+  else             { valWord.textContent = `${axisMeta.labels[min-1]} → ${axisMeta.labels[max-1]}`; valNum.textContent = `${min}–${max}`; }
+}
+
+// Display affinity = manual override if set, else computed
+function displayAffinity(style){
+  const name = style.name;
+  const computed = affinity(style);
+  const manual = state.manualAff[name];
+  return {
+    computed,
+    displayed: manual !== undefined ? manual / 100 : computed,
+    isManual: manual !== undefined
+  };
+}
+
+function renderAffinities(){
+  const host = document.getElementById('affs');
+  const scored = STYLES.map(s => {
+    const d = displayAffinity(s);
+    return { ...s, ...d };
+  }).sort((a, b) => b.displayed - a.displayed);
+
+  host.innerHTML = '';
+  scored.forEach((s, idx) => {
+    const pct = Math.round(s.displayed * 100);
+    const computedPct = Math.round(s.computed * 100);
+    const locked = s.flag && !state.unlocks[s.flag] && !s.isManual;
+    const muted = locked || (pct < 30 && !s.isManual);
+    const top = idx < 2 && !locked && pct >= 40;
+    const isExpanded = state.expanded === s.name;
+
+    const row = document.createElement('div');
+    row.className = 'aff' + (muted ? ' muted' : '') + (top ? ' top' : '') + (isExpanded ? ' expanded' : '');
+    row.dataset.name = s.name;
+    row.innerHTML = `
+      <div class="aff-name">${s.name}${locked ? `<span class="lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>locked</span>` : ''}${s.isManual ? `<span class="pin">pinned</span>` : ''}</div>
+      <div class="aff-pct-wrap">
+        <span class="aff-pct">${pct}%</span>
+        <svg class="aff-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+      </div>
+      <div class="aff-bar"><div class="aff-bar-fill" style="width:${pct}%"></div></div>
+      <div class="aff-desc">${s.desc}</div>
+      <div class="aff-body">
+        <div class="aff-adjust-row">
+          <span class="aff-adjust-label">Adjust</span>
+          <input type="range" class="aff-slider" min="0" max="100" value="${pct}" data-name="${s.name}">
+        </div>
+        <div class="aff-computed-hint">
+          <span>From your axes: <strong style="color:var(--ink);font-style:normal;font-weight:500">${computedPct}%</strong>${locked ? ' · this style is flag-gated' : ''}</span>
+          ${s.isManual ? `<button class="aff-reset" data-reset="${s.name}"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/></svg>reset</button>` : ''}
+        </div>
+      </div>
+    `;
+    host.appendChild(row);
+  });
+
+  // Wire up interactions after render
+  host.querySelectorAll('.aff').forEach(row => {
+    row.addEventListener('click', (e) => {
+      // Don't toggle when interacting with slider or reset
+      if (e.target.closest('.aff-slider') || e.target.closest('.aff-reset')) return;
+      const name = row.dataset.name;
+      state.expanded = state.expanded === name ? null : name;
+      renderAffinities();
+    });
+  });
+  host.querySelectorAll('.aff-slider').forEach(sl => {
+    sl.addEventListener('input', (e) => {
+      e.stopPropagation();
+      const name = sl.dataset.name;
+      state.manualAff[name] = +sl.value;
+      // If flag-gated style was locked and user is actively setting it, that's consent → unlock
+      const style = STYLES.find(x => x.name === name);
+      if (style && style.flag && !state.unlocks[style.flag] && +sl.value > 22) {
+        state.unlocks[style.flag] = true;
+        renderUnlocks();
+      }
+      renderAffinities();
+      renderSignature();
+    });
+    sl.addEventListener('click', (e) => e.stopPropagation());
+  });
+  host.querySelectorAll('.aff-reset').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const name = btn.dataset.reset;
+      delete state.manualAff[name];
+      renderAffinities();
+      renderSignature();
+    });
+  });
+}
+
+function renderUnlocks(){
+  document.querySelectorAll('#unlocks .chip').forEach(c => {
+    c.classList.toggle('on', !!state.unlocks[c.dataset.flag]);
+  });
+}
+function renderAdv(){
+  document.querySelectorAll('#adv-seg button').forEach(b => {
+    b.classList.toggle('on', b.dataset.adv === state.adv);
+  });
+}
+function renderSignature(){
+  const scored = STYLES.filter(s => !s.flag || state.unlocks[s.flag] || state.manualAff[s.name] !== undefined)
+                       .map(s => ({ ...s, score: displayAffinity(s).displayed }))
+                       .sort((a, b) => b.score - a.score);
+  const primary = scored[0];
+  const secondary = scored[1];
+  // Axis lean descriptors
+  const fsMid = (state.FS[0] + state.FS[1]) / 2;
+  const fsWord = fsMid <= 2.3 ? 'fruit-forward' : fsMid >= 3.7 ? 'savory' : 'balanced';
+  const bMid = (state.B[0] + state.B[1]) / 2;
+  const bWord = bMid <= 2.3 ? 'light-bodied' : bMid >= 3.7 ? 'full-bodied' : 'medium-bodied';
+  const dMid = (state.D[0] + state.D[1]) / 2;
+  const dSpan = state.D[1] - state.D[0];
+  const dWord = dSpan >= 2 ? 'flexible on sweetness'
+              : dMid >= 4 ? 'dry-leaning'
+              : dMid <= 2 ? 'sweet-leaning'
+              : 'medium on dryness';
+  const line = `You lean <span class="accent">${primary.name.toLowerCase()}</span> with a side of <span class="accent">${secondary.name.toLowerCase()}</span>. ${fsWord.charAt(0).toUpperCase() + fsWord.slice(1)}, ${bWord}, ${dWord}.`;
+  document.getElementById('sig-line').innerHTML = line;
+}
+
+// ---- BIND ----
+document.querySelectorAll('#unlocks .chip').forEach(c => {
+  c.addEventListener('click', () => {
+    const f = c.dataset.flag;
+    state.unlocks[f] = !state.unlocks[f];
+    renderUnlocks();
+    renderAffinities();
+    renderSignature();
+  });
+});
+document.querySelectorAll('#adv-seg button').forEach(b => {
+  b.addEventListener('click', () => {
+    state.adv = b.dataset.adv;
+    renderAdv();
+    renderAffinities();
+    renderSignature();
+  });
+});
+document.getElementById('btn-save').addEventListener('click', () => {
+  try {
+    localStorage.setItem('sakeyo_palate', JSON.stringify({
+      D: state.D, A: state.A, B: state.B, FS: state.FS,
+      unlocks: state.unlocks,
+      adv: state.adv,
+      manualAff: state.manualAff
+    }));
+  } catch(e) {}
+  window.location.href = 'sakeyo_Profile.html';
+});
+
+// ---- HYDRATE FROM QUIZ (if available) ----
+try {
+  const saved = localStorage.getItem('sakeyo_palate');
+  if (saved) {
+    const data = JSON.parse(saved);
+    if (data.D) state.D = data.D;
+    if (data.A) state.A = data.A;
+    if (data.B) state.B = data.B;
+    if (data.FS) state.FS = data.FS;
+    if (data.adv) state.adv = data.adv;
+    if (data.unlocks) Object.assign(state.unlocks, data.unlocks);
+    if (data.manualAff) state.manualAff = data.manualAff;
+  }
+} catch(e) {}
+
+// ---- BOOT ----
+renderAxes();
+renderUnlocks();
+renderAdv();
+renderAffinities();
+renderSignature();
+</script>
+</body></html>

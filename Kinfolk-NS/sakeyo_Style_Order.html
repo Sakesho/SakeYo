@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAKEYŌ — How to order</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=supreme@italic,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d131a; --black-deep:#05080c; --charcoal:#1a2028;
+  --crimson:#9B1B1B; --crimson-deep:#7A1515;
+  --cream:#F5F0EB; --cream-deep:#EDE6DD; --cream-warm:#E8DFD2;
+  --ink:#101820; --ink-mute:#5F5E5A; --ink-faint:#8A8880;
+  --hair:rgba(16,24,32,0.10); --hair-soft:rgba(16,24,32,0.06); --hair-strong:rgba(16,24,32,0.14);
+  --sage:#2D6B4F; --sage-lit:#86c69f;
+  --gold:#B8843C; --gold-lit:#E0B26A; --gold-deep:#8a5e20;
+  --sans:'Supreme','Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;
+  --serif:'Newsreader', Georgia, 'Iowan Old Style', serif;
+  --jp:'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+  --r-sm:6px; --r-md:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DED6CA;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+body{min-height:100vh;display:flex;justify-content:center;padding:32px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+.device{width:436px;background:#0a0a0a;border-radius:52px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #1a1a1a inset;height:fit-content}
+.phone{width:416px;height:896px;background:var(--cream);overflow-y:auto;overflow-x:hidden;border-radius:42px;scrollbar-width:none;position:relative;box-shadow:inset 0 0 0 1px #0a0a0a}
+.phone::-webkit-scrollbar{display:none}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;background:var(--black);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;min-height:52px;box-shadow:0 1px 0 rgba(255,255,255,0.03) inset}
+.hdr-back{color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;letter-spacing:-0.005em;width:90px}
+.hdr-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hdr-word{font-family:var(--sans);font-size:14px;font-weight:700;color:#fff;letter-spacing:0.22em;text-transform:uppercase}
+.hdr-word .yo{color:var(--crimson)}
+.hdr-right{width:90px;display:flex;justify-content:flex-end;gap:14px}
+.hdr-icon{color:rgba(255,255,255,0.85);display:flex}
+.hdr-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* HERO — style identity + show-server CTA */
+.hero{background:var(--black);padding:24px 22px 26px;color:#fff;position:relative;overflow:hidden}
+.hero-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,235,0.55);margin-bottom:12px}
+.hero-jp{font-family:var(--jp);font-size:54px;font-weight:600;color:#fff;line-height:1;letter-spacing:0.04em;margin-bottom:8px}
+.hero-romaji{font-family:var(--sans);font-size:14px;color:rgba(245,240,235,0.5);letter-spacing:0.08em;margin-bottom:14px;text-transform:uppercase;font-weight:500}
+.hero-en{font-family:var(--sans);font-size:36px;font-weight:400;color:var(--cream);letter-spacing:-0.02em;margin-bottom:8px;line-height:1.05}
+.hero-dek{font-family:var(--sans);font-style:italic;font-size:14px;color:rgba(245,240,235,0.7);line-height:1.5;letter-spacing:0;max-width:36ch;margin-bottom:20px}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;padding:13px 18px;border-radius:100px;background:var(--crimson);color:#fff;font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 6px rgba(155,27,27,0.22), 0 8px 18px -4px rgba(155,27,27,0.25);cursor:pointer;border:none}
+.hero-cta svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* DESCRIPTION */
+.section{padding:28px 22px 0;position:relative;z-index:2}
+.sec-over{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.sec-over::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sec-body{font-family:var(--sans);font-size:14.5px;line-height:1.65;color:var(--ink);letter-spacing:-0.003em;max-width:42ch}
+
+/* EXAMPLES + FOOD pairing — pillared cards */
+.fact-grid{padding:22px 22px 0;display:grid;grid-template-columns:1fr;gap:10px;position:relative;z-index:2}
+.fact{background:#fff;border:1px solid var(--hair);border-radius:var(--r-sm);padding:16px 18px}
+.fact-over{font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px}
+.fact-body{font-family:var(--sans);font-size:13.5px;line-height:1.55;color:var(--ink);letter-spacing:-0.005em}
+.fact-body em{font-style:italic;color:var(--ink-mute)}
+
+/* HOW TO ORDER — JP card */
+.order-card{margin:28px 22px 0;padding:22px 22px;background:#fff;border:1px solid var(--hair);border-radius:var(--r-sm);position:relative;z-index:2}
+.order-jp .order-flag{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--crimson);margin-bottom:14px;display:inline-flex;align-items:center;gap:8px}
+.order-jp .order-flag::before{content:"";display:inline-block;width:18px;height:12px;background:linear-gradient(180deg,#fff 0%,#fff 50%,#bc002d 50%,#bc002d 100%);border:1px solid var(--hair)}
+.order-en .order-flag{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink);margin-bottom:14px;display:inline-flex;align-items:center;gap:8px}
+.order-en .order-flag::before{content:"EN";font-size:9px;letter-spacing:0.12em;padding:2px 6px;background:var(--ink);color:#fff;border-radius:3px;font-weight:700}
+
+.order-prose-jp{font-family:var(--jp);font-size:18px;line-height:1.6;color:var(--ink);letter-spacing:0.02em;font-weight:500;margin-bottom:8px}
+.order-prose-romaji{font-family:var(--sans);font-style:italic;font-size:13px;color:var(--ink-mute);line-height:1.55;letter-spacing:0;margin-bottom:8px}
+.order-prose-en-translation{font-family:var(--sans);font-size:12.5px;color:var(--ink-faint);line-height:1.55;letter-spacing:-0.003em;font-style:italic}
+.order-prose-en{font-family:var(--sans);font-size:16px;line-height:1.55;color:var(--ink);letter-spacing:-0.005em;font-weight:400}
+
+.kw-head{font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-faint);margin:18px 0 10px}
+.kw-list{display:flex;flex-direction:column;gap:8px}
+.kw{display:flex;align-items:baseline;gap:10px;padding:8px 12px;background:var(--cream-warm);border-radius:var(--r-sm)}
+.kw-jp{font-family:var(--jp);font-size:14.5px;font-weight:500;color:var(--ink);letter-spacing:0.02em;flex-shrink:0;min-width:72px}
+.kw-ro{font-family:var(--sans);font-style:italic;font-size:11.5px;color:var(--ink-mute);letter-spacing:0;flex-shrink:0;min-width:90px}
+.kw-en{font-family:var(--sans);font-size:11.5px;color:var(--ink-mute);letter-spacing:-0.003em;margin-left:auto;text-align:right}
+
+.kw-en-list{display:flex;flex-wrap:wrap;gap:6px}
+.kw-chip{display:inline-flex;align-items:center;padding:5px 11px;border-radius:100px;background:var(--cream-warm);font-family:var(--sans);font-size:11px;color:var(--ink);letter-spacing:-0.005em;font-weight:500}
+
+.foot{padding:36px 22px 14px;text-align:center;position:relative;z-index:2}
+.foot-glyph{font-family:var(--sans);font-size:72px;line-height:1;color:rgba(16,24,32,0.10);font-weight:400;user-select:none}
+
+.bnav{position:sticky;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--hair);padding:10px 0 18px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:0;box-shadow:0 -8px 20px -4px rgba(16,24,32,0.04)}
+.bnav .b{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-faint);min-height:44px;justify-content:center}
+.bnav .b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav .b .lbl{font-size:10px;font-weight:500;letter-spacing:-0.005em}
+.bnav .fab-slot{display:flex;justify-content:center;align-items:center}
+.bnav .fab{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #c43030 0%, var(--crimson) 45%, var(--crimson-deep) 100%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 5px rgba(155,27,27,0.22), 0 6px 16px rgba(155,27,27,0.25);transform:translateY(-4px)}
+.bnav .fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* SHOW-SERVER FULLSCREEN OVERLAY — high-contrast, hand-the-phone-over UI */
+.flashcard{position:fixed;inset:0;background:#000;z-index:200;display:none;flex-direction:column;color:#fff;padding:28px 24px calc(28px + env(safe-area-inset-bottom));overflow-y:auto}
+.flashcard.on{display:flex}
+.fc-close{align-self:flex-end;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.10);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;color:#fff}
+.fc-close svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.fc-body{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:20px 0}
+.fc-instr{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:20px}
+.fc-style-jp{font-family:var(--jp);font-size:48px;font-weight:600;letter-spacing:0.05em;margin-bottom:10px;line-height:1.1}
+.fc-style-en{font-family:var(--sans);font-style:italic;font-size:15px;color:rgba(255,255,255,0.55);letter-spacing:0;margin-bottom:36px}
+.fc-divider{height:1px;background:rgba(255,255,255,0.18);margin:0 0 36px}
+.fc-label{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:18px}
+.fc-prose{font-family:var(--jp);font-size:24px;font-weight:500;line-height:1.55;color:#fff;letter-spacing:0.04em;margin-bottom:18px;padding:0 6px}
+.fc-romaji{font-family:var(--sans);font-style:italic;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.55;letter-spacing:0;padding:0 12px}
+.fc-foot{text-align:center;padding-top:20px;font-family:var(--sans);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+
+@media (max-width:500px){
+  body{padding:0!important;min-height:100vh;min-height:100dvh}
+  .device{width:100%!important;background:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}
+  .phone{width:100%!important;height:100vh!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}
+  .hdr{padding-top:calc(14px + env(safe-area-inset-top))!important}
+  .bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}
+}
+</style>
+</head>
+<body data-screen-label="Style — How to order">
+<div class="device"><div class="phone">
+
+<header class="hdr">
+  <a class="hdr-back" id="backLink" href="sakeyo_Profile.html">
+    <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back
+  </a>
+  <div class="hdr-word">SAKE<span class="yo">YŌ</span></div>
+  <div class="hdr-right">
+    <a class="hdr-icon" href="sakeyo_Settings.html" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-over">Style · How to order</div>
+  <div class="hero-jp" id="heroJp"></div>
+  <div class="hero-romaji" id="heroRomaji"></div>
+  <div class="hero-en" id="heroEn"></div>
+  <div class="hero-dek" id="heroDek"></div>
+  <button class="hero-cta" id="showFlashcard">
+    <svg viewBox="0 0 24 24"><path d="M2 7h20v10H2zM6 11h12M6 14h6"/></svg>
+    Show server
+  </button>
+</div>
+
+<!-- DESCRIPTION -->
+<section class="section">
+  <div class="sec-over">In short</div>
+  <p class="sec-body" id="longDesc"></p>
+</section>
+
+<!-- EXAMPLES + FOOD -->
+<div class="fact-grid">
+  <div class="fact">
+    <div class="fact-over">Bottles to know</div>
+    <div class="fact-body" id="examples"></div>
+  </div>
+  <div class="fact">
+    <div class="fact-over">What it pairs with</div>
+    <div class="fact-body" id="foodPair"></div>
+  </div>
+</div>
+
+<!-- HOW TO ORDER — JAPAN -->
+<div class="order-card order-jp">
+  <div class="order-flag">In Japan</div>
+  <div class="order-prose-jp" id="jpProse"></div>
+  <div class="order-prose-romaji" id="jpRomaji"></div>
+  <div class="order-prose-en-translation" id="jpEnTranslation"></div>
+
+  <div class="kw-head">Useful keywords</div>
+  <div class="kw-list" id="jpKeywords"></div>
+</div>
+
+<!-- HOW TO ORDER — ENGLISH -->
+<div class="order-card order-en">
+  <div class="order-flag">In English</div>
+  <div class="order-prose-en" id="enProse"></div>
+
+  <div class="kw-head">Useful keywords</div>
+  <div class="kw-en-list" id="enKeywords"></div>
+</div>
+
+<div class="foot">
+  <div class="foot-glyph">代</div>
+</div>
+
+<nav class="bnav">
+  <a class="b" href="SakeYo_Home.html"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></a>
+  <a class="b" href="sakeyo_Search.html"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg><div class="lbl">Search</div></a>
+  <div class="fab-slot"><a class="fab" href="sakeyo_Scan_Capture.html" aria-label="Scan"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></a></div>
+  <a class="b" href="sakeyo_Explore.html"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><div class="lbl">Menu Scan</div></a>
+  <a class="b" href="sakeyo_Profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><div class="lbl">Profile</div></a>
+</nav>
+
+</div></div>
+
+<!-- FULLSCREEN FLASHCARD — hand-the-phone-to-the-server -->
+<div class="flashcard" id="flashcard" role="dialog" aria-modal="true" aria-label="Show server">
+  <button class="fc-close" id="fcClose" aria-label="Close">
+    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="fc-body">
+    <div class="fc-instr">Show this to the server</div>
+    <div class="fc-style-jp" id="fcStyleJp"></div>
+    <div class="fc-style-en" id="fcStyleEn"></div>
+    <div class="fc-divider"></div>
+    <div class="fc-label">Order phrase</div>
+    <div class="fc-prose" id="fcProse"></div>
+    <div class="fc-romaji" id="fcRomaji"></div>
+  </div>
+  <div class="fc-foot">SAKE<span style="color:var(--crimson)">YŌ</span></div>
+</div>
+
+<script>
+// ----------------------------------------------------------------------------
+// 11 Harper sake style profiles. Content lifted from harper_sake_profiles.pdf.
+// ----------------------------------------------------------------------------
+const STYLES = {
+  mellow: {
+    en: "Mellow", jp: "中口", romaji: "Chūkuchi",
+    short: "Balanced and approachable, built around rice rather than fruit, grain, or caramel — the broad middle of the sake spectrum.",
+    long: "The center of the sake spectrum, and what much of Japan drinks with dinner every night. SMV near neutral, acidity and amino acids moderate, body mid-range. Junmai, junmai ginjo, tokubetsu junmai, honjozo, and tokubetsu honjozo all land here when nothing pushes the sake toward a more distinctive profile.",
+    examples: "Seishu Hakkaisan · Urakasumi Zen Junmai Ginjo · Oku no Matsu Tokubetsu Junmai",
+    food: "Strongest with lean umami delicate food — chawanmushi, clear mushroom soups, white fish in light soy. Light sweet-savory dishes (tamagoyaki, nimono, chicken teriyaki) sit comfortably in range. Flattens under bright acidic food and chili-forward spice.",
+    jpProse: "バランスが良く、米の旨みが中心で、辛すぎず甘すぎず、香りも穏やかで柔らかい口当たりのものをお願いします。",
+    jpRomaji: "Baransu ga yoku, kome no umami ga chūshin de, karasugizu amasugizu, kaori mo odayaka de yawarakai kuchiatari no mono o onegaishimasu.",
+    jpEnTranslation: "\"Something balanced and rice-forward, not too dry or sweet, with a gentle aroma and soft mouthfeel, please.\"",
+    jpKeywords: [
+      {jp:"バランスの良い", romaji:"baransu no yoi", en:"balanced"},
+      {jp:"まろやか", romaji:"maroyaka", en:"mellow / rounded"},
+      {jp:"米の旨み", romaji:"kome no umami", en:"rice umami"},
+      {jp:"穏やか", romaji:"odayaka", en:"gentle"},
+      {jp:"中口", romaji:"chūkuchi", en:"medium-sweet"},
+      {jp:"柔らかい", romaji:"yawarakai", en:"soft"},
+      {jp:"香り控えめ", romaji:"kaori hikaeme", en:"restrained aroma"}
+    ],
+    enProse: "\"Something balanced and rice-forward, middle of the road, nothing too fruity or heavy.\"",
+    enKeywords: ["balanced","rice-forward","middle of the road","medium-bodied","mellow","rounded","soft","restrained aroma","not too dry or sweet"]
+  },
+
+  fruity: {
+    en: "Fruity", jp: "華やか", romaji: "Hanayaka",
+    short: "Aromatic and fruit-forward, sweet-leaning and ester-driven — the juicy, tropical end of the sake spectrum.",
+    long: "Ginjo and daiginjo at its most expressive. Highly polished rice, slow cold fermentation, often an aromatic yeast like 1801 or CEL-24 pushing banana, melon, lychee, or pineapple high into the nose. Real sweetness, soft palate, enough acidity to keep it lifted. Serve well chilled — the fruit flattens fast as it warms.",
+    examples: "Kaigetsu CEL-24 Junmai Ginjo · Dewazakura Oka Ginjoshu · Dassai Junmai Daiginjo 45",
+    food: "Strongest with herbal fresh aromatic dishes (shiso salad, sashimi salad, cold soba), lean saline marine (raw oysters, sweet shrimp), and sweet-savory light dishes (yellowtail teriyaki, tamagoyaki). Falters under heavy savory cooking, charred meats, and sauce-heavy plates.",
+    jpProse: "香りが華やかで、果実のような甘みとジューシーさのある日本酒をお願いします。よく冷えた、軽くて飲みやすいタイプがいいです。",
+    jpRomaji: "Kaori ga hanayaka de, kajitsu no yō na amami to jūshī sa no aru nihonshu o onegaishimasu. Yoku hieta, karukute nomiyasui taipu ga ii desu.",
+    jpEnTranslation: "\"A fragrant, juicy sake with fruit-like sweetness, please. Well chilled, light and easy-drinking.\"",
+    jpKeywords: [
+      {jp:"華やか", romaji:"hanayaka", en:"fragrant / floral"},
+      {jp:"フルーティー", romaji:"furūtī", en:"fruity"},
+      {jp:"果実香", romaji:"kajitsu-kō", en:"fruit aroma"},
+      {jp:"ジューシー", romaji:"jūshī", en:"juicy"},
+      {jp:"ほんのり甘い", romaji:"honnori amai", en:"lightly sweet"},
+      {jp:"軽快", romaji:"keikai", en:"light & lively"},
+      {jp:"よく冷やして", romaji:"yoku hiyashite", en:"well chilled"}
+    ],
+    enProse: "\"Something fruity and aromatic, a little on the sweet side, bright and juicy. Well chilled, nothing heavy or savory.\"",
+    enKeywords: ["fruity","aromatic","tropical","juicy","ester-forward","lightly sweet","floral","chilled","expressive"]
+  },
+
+  clean: {
+    en: "Clean", jp: "端麗", romaji: "Tanrei",
+    short: "Polished and restrained — the clean-finish end of fruit-forward sake. Highly milled rice, but tuned for structure rather than aroma.",
+    long: "The drier, more restrained cousin of Fruity. Same polished-rice base — ginjo and daiginjo — but the brewer is chasing elegance instead of aroma. Fruit is present in a quieter register: apple, white peach, pear, sometimes a mineral edge. The finish is the signature: clean, precise, nothing left on the palate. Often the style a brewery uses to show off its best work.",
+    examples: "Isojiman Junmai Daiginjo · Masumi Junmai Daiginjo Sanka · Biwa no Choju Daiginjo",
+    food: "Strongest with lean neutral and lean umami delicate food — chilled tofu, yudofu, sea bream sashimi, chawanmushi, white fish in light soy — and broth-centered light dishes like clear clam or mushroom soup. Loses definition under fried heavy dishes, sauce-dominant plates, rich spice.",
+    jpProse: "繊細で上品、後味がすっきりしたものをお願いします。香りは控えめで、キレが良く、余韻が短いタイプがいいです。",
+    jpRomaji: "Sensai de jōhin, atoaji ga sukkiri shita mono o onegaishimasu. Kaori wa hikaeme de, kire ga yoku, yoin ga mijikai taipu ga ii desu.",
+    jpEnTranslation: "\"Something delicate and refined with a clean finish, please. Restrained aroma, sharp finish, short aftertaste.\"",
+    jpKeywords: [
+      {jp:"繊細", romaji:"sensai", en:"delicate"},
+      {jp:"上品", romaji:"jōhin", en:"refined / elegant"},
+      {jp:"キレの良い", romaji:"kire no yoi", en:"clean finish"},
+      {jp:"端麗", romaji:"tanrei", en:"clean / sleek"},
+      {jp:"透明感", romaji:"tōmeikan", en:"transparency"},
+      {jp:"余韻が短い", romaji:"yoin ga mijikai", en:"short aftertaste"},
+      {jp:"香り控えめ", romaji:"kaori hikaeme", en:"restrained aroma"}
+    ],
+    enProse: "\"Something polished and elegant, clean-finishing, not too aromatic — restrained rather than fruit-forward.\"",
+    enKeywords: ["polished","elegant","restrained","clean-finishing","precise","crisp","structured","subtle","refined"]
+  },
+
+  sour: {
+    en: "Sour", jp: "酸味", romaji: "Sanmi",
+    short: "Tart, citric, and uncommon. Made with white or black koji, or via bodaimoto — methods that yield a bright, wine-like acidity found in almost no other style.",
+    long: "The odd category out. White and black koji produce citric acid alongside the usual lactic and succinic, giving a clean, almost white-wine tartness no other method delivers. Bodaimoto — a pre-Edo starter using raw rice soaked in water — takes a different route to a related place: rustic, sometimes funky, more yogurt than citrus but still firmly sour. Acidity is high; the rest of the profile varies widely.",
+    examples: "Terada Honke Daigo no Shizuku",
+    food: "Strongest with bright lean acidic food — vinegared dishes, sunomono, nanban-zuke, ceviche — lean saline marine (oysters, sweet shrimp), and fried crisp light things (tempura, fried oysters, spring rolls). Struggles with fatty umami protein, charred savory food, and sweet desserts.",
+    jpProse: "さっぱりとした酸味、柑橘のような爽やかな酸が特徴の日本酒をお願いします。白麹や黒麹を使ったタイプ、または菩提酛で造られたものがあれば。",
+    jpRomaji: "Sappari to shita sanmi, kankitsu no yō na sawayaka na san ga tokuchō no nihonshu o onegaishimasu. Shiro-kōji ya kuro-kōji o tsukatta taipu, mata wa bodaimoto de tsukurareta mono ga areba.",
+    jpEnTranslation: "\"A sake with refreshing, citrus-like acidity, please. Made with white or black koji, or bodaimoto if you have it.\"",
+    jpKeywords: [
+      {jp:"酸味", romaji:"sanmi", en:"acidity / tartness"},
+      {jp:"爽やか", romaji:"sawayaka", en:"refreshing"},
+      {jp:"柑橘", romaji:"kankitsu", en:"citrus"},
+      {jp:"白麹", romaji:"shiro-kōji", en:"white koji"},
+      {jp:"黒麹", romaji:"kuro-kōji", en:"black koji"},
+      {jp:"菩提酛", romaji:"bodaimoto", en:"bodaimoto starter"},
+      {jp:"ワインのような", romaji:"wain no yōna", en:"wine-like"},
+      {jp:"クエン酸", romaji:"kuensan", en:"citric acid"}
+    ],
+    enProse: "\"Something sour or citric, white-wine-like — made with white or black koji, or bodaimoto if they have it.\"",
+    enKeywords: ["sour","tart","citric","white-wine-like","bright acidity","sharp","zippy","white koji","black koji","bodaimoto","natural-wine-adjacent","sometimes funky"]
+  },
+
+  rich: {
+    en: "Rich", jp: "コク", romaji: "Koku",
+    short: "Deep, savory, and complex — the traditional-method end of sake. Kimoto and yamahai primarily, with tang, umami weight, and a slow-building flavor.",
+    long: "The traditional-fermentation end of the spectrum. Kimoto and yamahai build their lactic starter naturally — through resident bacteria rather than added lactic acid — and that slower fermentation leaves complexity modern methods don't reach. Tangy, sometimes yogurt-like depth, pronounced umami, a bitter edge, and a long evolving finish. Serve warm to room temperature; warmth opens it up.",
+    examples: "Kenbishi · Daishichi Junmai Kimoto · Gunma Izumi · Mimurosugi Yamahai",
+    food: "Strongest with fatty umami protein (pork belly kakuni, yellowtail collar, nikujaga), charred or roasted savory (yakitori, yakiniku, robata mushrooms), and broth-centered rich umami (tonkotsu ramen, offal hot pot). Fermented elements amplify what's already in the sake. Overwhelms delicate food.",
+    jpProse: "生酛や山廃のような、旨みが深く、複雑味のある日本酒をお願いします。酸がしっかりしていて、コクのあるタイプ。燗が合うものが良いです。",
+    jpRomaji: "Kimoto ya yamahai no yōna, umami ga fukaku, fukuzatsumi no aru nihonshu o onegaishimasu. San ga shikkari shite ite, koku no aru taipu. Kan ga au mono ga ii desu.",
+    jpEnTranslation: "\"A kimoto or yamahai-style sake with deep umami and complexity, please. Solid acidity, rich body, ideally good warmed.\"",
+    jpKeywords: [
+      {jp:"コク", romaji:"koku", en:"rich body / depth"},
+      {jp:"旨みが強い", romaji:"umami ga tsuyoi", en:"strong umami"},
+      {jp:"生酛", romaji:"kimoto", en:"kimoto starter"},
+      {jp:"山廃", romaji:"yamahai", en:"yamahai starter"},
+      {jp:"複雑", romaji:"fukuzatsu", en:"complex"},
+      {jp:"熟成感", romaji:"jukuseikan", en:"matured character"},
+      {jp:"燗向き", romaji:"kan-muki", en:"good warmed"},
+      {jp:"しっかりとした", romaji:"shikkari to shita", en:"firm / solid"}
+    ],
+    enProse: "\"Something rich, deep, and savory — kimoto or yamahai if they have it. Complex, with umami and some tang, ideally good warmed.\"",
+    enKeywords: ["rich","deep","savory","complex","umami-heavy","kimoto","yamahai","traditional","tangy","warm-serving","long finish"]
+  },
+
+  heavy: {
+    en: "Heavy", jp: "原酒", romaji: "Genshu",
+    short: "Full-bodied, high-alcohol, and structurally assertive. Genshu territory — undiluted sake where the full weight of fermentation arrives in the glass.",
+    long: "Body and alcohol are the story. Most sake is cut with water after pressing to bring ABV from ~19% down to 15–16%; genshu skips that step, leaving 17–20% ABV and a palate that reflects it. Robust, grainy, sometimes slightly hot impression cold — rounds out considerably with warming. Acidity moderate to high, giving lift.",
+    examples: "Noguchi Naohiko · Kikuhime Yamahai · Izumibashi Tokubetsu Junmaishu",
+    food: "Strongest with fatty umami protein (pork belly, yellowtail collar, braised beef), charred or roasted savory (yakiniku, roast pork belly, grilled mackerel), and broth-centered rich umami. Holds up against fried savory heavy and rich aromatic spice sauce — curry udon, mapo tofu, butter chicken. Steamrolls anything delicate.",
+    jpProse: "ボディがしっかりしていて、アルコール度数が高めの日本酒をお願いします。原酒のように力強く、飲みごたえのあるタイプ。",
+    jpRomaji: "Bodi ga shikkari shite ite, arukōru dosū ga takame no nihonshu o onegaishimasu. Genshu no yōni chikara-zuyoku, nomigotae no aru taipu.",
+    jpEnTranslation: "\"A full-bodied, higher-alcohol sake, please — powerful and substantial like a genshu.\"",
+    jpKeywords: [
+      {jp:"原酒", romaji:"genshu", en:"undiluted"},
+      {jp:"ボディ", romaji:"bodi", en:"body"},
+      {jp:"力強い", romaji:"chikara-zuyoi", en:"powerful"},
+      {jp:"飲みごたえ", romaji:"nomigotae", en:"substantial"},
+      {jp:"アルコール高め", romaji:"arukōru takame", en:"higher alcohol"},
+      {jp:"濃厚", romaji:"nōkō", en:"concentrated"},
+      {jp:"どっしり", romaji:"dosshiri", en:"weighty"}
+    ],
+    enProse: "\"Something full-bodied and high-alcohol — undiluted genshu if they have it. Weight and structure, not elegance.\"",
+    enKeywords: ["full-bodied","high-alcohol","genshu","powerful","robust","structural","assertive","undiluted","hefty","warming"]
+  },
+
+  light: {
+    en: "Light", jp: "軽い", romaji: "Karui",
+    short: "Clean, easy-drinking, and low-alcohol. Often 12% ABV or lower — sometimes as low as 5–7% — where standard sake sits at 15–16%. Sometimes sparkling.",
+    long: "Brewers compensate for low alcohol with higher acidity to keep the sake lively rather than thin. Flavor stays close to fresh rice and subtle fruit. Sparkling sake lands here when alcohol is low. Serve well chilled. A good style to open a meal with, or for someone who finds standard sake too alcoholic.",
+    examples: "Ichi no Kura Himezen · Hakkaisan Awa · Suzune Wabi",
+    food: "Strongest with lean neutral delicate (chilled tofu, yudofu, steamed egg custard, sea bream sashimi), lean umami delicate (chawanmushi, clear soups), and broth-centered light dishes (kake udon, ochazuke). Disappears under anything heavy.",
+    jpProse: "アルコール度数が低めで、軽くてすっきりとした日本酒をお願いします。発泡しているもの、または食前酒として合う飲みやすいタイプがいいです。",
+    jpRomaji: "Arukōru dosū ga hikume de, karukute sukkiri to shita nihonshu o onegaishimasu. Happō shite iru mono, mata wa shokuzenshu to shite au nomiyasui taipu ga ii desu.",
+    jpEnTranslation: "\"A light, clean, lower-alcohol sake, please. Sparkling or aperitif-style, easy-drinking.\"",
+    jpKeywords: [
+      {jp:"低アルコール", romaji:"tei-arukōru", en:"low alcohol"},
+      {jp:"軽い", romaji:"karui", en:"light"},
+      {jp:"すっきり", romaji:"sukkiri", en:"crisp / clean"},
+      {jp:"発泡", romaji:"happō", en:"sparkling"},
+      {jp:"食前酒", romaji:"shokuzenshu", en:"aperitif"},
+      {jp:"飲みやすい", romaji:"nomiyasui", en:"easy-drinking"},
+      {jp:"さっぱり", romaji:"sappari", en:"refreshing"}
+    ],
+    enProse: "\"Something light and low-alcohol — a sparkling or a gentle aperitif-style sake, well chilled. Easy-drinking, nothing heavy.\"",
+    enKeywords: ["light","low-alcohol","easy-drinking","sparkling","delicate","refreshing","chilled","aperitif-style","clean"]
+  },
+
+  fresh: {
+    en: "Fresh", jp: "生酒", romaji: "Nama-zake",
+    short: "Vibrant and unfinished — unpasteurized nama-zake or freshly pressed shibori-tate, where active enzymes and yeast still give the sake an almost peppery energy.",
+    long: "Sake is normally pasteurized twice; nama-zake skips one or both of those steps, leaving the sake biologically active. Expect a green, slightly peppery, citrusy lift on the nose and a snap of freshness. Shibori-tate (freshly pressed) gets to a similar place. Sparkling sake fits here too when body is moderate. Drink young, cold, soon after opening.",
+    examples: "Dassai Junmai Daiginjo 45 Nama · Funaguchi Kikusui Honjozo Nama Genshu · Miyo-zakura Shibori-tate Tokubetsu Junmai",
+    food: "Strongest with herbal fresh aromatic (shiso salad, sashimi salad, cold soba), fried crisp light (tempura, fried oysters, spring rolls), and lean saline marine (raw oysters, steamed clams, sweet shrimp). Creamy and lightly fermented things sit nicely too — burrata, cultured butter, fresh cheese.",
+    jpProse: "生酒や搾りたて、または発泡している日本酒をお願いします。フレッシュで若々しく、青さや炭酸を感じるタイプ。よく冷えた状態でいただきたいです。",
+    jpRomaji: "Nama-zake ya shiboritate, mata wa happō shite iru nihonshu o onegaishimasu. Furesshu de wakawakashiku, aosa ya tansan o kanjiru taipu. Yoku hieta jōtai de itadakitai desu.",
+    jpEnTranslation: "\"An unpasteurized nama, freshly pressed shibori-tate, or sparkling sake, please. Fresh and youthful with green or carbonated character, well chilled.\"",
+    jpKeywords: [
+      {jp:"生酒", romaji:"nama-zake", en:"unpasteurized"},
+      {jp:"搾りたて", romaji:"shiboritate", en:"freshly pressed"},
+      {jp:"発泡", romaji:"happō", en:"sparkling"},
+      {jp:"活性", romaji:"kassei", en:"active / live"},
+      {jp:"フレッシュ", romaji:"furesshu", en:"fresh"},
+      {jp:"若々しい", romaji:"wakawakashii", en:"youthful"},
+      {jp:"爽やか", romaji:"sawayaka", en:"refreshing"},
+      {jp:"青い", romaji:"aoi", en:"green / unripe"}
+    ],
+    enProse: "\"Something fresh — unpasteurized nama, shibori-tate, or sparkling. Lively, young, served cold.\"",
+    enKeywords: ["fresh","nama","unpasteurized","shibori-tate","freshly pressed","sparkling","lively","youthful","green","chilled"]
+  },
+
+  dry: {
+    en: "Dry", jp: "辛口", romaji: "Karakuchi",
+    short: "Crisp and precisely dry, with a sharp, clean finish. One of the most food-friendly styles — built to cut rather than match.",
+    long: "The tanrei karakuchi (light and dry) style most associated with Niigata but brewed across Japan. SMV runs distinctly positive, often +4 and above. Acidity moderate to low, amino acids kept down. The result is a sake that finishes clean and fast. Honjozo and tokubetsu honjozo make up much of the category, along with drier junmai. A good default when food is fried, salty, oily.",
+    examples: "Suehiro Honjozo Kira · Koshi no Kanbai Bessen Tokubetsu Honjozo · Takashimizu Seisen Karakuchi",
+    food: "Strongest with fried crisp light (tempura, fried oysters, croquettes, spring rolls), salt-forward savory (salt-grilled mackerel, edamame, yakitori with salt, salt-and-pepper squid), and lean umami delicate (chawanmushi, clear soups, light-soy white fish). Clashes with sweetness and bright acidity.",
+    jpProse: "辛口で、キレが良く、後味がすっきりした日本酒をお願いします。甘みを感じず、さっぱりとして、食事と合わせやすいタイプ。",
+    jpRomaji: "Karakuchi de, kire ga yoku, atoaji ga sukkiri shita nihonshu o onegaishimasu. Amami o kanjizu, sappari to shite, shokuji to awase yasui taipu.",
+    jpEnTranslation: "\"A dry sake with a sharp, clean finish, please. No perceptible sweetness, refreshing, easy to pair with food.\"",
+    jpKeywords: [
+      {jp:"辛口", romaji:"karakuchi", en:"dry"},
+      {jp:"キレ", romaji:"kire", en:"sharpness / clean finish"},
+      {jp:"淡麗", romaji:"tanrei", en:"light & dry"},
+      {jp:"すっきり", romaji:"sukkiri", en:"clean"},
+      {jp:"さっぱり", romaji:"sappari", en:"refreshing"},
+      {jp:"後味が短い", romaji:"atoaji ga mijikai", en:"short aftertaste"},
+      {jp:"食中酒", romaji:"shokuchūshu", en:"food-friendly sake"}
+    ],
+    enProse: "\"Something dry and crisp, clean-finishing, not sweet at all. Something that cuts through food rather than matches it.\"",
+    enKeywords: ["dry","crisp","clean-finishing","sharp","tanrei karakuchi","lean","food-friendly","palate-cleansing","precise"]
+  },
+
+  sweet: {
+    en: "Sweet", jp: "甘口", romaji: "Amakuchi",
+    short: "Richly sweet, with enough acidity to keep it from cloying. Often nigori, yondan-shikomi, or dessert-positioned — built for contrast with strong savory or spicy food.",
+    long: "SMV runs negative, often significantly. Residual sugar sits high enough to register immediately. The good examples carry sweetness with real acidity and a savory amino-acid backbone. Nigori (unfiltered, milky), yondan-shikomi (fourth rice addition that boosts final sugar), koji-forward and dessert-positioned bottles all live here. Notes can range from stone fruit to caramel to sweet rice. Serve chilled.",
+    examples: "Kasumochi Genshu Yauemonshu (Yamatogawa) · Tsuki no Katsura Nakakumi Nigori-zake",
+    food: "Works through contrast. Sweet-savory light dishes (teriyaki, nimono, char siu, honey walnut shrimp). Spice-driven aromatic (mapo tofu, kung pao chicken, Buffalo wings). Rich aromatic spice sauce (Japanese curry, Thai green curry, butter chicken). Handles dessert well — mochi, purin, panna cotta, mango sticky rice.",
+    jpProse: "甘口で、しっかりと甘みのある日本酒をお願いします。にごり酒や貴醸酒のような濃厚なもの、料理のスパイスや塩味とのコントラストに合うタイプがいいです。",
+    jpRomaji: "Amakuchi de, shikkari to amami no aru nihonshu o onegaishimasu. Nigori-zake ya kijōshu no yō na nōkō na mono, ryōri no supaisu ya shio aji to no kontorasuto ni au taipu ga ii desu.",
+    jpEnTranslation: "\"A clearly sweet sake, please. Something concentrated like nigori or kijoshu, made for contrast with spicy or salty food.\"",
+    jpKeywords: [
+      {jp:"甘口", romaji:"amakuchi", en:"sweet"},
+      {jp:"濃醇", romaji:"nōjun", en:"rich / concentrated"},
+      {jp:"にごり酒", romaji:"nigori-zake", en:"unfiltered / cloudy"},
+      {jp:"貴醸酒", romaji:"kijōshu", en:"sake-brewed-with-sake"},
+      {jp:"四段仕込み", romaji:"yondan-shikomi", en:"fourth rice addition"},
+      {jp:"デザート酒", romaji:"dezāto-shu", en:"dessert sake"},
+      {jp:"まろやか", romaji:"maroyaka", en:"rounded"},
+      {jp:"コクのある甘み", romaji:"koku no aru amami", en:"deep sweetness"}
+    ],
+    enProse: "\"Something clearly sweet — nigori, or a dessert-leaning sake. Rich sweetness with some acidity, good against spice or dessert.\"",
+    enKeywords: ["sweet","nigori","unfiltered","dessert-style","yondan-shikomi","kijoshu","rich","lush","contrast-pairing","stone-fruit","caramel"]
+  },
+
+  aged: {
+    en: "Aged", jp: "古酒", romaji: "Koshu",
+    short: "Transformed by time. Amber color, caramel and dried-fruit aromas, concentrated flavor — closer to a fine aged spirit than to the sake it started as.",
+    long: "Given years in tank or bottle, sake color deepens from pale yellow through amber to dark brown, and flavors shift dramatically — caramel, dried apricot, fig, walnut, soy sauce, chocolate, sometimes a sherry-like oxidative quality. Acidity softens even as amino acid concentration climbs. Koshu (3+ years), jukuseishu (longer), and kijoshu (sake-brewed-with-sake, often aged) all live here. Serve at room temperature or slightly warm, in small pours.",
+    examples: "Momotose 1972 (Fukumitsuya) · Hanahato Kijoshu 7-nen Chozo · Kirin Hizoshu (Kaetsu Shuzo)",
+    food: "Strongest with charred or roasted savory (yakitori, grilled mackerel, yakiniku, roast pork belly, roast beef), sauce-dominant savory (hamburg steak with demi-glace, hayashi rice, mapo tofu, black pepper beef), and fatty umami protein braised dishes. Caramelized glazes, fermented elements, and smoke all echo what's already in the sake.",
+    jpProse: "熟成酒や古酒、または長期熟成させた貴醸酒をお願いします。琥珀色で、カラメルや果実、ナッツのような複雑な香りがするタイプ。常温か少し温めていただきたいです。",
+    jpRomaji: "Jukuseishu ya koshu, mata wa chōki jukusei sa seta kijōshu o onegaishimasu. Kohaku-iro de, karameru ya kajitsu, nattsu no yō na fukuzatsu na kaori ga suru taipu. Jōon ka sukoshi atatamete itadakitai desu.",
+    jpEnTranslation: "\"An aged koshu, jukuseishu, or long-aged kijoshu, please. Amber color, complex caramel/fruit/nut aromas, served at room temp or slightly warm.\"",
+    jpKeywords: [
+      {jp:"古酒", romaji:"koshu", en:"aged sake"},
+      {jp:"熟成酒", romaji:"jukuseishu", en:"matured sake"},
+      {jp:"長期熟成", romaji:"chōki jukusei", en:"long-aged"},
+      {jp:"琥珀色", romaji:"kohaku-iro", en:"amber color"},
+      {jp:"カラメル", romaji:"karameru", en:"caramel"},
+      {jp:"ナッツ", romaji:"nattsu", en:"nutty"},
+      {jp:"貴醸酒", romaji:"kijōshu", en:"sake-brewed-with-sake"},
+      {jp:"複雑", romaji:"fukuzatsu", en:"complex"},
+      {jp:"常温", romaji:"jōon", en:"room temperature"}
+    ],
+    enProse: "\"Something aged — koshu, jukuseishu, or an aged kijoshu. Amber color, caramel and dried-fruit character, served at room temperature or slightly warm.\"",
+    enKeywords: ["aged","koshu","jukuseishu","kijoshu","amber","caramel","dried-fruit","nutty","oxidative","complex","after-dinner"]
+  }
+};
+
+// ----------------------------------------------------------------------------
+// Render the requested style. ?style=mellow|fruity|... — defaults to mellow.
+// ?from=pairing routes Back to Pairing Result; otherwise Back to Profile.
+// ----------------------------------------------------------------------------
+const params = new URLSearchParams(window.location.search);
+const styleKey = (params.get('style') || 'mellow').toLowerCase();
+const data = STYLES[styleKey] || STYLES.mellow;
+
+const from = params.get('from');
+const back = document.getElementById('backLink');
+if (from === 'pairing') {
+  const dish = params.get('dish') ? `?profile=${encodeURIComponent(styleKey)}&dish=${encodeURIComponent(params.get('dish')||'')}&branch=${encodeURIComponent(params.get('branch')||'')}` : '';
+  back.href = `sakeyo_Pairing_Result.html${dish}`;
+  back.innerHTML = back.innerHTML.replace('Back', 'Pairing');
+}
+
+document.getElementById('heroJp').textContent = data.jp;
+document.getElementById('heroRomaji').textContent = data.romaji;
+document.getElementById('heroEn').textContent = data.en;
+document.getElementById('heroDek').textContent = data.short;
+document.getElementById('longDesc').textContent = data.long;
+document.getElementById('examples').textContent = data.examples;
+document.getElementById('foodPair').textContent = data.food;
+document.getElementById('jpProse').textContent = data.jpProse;
+document.getElementById('jpRomaji').textContent = data.jpRomaji;
+document.getElementById('jpEnTranslation').textContent = data.jpEnTranslation;
+document.getElementById('enProse').textContent = data.enProse;
+
+const jpKwHost = document.getElementById('jpKeywords');
+data.jpKeywords.forEach(k => {
+  const row = document.createElement('div');
+  row.className = 'kw';
+  row.innerHTML = `<span class="kw-jp">${k.jp}</span><span class="kw-ro">${k.romaji}</span><span class="kw-en">${k.en}</span>`;
+  jpKwHost.appendChild(row);
+});
+
+const enKwHost = document.getElementById('enKeywords');
+data.enKeywords.forEach(k => {
+  const chip = document.createElement('span');
+  chip.className = 'kw-chip';
+  chip.textContent = k;
+  enKwHost.appendChild(chip);
+});
+
+// Flashcard overlay — content
+document.getElementById('fcStyleJp').textContent = data.jp;
+document.getElementById('fcStyleEn').textContent = data.en;
+document.getElementById('fcProse').textContent = data.jpProse;
+document.getElementById('fcRomaji').textContent = data.jpRomaji;
+
+// Flashcard open/close
+const fc = document.getElementById('flashcard');
+document.getElementById('showFlashcard').addEventListener('click', () => fc.classList.add('on'));
+document.getElementById('fcClose').addEventListener('click', () => fc.classList.remove('on'));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fc.classList.remove('on'); });
+</script>
+
+</body></html>

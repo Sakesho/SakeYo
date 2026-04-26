@@ -92,7 +92,9 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 
 /* STYLE CARDS */
 .styles{padding:0 22px;display:flex;flex-direction:column}
-.style-card{padding:14px 0;border-top:1px solid var(--hair)}
+.style-card{padding:14px 0;border-top:1px solid var(--hair);display:block;transition:opacity .12s ease,transform .12s ease}
+.style-card:hover{opacity:0.78}
+.style-card:active{transform:scale(0.99)}
 .style-card:first-child{padding-top:8px;border-top:1px solid rgba(16,24,32,0.16)}
 .style-row1{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px}
 .style-name{font-family:var(--sans);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-0.018em;display:flex;align-items:center;gap:10px}
@@ -238,17 +240,17 @@ h1, h2, .art-title, .type-hero, .type-greeting, .kit-title, .greet-name, .hero-h
     <span class="sec-meta">Affinity</span>
   </div>
   <div class="styles">
-    <div class="style-card"><div class="style-row1"><div class="style-name">Mellow</div><div class="style-pct">88%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:88%"></div></div><div class="style-row2"><span>5 bottles</span><span class="rating">★ 4.6</span></div></div>
-    <div class="style-card"><div class="style-row1"><div class="style-name">Dry</div><div class="style-pct">74%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:74%"></div></div><div class="style-row2"><span>4 bottles</span><span class="rating">★ 4.3</span></div></div>
-    <div class="style-card"><div class="style-row1"><div class="style-name">Light</div><div class="style-pct">68%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:68%"></div></div><div class="style-row2"><span>3 bottles</span><span class="rating">★ 4.1</span></div></div>
-    <div class="style-card"><div class="style-row1"><div class="style-name">Fresh</div><div class="style-pct">61%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:61%"></div></div><div class="style-row2"><span>3 bottles</span><span class="rating">★ 4.0</span></div></div>
-    <div class="style-card"><div class="style-row1"><div class="style-name">Fruity</div><div class="style-pct">52%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:52%"></div></div><div class="style-row2"><span>4 bottles</span><span class="rating">★ 3.8</span></div></div>
-    <div class="style-card"><div class="style-row1"><div class="style-name">Rich</div><div class="style-pct">45%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:45%"></div></div><div class="style-row2"><span>2 bottles</span><span class="rating">★ 4.0</span></div></div>
-    <div class="style-card"><div class="style-row1"><div class="style-name">Clean</div><div class="style-pct">38%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:38%"></div></div><div class="style-row2"><span>2 bottles</span><span class="rating">★ 3.9</span></div></div>
-    <div class="style-card"><div class="style-row1"><div class="style-name">Aged</div><div class="style-pct">22%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:22%"></div></div><div class="style-row2"><span>1 bottle</span><span class="rating">★ 3.5</span></div></div>
-    <div class="style-card empty"><div class="style-row1"><div class="style-name">Sour</div><div class="not-tried">Not tried</div></div><div class="empty-cta">Bright, lactic, often kimoto. A small but devoted corner.</div></div>
-    <div class="style-card empty"><div class="style-row1"><div class="style-name">Sweet</div><div class="not-tried">Not tried</div></div><div class="empty-cta">Often dessert sake or low-polish junmai. Worth one try.</div></div>
-    <div class="style-card empty"><div class="style-row1"><div class="style-name">Heavy</div><div class="not-tried">Not tried</div></div><div class="empty-cta">Bold and full-bodied. The opposite end of your palate.</div></div>
+    <a class="style-card" href="sakeyo_Style_Order.html?style=mellow"><div class="style-row1"><div class="style-name">Mellow</div><div class="style-pct">88%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:88%"></div></div><div class="style-row2"><span>5 bottles</span><span class="rating">★ 4.6</span></div></a>
+    <a class="style-card" href="sakeyo_Style_Order.html?style=dry"><div class="style-row1"><div class="style-name">Dry</div><div class="style-pct">74%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:74%"></div></div><div class="style-row2"><span>4 bottles</span><span class="rating">★ 4.3</span></div></a>
+    <a class="style-card" href="sakeyo_Style_Order.html?style=light"><div class="style-row1"><div class="style-name">Light</div><div class="style-pct">68%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:68%"></div></div><div class="style-row2"><span>3 bottles</span><span class="rating">★ 4.1</span></div></a>
+    <a class="style-card" href="sakeyo_Style_Order.html?style=fresh"><div class="style-row1"><div class="style-name">Fresh</div><div class="style-pct">61%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:61%"></div></div><div class="style-row2"><span>3 bottles</span><span class="rating">★ 4.0</span></div></a>
+    <a class="style-card" href="sakeyo_Style_Order.html?style=fruity"><div class="style-row1"><div class="style-name">Fruity</div><div class="style-pct">52%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:52%"></div></div><div class="style-row2"><span>4 bottles</span><span class="rating">★ 3.8</span></div></a>
+    <a class="style-card" href="sakeyo_Style_Order.html?style=rich"><div class="style-row1"><div class="style-name">Rich</div><div class="style-pct">45%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:45%"></div></div><div class="style-row2"><span>2 bottles</span><span class="rating">★ 4.0</span></div></a>
+    <a class="style-card" href="sakeyo_Style_Order.html?style=clean"><div class="style-row1"><div class="style-name">Clean</div><div class="style-pct">38%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:38%"></div></div><div class="style-row2"><span>2 bottles</span><span class="rating">★ 3.9</span></div></a>
+    <a class="style-card" href="sakeyo_Style_Order.html?style=aged"><div class="style-row1"><div class="style-name">Aged</div><div class="style-pct">22%</div></div><div class="style-bar"><div class="style-bar-fill" style="width:22%"></div></div><div class="style-row2"><span>1 bottle</span><span class="rating">★ 3.5</span></div></a>
+    <a class="style-card empty" href="sakeyo_Style_Order.html?style=sour"><div class="style-row1"><div class="style-name">Sour</div><div class="not-tried">Not tried</div></div><div class="empty-cta">Bright, lactic, often kimoto. A small but devoted corner.</div></a>
+    <a class="style-card empty" href="sakeyo_Style_Order.html?style=sweet"><div class="style-row1"><div class="style-name">Sweet</div><div class="not-tried">Not tried</div></div><div class="empty-cta">Often dessert sake or low-polish junmai. Worth one try.</div></a>
+    <a class="style-card empty" href="sakeyo_Style_Order.html?style=heavy"><div class="style-row1"><div class="style-name">Heavy</div><div class="not-tried">Not tried</div></div><div class="empty-cta">Bold and full-bodied. The opposite end of your palate.</div></a>
   </div>
   <a class="retake-row" href="sakeyo_Palate_Tune.html" style="margin-top:14px">
     <div class="retake-icon" style="background:rgba(45,107,79,0.10)"><svg viewBox="0 0 24 24" style="stroke:var(--sage)"><path d="M4 21v-7"/><path d="M4 10V3"/><path d="M12 21v-9"/><path d="M12 8V3"/><path d="M20 21v-5"/><path d="M20 12V3"/><path d="M1 14h6"/><path d="M9 8h6"/><path d="M17 16h6"/></svg></div>

@@ -65,8 +65,18 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .fact-body{font-family:var(--sans);font-size:13.5px;line-height:1.55;color:var(--ink);letter-spacing:-0.005em}
 .fact-body em{font-style:italic;color:var(--ink-mute)}
 
-/* HOW TO ORDER — JP card */
-.order-card{margin:28px 22px 0;padding:22px 22px;background:#fff;border:1px solid var(--hair);border-radius:var(--r-sm);position:relative;z-index:2}
+/* TAB SWITCHER — English (default) / Japanese */
+.tabs{margin:32px 22px 0;display:flex;gap:0;background:transparent;position:relative;z-index:2;border-bottom:1px solid var(--hair)}
+.tab{flex:1;padding:12px 0;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:-0.005em;color:var(--ink-mute);background:transparent;border:none;border-bottom:1.5px solid transparent;cursor:pointer;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-bottom:-1px}
+.tab.on{color:var(--ink);border-bottom-color:var(--crimson);font-weight:600}
+.tab .glyph{font-family:var(--jp);font-size:13px;font-weight:600;opacity:0.55}
+.tab.on .glyph{opacity:0.9}
+
+.order-pane{display:none}
+.order-pane.on{display:block}
+
+/* HOW TO ORDER — card */
+.order-card{margin:14px 22px 0;padding:22px 22px;background:#fff;border:1px solid var(--hair);border-radius:var(--r-sm);position:relative;z-index:2}
 .order-jp .order-flag{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--crimson);margin-bottom:14px;display:inline-flex;align-items:center;gap:8px}
 .order-jp .order-flag::before{content:"";display:inline-block;width:18px;height:12px;background:linear-gradient(180deg,#fff 0%,#fff 50%,#bc002d 50%,#bc002d 100%);border:1px solid var(--hair)}
 .order-en .order-flag{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink);margin-bottom:14px;display:inline-flex;align-items:center;gap:8px}
@@ -166,24 +176,34 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   </div>
 </div>
 
-<!-- HOW TO ORDER — JAPAN -->
-<div class="order-card order-jp">
-  <div class="order-flag">In Japan</div>
-  <div class="order-prose-jp" id="jpProse"></div>
-  <div class="order-prose-romaji" id="jpRomaji"></div>
-  <div class="order-prose-en-translation" id="jpEnTranslation"></div>
-
-  <div class="kw-head">Useful keywords</div>
-  <div class="kw-list" id="jpKeywords"></div>
+<!-- TAB SWITCHER — defaults to English (Singapore-friendly) -->
+<div class="tabs" role="tablist">
+  <button type="button" class="tab on" data-tab="en" role="tab" aria-selected="true">In English</button>
+  <button type="button" class="tab" data-tab="jp" role="tab" aria-selected="false"><span class="glyph">日本</span>In Japan</button>
 </div>
 
-<!-- HOW TO ORDER — ENGLISH -->
-<div class="order-card order-en">
-  <div class="order-flag">In English</div>
-  <div class="order-prose-en" id="enProse"></div>
+<!-- HOW TO ORDER — ENGLISH (default visible) -->
+<div class="order-pane on" id="paneEn">
+  <div class="order-card order-en">
+    <div class="order-flag">In English</div>
+    <div class="order-prose-en" id="enProse"></div>
 
-  <div class="kw-head">Useful keywords</div>
-  <div class="kw-en-list" id="enKeywords"></div>
+    <div class="kw-head">Useful keywords</div>
+    <div class="kw-en-list" id="enKeywords"></div>
+  </div>
+</div>
+
+<!-- HOW TO ORDER — JAPAN -->
+<div class="order-pane" id="paneJp">
+  <div class="order-card order-jp">
+    <div class="order-flag">In Japan</div>
+    <div class="order-prose-jp" id="jpProse"></div>
+    <div class="order-prose-romaji" id="jpRomaji"></div>
+    <div class="order-prose-en-translation" id="jpEnTranslation"></div>
+
+    <div class="kw-head">Useful keywords</div>
+    <div class="kw-list" id="jpKeywords"></div>
+  </div>
 </div>
 
 <div class="foot">
@@ -520,6 +540,20 @@ document.getElementById('fcStyleJp').textContent = data.jp;
 document.getElementById('fcStyleEn').textContent = data.en;
 document.getElementById('fcProse').textContent = data.jpProse;
 document.getElementById('fcRomaji').textContent = data.jpRomaji;
+
+// Tab switcher — English / Japanese order panels
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const which = btn.dataset.tab;
+    document.querySelectorAll('.tab').forEach(b => {
+      const on = b.dataset.tab === which;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-selected', String(on));
+    });
+    document.getElementById('paneEn').classList.toggle('on', which === 'en');
+    document.getElementById('paneJp').classList.toggle('on', which === 'jp');
+  });
+});
 
 // Flashcard open/close
 const fc = document.getElementById('flashcard');
